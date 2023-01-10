@@ -2,14 +2,14 @@ import { AppReact } from "@/utils/types/react";
 
 import { MediaContextProvider } from "./MediaContextProvider";
 import { RouterProvider } from "./RouterProvider";
-import { ToastProvider } from "./ToastProvider";
+import { AppThemeProvider } from "./ThemeProvider";
 
 export const AppProvider: AppReact.FC.Children = ({ children }) => {
   return (
-    <ToastProvider>
+    <AppThemeProvider>
       <MediaContextProvider>
         <RouterProvider>{children}</RouterProvider>
       </MediaContextProvider>
-    </ToastProvider>
+    </AppThemeProvider>
   );
 };

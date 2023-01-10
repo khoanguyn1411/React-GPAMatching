@@ -1,6 +1,5 @@
-import "react-toastify/dist/ReactToastify.min.css";
 import "./styles/global.css";
-import "./styles/tailwind.css";
+import "./styles/variables.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
