@@ -9,7 +9,9 @@
 - Run `yarn lint` to format code and fix eslint errors. 
 
 ## Tech stacks
-- Package management: Vite.
+- Framework: ReactJS.
+- Package management: yarn.
+- Frontend tooling: Vite.
 - State management: Jotai and React query.
 - HTTP client library: axios.
 - Structure: Three layers application.
