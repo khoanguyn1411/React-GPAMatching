@@ -2,8 +2,6 @@ import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { UserService } from "@/services/userService";
 
-import { http } from "./api-core";
-
 export function interceptToken(config: AxiosRequestConfig): AxiosRequestConfig {
   if (!UserService.shouldInterceptToken(config)) {
     return config;

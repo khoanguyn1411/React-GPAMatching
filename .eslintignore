@@ -1,4 +1,5 @@
 .next
 .history
+vite.config.ts
 node_modules
 public
