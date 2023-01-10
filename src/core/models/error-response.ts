@@ -6,7 +6,7 @@ export interface ErrorResponse<
   Error extends RecordObject,
   KeyOfError extends keyof Error | null = null,
 > {
-  readonly statusCode: string;
+  readonly statusCode: number;
   readonly unknownError: unknown;
-  readonly httpError: HttpError<Error, KeyOfError>;
+  readonly httpError: HttpError<Error, KeyOfError> | null;
 }
