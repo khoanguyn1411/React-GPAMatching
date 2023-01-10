@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Ignore build folder
+build
+
 # Ignore .env files
 .env
 .env.development
