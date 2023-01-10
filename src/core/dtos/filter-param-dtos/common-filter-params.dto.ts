@@ -1,10 +1,10 @@
 export namespace CommonFilterParamsDto {
   export interface PaginationDto {
-    page: number;
-    limit: number;
+    readonly page: number;
+    readonly limit: number;
   }
   export interface SearchDto {
-    search: string;
+    readonly search: string;
   }
   export type Combined = PaginationDto & SearchDto;
 }

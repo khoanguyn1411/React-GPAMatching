@@ -11,5 +11,5 @@ export type DetailErrorDto<T> = {
 };
 
 export type HttpErrorDto<T> = DetailErrorDto<T> & {
-  non_field_errors?: string[];
+  readonly non_field_errors?: string[];
 };
