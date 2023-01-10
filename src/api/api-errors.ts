@@ -78,7 +78,7 @@ class ApiError {
     return {
       status_code: UNKNOWN_STATUS_CODE,
       result_dto: null,
-      unknown_error_dto: error,
+      unknown_error_dto: error.config?.data ?? error.message,
       http_error_dto: null,
     };
   }
