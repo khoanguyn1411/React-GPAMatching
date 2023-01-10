@@ -7,11 +7,11 @@ import { RecordObject } from "@/utils/types/common";
 const UNKNOWN_STATUS_CODE = 9999;
 
 class ApiError {
-  private validateHttpError<T>(
+  private validateHttpError<T extends RecordObject>(
     _error: RecordObject,
-    statusCode: string | undefined,
+    statusCode: number | undefined,
   ): _error is HttpErrorDto<T> {
-    return statusCode === "401";
+    return statusCode === 401;
   }
 
   private isErrorWithDetail<T>(
@@ -47,7 +47,7 @@ class ApiError {
         http_error_dto: null,
       };
     }
-    const isHttpError = this.validateHttpError(error.response?.data, error.code);
+    const isHttpError = this.validateHttpError(error.response?.data, error.status);
     if (isHttpError) {
       const rootHttpError = error.response?.data;
       let httpError: AppResponseDto<TResultDto, TErrorDto>["http_error_dto"];

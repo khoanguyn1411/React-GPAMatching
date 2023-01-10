@@ -1,4 +1,4 @@
-export namespace LocalStorageService {
+export namespace LocalStorage {
   /**
    * Get values by key from local storage.
    * @param key The key by which the value is stored.

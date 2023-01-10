@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-export namespace DateService {
+export namespace DateUtils {
   /**
    * Format text to date as string.
    * @param value Text need to be formatted to Date.
@@ -40,7 +40,7 @@ export namespace DateService {
   export function getDayAfterWeek(): string {
     const today = new Date();
     today.setDate(today.getDate() + 7);
-    return DateService.toFormat(today, "US");
+    return DateUtils.toFormat(today, "US");
   }
 
   /**

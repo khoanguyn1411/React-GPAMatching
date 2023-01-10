@@ -1,4 +1,4 @@
-export namespace CurrencyService {
+export namespace Currency {
   /**
    * Format text to currency (VND).
    * @param price Number as string need to be formatted to currency.

@@ -1,4 +1,4 @@
-export namespace CSSVarService {
+export namespace CSSVar {
   export function set(name: string, value: string): void {
     document.documentElement.style.setProperty(`--${name}`, value);
   }

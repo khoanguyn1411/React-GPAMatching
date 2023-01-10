@@ -1,4 +1,4 @@
-export namespace FileService {
+export namespace FileUtils {
   /**
    * Check if file is in a correct extension.
    * @param fileName File name.
