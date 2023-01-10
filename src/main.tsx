@@ -1,3 +1,4 @@
+import "./styles/fonts.css";
 import "./styles/global.css";
 import "./styles/variables.css";
 
@@ -6,13 +7,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import App from "./App";
+import { AppProvider } from "./provider";
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <AppProvider>
+        <App />
+      </AppProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );
