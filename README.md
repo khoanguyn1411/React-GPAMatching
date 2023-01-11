@@ -15,5 +15,5 @@
 - State management: Jotai and React query.
 - HTTP client library: axios.
 - Structure: Three layers application.
-- Style: tailwindCSS and CSS.
+- Style: MUI and CSS.
 
