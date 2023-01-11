@@ -1,4 +1,4 @@
-name: Lint ci/cd
+name: Check eslint
 
 on:
   push:
