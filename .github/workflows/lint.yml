@@ -7,7 +7,7 @@ on:
     branches: ["develop", "staging", "master"]
 
 jobs: 
-  lint-stage: 
+  check-eslint-stage: 
     runs-on: ubuntu-latest
     steps: 
     - name: Check out repository code
