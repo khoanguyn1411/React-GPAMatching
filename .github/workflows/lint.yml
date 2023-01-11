@@ -1,0 +1,16 @@
+name: Lint ci/cd
+
+on:
+  push:
+    branches: ["develop", "staging", "master"]
+  pull_request:
+    branches: ["develop", "staging", "master"]
+
+jobs: 
+  lint-stage: 
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Check eslint and prettier
+      run: yarn fix-all     
