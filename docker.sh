@@ -1,4 +1,4 @@
-IMAGE_NAME=gpa-matching-frontend-reactjs
+IMAGE_NAME=khoanguyen1411/gpa-matching-frontend:release
 
 run() {
     sudo sudo dockerd
@@ -20,6 +20,16 @@ destroy() {
 reset() {
     destroy
     start
+}
+push(){
+    IMAGE=$(sudo docker images -q ${IMAGE_NAME})
+    if test ! -z "$IMAGE"
+    then
+        sudo docker push ${IMAGE_NAME}
+    else
+        start
+        sudo docker push ${IMAGE_NAME}
+    fi
 }
 
 $@

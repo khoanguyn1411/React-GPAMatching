@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   webreactjs:
-    image: gpa-matching-frontend-reactjs
+    image: khoanguyen1411/gpa-matching-frontend:release
     build: 
       context: .
       dockerfile: Dockerfile
