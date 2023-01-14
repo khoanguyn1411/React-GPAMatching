@@ -10,7 +10,10 @@
     "format": "prettier --write \"./src/**/*.{html,css}\" --config ./.prettierrc",
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "fix-all": "yarn lint && yarn format",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docker-stop": "sudo docker rmi -f gpa-matching-webreactjs",
+    "docker-start": "sudo COMPOSE_DOCKER_CLI_BUILD=1 docker compose up",
+    "docker-reset": "yarn docker-stop && yarn docker-start"
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx}": [
