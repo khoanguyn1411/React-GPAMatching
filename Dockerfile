@@ -11,6 +11,6 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN yarn build
 
 # production stage
-FROM nginx:lastest as production-stage
+FROM nginx:latest as production-stage
 COPY --from=build-stage /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]

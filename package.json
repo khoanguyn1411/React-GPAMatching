@@ -11,10 +11,7 @@
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "fix-all": "yarn lint && yarn format",
     "prepare": "husky install",
-    "docker-destroy": "sudo docker rmi -f gpa-matching-frontend-reactjs",
-    "docker-stop": "sudo docker stop gpa-matching-frontend-webreactjs-1",
-    "docker-start": "sudo COMPOSE_DOCKER_CLI_BUILD=1 docker compose up -d",
-    "docker-reset": "yarn docker-destroy && yarn docker-start"
+    ".sh:permission": "chmod +x docker.sh"
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx}": [
