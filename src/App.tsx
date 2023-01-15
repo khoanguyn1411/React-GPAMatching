@@ -1,9 +1,5 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 
-interface testEnaum {
-  test: 1
-}
-
 const App: React.FC = () => {
   return (
     <Box padding={5}>
