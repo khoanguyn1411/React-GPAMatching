@@ -7,7 +7,7 @@ on:
     branches: ["develop", "staging", "master"]
 
 jobs:
-  build:
+  build-and-push-image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,4 +44,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/gpa-matching-frontend:release
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache        
+          cache-to: type=local,dest=/tmp/.buildx-cache    
+
+      - name: Verify
+        run: echo ${{ steps.docker_build.outputs.digest }}    
