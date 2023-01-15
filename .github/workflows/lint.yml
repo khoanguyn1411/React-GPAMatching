@@ -2,9 +2,9 @@ name: Lint staged
 
 on:
   push:
-    branches: ["develop", "staging", "master"]
+    branches: ["develop", "master"]
   pull_request:
-    branches: ["develop", "staging", "master"]
+    branches: ["develop", "master"]
 
 jobs: 
   check-lint-staged: 

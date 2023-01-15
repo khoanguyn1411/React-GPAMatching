@@ -83,6 +83,7 @@ jobs:
           host: ${{ secrets.SSH_SERVER_IP }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USER_NAME }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/halo/gpa-matching-deployment/
@@ -97,6 +98,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USER_NAME }}
           port: ${{ secrets.SSH_PORT }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /home/halo/gpa-matching-deployment/
             docker-compose up -d --no-deps production
