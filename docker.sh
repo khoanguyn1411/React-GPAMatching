@@ -1,4 +1,8 @@
-IMAGE_NAME=khoanguyen1411/gpa-matching-frontend:release
+REGISTER=khoanguyen1411
+REPO=gpa-matching-frontend
+TAG=release
+
+IMAGE_NAME=${REGISTER}/${REPO}:${TAG}
 
 run() {
     sudo sudo dockerd
