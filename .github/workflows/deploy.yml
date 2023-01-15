@@ -78,8 +78,9 @@ jobs:
       
       - name: Deploy to develop server.
         uses: appleboy/ssh-action@master
+        if: github.ref == 'refs/heads/develop'
         with: 
-          host: ${{ secrets.SSH_SERVER_IP_DEV }}
+          host: ${{ secrets.SSH_SERVER_IP }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USER_NAME }}
           port: ${{ secrets.SSH_PORT }}
@@ -90,8 +91,9 @@ jobs:
 
       - name: Deploy to production server.
         uses: appleboy/ssh-action@master
+        if: github.ref == 'refs/heads/master'
         with: 
-          host: ${{ secrets.SSH_SERVER_IP_DEV }}
+          host: ${{ secrets.SSH_SERVER_IP }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USER_NAME }}
           port: ${{ secrets.SSH_PORT }}
