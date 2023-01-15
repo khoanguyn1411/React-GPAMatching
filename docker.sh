@@ -1,6 +1,6 @@
 REGISTRY=khoanguyen1411
 REPO=gpa-matching-frontend
-TAG=release
+TAG=develop
 
 IMAGE_NAME=${REGISTRY}/${REPO}:${TAG}
 
@@ -22,8 +22,14 @@ destroy() {
     sudo docker rmi -f ${IMAGE_NAME}
 }
 reset() {
-    destroy
-    start
+    IMAGE=$(sudo docker images -q ${IMAGE_NAME})
+    if test ! -z "$IMAGE"
+    then
+        destroy
+        start
+    else 
+        start
+    fi
 }
 push(){
     IMAGE=$(sudo docker images -q ${IMAGE_NAME})
@@ -34,6 +40,11 @@ push(){
         start
         sudo docker push ${IMAGE_NAME}
     fi
+}
+repush(){
+    destroy
+    start
+    push
 }
 
 $@

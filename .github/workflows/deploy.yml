@@ -2,9 +2,9 @@ name: Deploy
 
 on:
   push:
-    branches: ["develop", "staging", "master"]
+    branches: ["develop", "master"]
   pull_request:
-    branches: ["develop", "staging", "master"]
+    branches: ["develop", "master"]
 
 jobs:
   build-and-push-image:
@@ -34,7 +34,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build and push images to Docker Hub
+      - name: Build and push images to Docker Hub (develop)
+        if: github.ref == 'refs/heads/develop'
+        uses: docker/build-push-action@v3
+        with: 
+          context: ./
+          file: ./Dockerfile
+          id: docker_build_develop
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/gpa-matching-frontend:develop
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache    
+
+      - name: Build and push images to Docker Hub (release)
+        if: github.ref == 'refs/heads/master'
         uses: docker/build-push-action@v3
         with: 
           context: ./
@@ -47,4 +61,41 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache    
 
       - name: Verify
-        run: echo ${{ steps.docker_build.outputs.digest }}    
+        run: echo ${{ steps.docker_build.outputs.digest }}
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with: 
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}} 
+      
+      - name: Deploy to develop server.
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.SSH_SERVER_IP_DEV }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USER_NAME }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/halo/gpa-matching-deployment/
+            docker-compose up -d --no-deps develop
+            docker image prune -f
+
+      - name: Deploy to production server.
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.SSH_SERVER_IP_DEV }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USER_NAME }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/halo/gpa-matching-deployment/
+            docker-compose up -d --no-deps production
+            docker image prune -f

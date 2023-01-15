@@ -1,11 +1,14 @@
 version: "3.3"
 
 services:
-  webreactjs:
-    image: khoanguyen1411/gpa-matching-frontend:release
-    build: 
-      context: .
-      dockerfile: Dockerfile
+  develop:
+    image: khoanguyen1411/gpa-matching-frontend:develop
     ports:
-      - "3000:80"
+      - "5000:80"
+    restart: unless-stopped
+
+  production:
+    image: khoanguyen1411/gpa-matching-frontend:release
+    ports:
+      - "5000:80"
     restart: unless-stopped

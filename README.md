@@ -11,7 +11,7 @@
 ## Linting
 - Run `yarn format` to format code with prettier configuration for HTML and CSS files.
 - Run `yarn lint` to fix eslint errors.
-- Run `yarn fix-all` to format code and fix eslint errors. 
+- Run `yarn fix-all` to format code and fix eslint errors.
 
 ## Using docker
 ### Prerequisite
