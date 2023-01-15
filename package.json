@@ -12,7 +12,8 @@
     "fix-all": "yarn lint && yarn format",
     "prepare": "husky install",
     "docker:permission": "chmod +x docker.sh",
-    "docker": "./docker.sh"
+    "docker": "./docker.sh",
+    "redeploy": "git add . && git commit -m \"Redeploy\" && git push"
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx,json,html,css}": [
