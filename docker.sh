@@ -8,7 +8,7 @@ run() {
     sudo sudo dockerd
 }   
 start() {
-    sudo COMPOSE_DOCKER_CLI_BUILD=1 docker compose up -d
+    sudo COMPOSE_DOCKER_CLI_BUILD=1 docker compose up -d --remove-orphans develop
 }
 stop() {
     CONTAINER=$(sudo docker ps -a -q --filter ancestor=${IMAGE_NAME} --format="{{.ID}}")
