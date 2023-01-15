@@ -80,7 +80,7 @@ jobs:
         uses: appleboy/ssh-action@master
         if: github.ref == 'refs/heads/develop'
         with: 
-          host: ${{ secrets.SSH_SERVER_IP }}
+          host: ${{ secrets.SSH_SERVER_IP_DEVELOP }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USER_NAME }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
@@ -94,7 +94,7 @@ jobs:
         uses: appleboy/ssh-action@master
         if: github.ref == 'refs/heads/master'
         with: 
-          host: ${{ secrets.SSH_SERVER_IP }}
+          host: ${{ secrets.SSH_SERVER_IP_PRODUCTION }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USER_NAME }}
           port: ${{ secrets.SSH_PORT }}
