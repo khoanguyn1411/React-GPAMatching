@@ -81,9 +81,9 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         with: 
           host: ${{ secrets.SSH_SERVER_IP_DEVELOP }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER_NAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          username: ${{ secrets.SSH_USER_NAME }}
+          port: ${{ secrets.SSH_PORT }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /home/halo/gpa-matching-deployment/
