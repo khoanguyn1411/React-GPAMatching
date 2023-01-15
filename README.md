@@ -15,7 +15,7 @@
 
 ## Using docker
 ### Prerequisite
-    Run `yarn docker:permission` to give docker.sh executed permission.
+Run `yarn docker:permission` to give docker.sh executed permission.
 ### Commands
 - Run `yarn docker run` to start docker (if docker is not running).
 - Run `yarn docker start` to pull image and start container.
