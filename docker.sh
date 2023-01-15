@@ -1,12 +1,12 @@
-REGISTER=khoanguyen1411
+REGISTRY=khoanguyen1411
 REPO=gpa-matching-frontend
 TAG=release
 
-IMAGE_NAME=${REGISTER}/${REPO}:${TAG}
+IMAGE_NAME=${REGISTRY}/${REPO}:${TAG}
 
 run() {
     sudo sudo dockerd
-}
+}   
 start() {
     sudo COMPOSE_DOCKER_CLI_BUILD=1 docker compose up -d
 }

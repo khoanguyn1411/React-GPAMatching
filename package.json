@@ -11,7 +11,8 @@
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "fix-all": "yarn lint && yarn format",
     "prepare": "husky install",
-    ".sh:permission": "chmod +x docker.sh"
+    "docker:permission": "chmod +x docker.sh",
+    "docker": "./docker.sh"
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx,json,html,css}": [
