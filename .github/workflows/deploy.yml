@@ -87,7 +87,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /home/halo/gpa-matching-deployment/
-            docker-compose up -d --no-deps develop
+            docker-compose up -d --no-deps --remove-orphans develop
             docker image prune -f
 
       - name: Deploy to production server.
@@ -101,5 +101,5 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /home/halo/gpa-matching-deployment/
-            docker-compose up -d --no-deps production
+            docker-compose up -d --no-deps --remove-orphans production
             docker image prune -f
