@@ -1,11 +1,9 @@
 import { RouteObject, useRoutes } from "react-router-dom";
 
-export const RootRoutes: React.FC = () => {
-  const routes: RouteObject[] = [
-    {
-      element: <div>Your element here</div>,
-    },
-  ];
+import { authRoutes } from "@/features/auth/login-routes";
+import { notFoundRoutes } from "@/shared/layouts/not-found-container/not-found-routes";
 
+export const RootRoutes: React.FC = () => {
+  const routes: RouteObject[] = [...notFoundRoutes, ...authRoutes];
   return useRoutes(routes);
 };
