@@ -1,5 +1,9 @@
 import { createTheme } from "@mui/material";
-import { red } from "@mui/material/colors";
+
+export const appColors = {
+  primary: "#455A64",
+  backgroundBlur: "rgba(255, 255, 255, 0.8)",
+};
 
 /**
  * Material UI theme.
@@ -9,7 +13,8 @@ export const muiTheme = createTheme({
   components: {
     MuiTypography: {
       styleOverrides: {
-        h1: { fontSize: "20px", fontWeight: "bold" },
+        h1: { fontSize: "25px", fontWeight: "bold" },
+        h2: { fontSize: "20px", fontWeight: "bold" },
       },
     },
     MuiButton: {
@@ -31,7 +36,7 @@ export const muiTheme = createTheme({
   },
   palette: {
     primary: {
-      main: red[500],
+      main: appColors.primary,
     },
     background: {
       default: "#333",

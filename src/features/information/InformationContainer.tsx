@@ -1,9 +1,24 @@
-import { atom, useAtom } from "jotai";
+import { Button, Container, Typography } from "@mui/material";
 import { FC } from "react";
 
-const num = atom(0);
+import { firebaseAuth } from "@/firebase/firebase-config";
+
+import { useAuth } from "../auth/useAuth";
 
 export const InformationContainer: FC = () => {
-  const [test, setTest] = useAtom(num);
-  return <button onClick={() => setTest(test + 1)}>{test}</button>;
+  const { currentUser } = useAuth();
+  return (
+    <Container>
+      <Typography>
+        Chúc mừng bạn {currentUser?.displayName} đã bị hack mất tài khoản Google.
+      </Typography>
+      <Button
+        onClick={() => {
+          firebaseAuth.signOut();
+        }}
+      >
+        SignOut
+      </Button>
+    </Container>
+  );
 };

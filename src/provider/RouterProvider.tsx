@@ -1,19 +1,26 @@
 import LinearProgress from "@mui/material/LinearProgress";
-import React from "react";
+import { atom } from "jotai";
+import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 
+import { useAuth } from "@/features/auth/useAuth";
 import { AppReact } from "@/utils/types/react";
 
+export const isRouteLoadingAtom = atom<boolean>(false);
+
 export const RouterProvider: AppReact.FC.Children = ({ children }) => {
+  const { isPending } = useAuth();
   return (
-    <React.Suspense fallback={<div>Loading</div>}>
-      <BrowserRouter>
+    <Suspense
+      fallback={
         <LinearProgress
           variant="indeterminate"
           sx={{ position: "fixed", height: "2.5px", top: 0, width: "100%", zIndex: 9999 }}
         />
-        {children}
-      </BrowserRouter>
-    </React.Suspense>
+      }
+    >
+      {isPending && <div>Loading...</div>}
+      {!isPending && <BrowserRouter>{children}</BrowserRouter>}
+    </Suspense>
   );
 };
