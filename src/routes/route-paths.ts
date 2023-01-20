@@ -14,10 +14,14 @@ const baseRoutePaths = buildRoutePaths({
 const loginRoutePaths = buildRoutePaths({
   login: { path: "login", title: "Đăng nhập" },
 } as const);
+const informationRoutePaths = buildRoutePaths({
+  information: { path: "information" },
+});
 
 // Add new module route path here.
 const appRoutePaths = {
   ...loginRoutePaths,
+  ...informationRoutePaths,
 };
 
 export const routePaths = {
