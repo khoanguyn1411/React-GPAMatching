@@ -1,5 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import { FC } from "react";
+import { StyledFirebaseAuth } from "react-firebaseui";
+
+import { firebaseAuth } from "@/firebase/firebase-config";
+import { firebaseUIConfig } from "@/firebase/firebase-ui-config";
 
 export const LoginContainer: FC = () => {
   return (
@@ -22,6 +26,7 @@ export const LoginContainer: FC = () => {
           KHỞI NGHIỆP KINH DOANH
         </Typography>
         <Typography>Mùa 5</Typography>
+        <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={firebaseAuth} />
       </Stack>
     </Stack>
   );
