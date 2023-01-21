@@ -1,10 +1,7 @@
 import { Card, Stack, Typography } from "@mui/material";
 import { FC } from "react";
-import { StyledFirebaseAuth } from "react-firebaseui";
 
 import { images } from "@/assets/images";
-import { firebaseAuth } from "@/firebase/firebase-config";
-import { firebaseUIConfig } from "@/firebase/firebase-ui-config";
 import { appColors } from "@/theme/mui-theme";
 
 import style from "./LoginContainer.module.css";
@@ -37,7 +34,6 @@ export const LoginContainer: FC = () => {
           <Typography textAlign={"center"} variant="h1">
             Nền tảng kết nối các ý tưởng và tìm kiếm đồng đội
           </Typography>
-          <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={firebaseAuth} />
           <Typography color={appColors.textPrimaryLight} fontSize={"15px"} fontWeight={500}>
             Powed by Symlody Team
           </Typography>
