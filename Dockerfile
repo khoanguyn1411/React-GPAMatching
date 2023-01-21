@@ -8,12 +8,12 @@ FROM node:16-alpine AS build-stage
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-# RUN yarn build
+RUN yarn build
 
 # production stage
-# FROM nginx:latest as production-stage
-# COPY --from=build-stage /app/build /usr/share/nginx/html
+FROM nginx:latest as production-stage
+COPY --from=build-stage /app/build /usr/share/nginx/html
 
 EXPOSE 5000
 
-CMD ["yarn", "start"]
+CMD ["nginx", "-g", "daemon off;"]
