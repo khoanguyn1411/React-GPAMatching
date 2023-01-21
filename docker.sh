@@ -2,7 +2,7 @@ REGISTRY=khoanguyen1411
 REPO=gpa-matching-frontend
 TAG=develop
 
-IMAGE_NAME=${TAG}
+IMAGE_NAME=${REGISTRY}/${REPO}:${TAG}
 
 run() {
     sudo sudo dockerd
