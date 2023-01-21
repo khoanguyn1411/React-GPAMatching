@@ -28,3 +28,5 @@ export const routePaths = {
   ...baseRoutePaths,
   ...appRoutePaths,
 };
+
+export const APP_DEFAULT_ROUTE_URL = routePaths.information.url;

@@ -2,6 +2,7 @@ import { RouteObject, useRoutes } from "react-router-dom";
 
 import { authRoutes } from "@/features/auth/routes";
 import { useAuth } from "@/features/auth/useAuth";
+import { homeRoutes } from "@/features/home/routes";
 import { informationRoutes } from "@/features/information/routes";
 import { AuthorizedGuard } from "@/guards/AuthorizedGuard";
 import { UnauthorizedGuard } from "@/guards/UnauthorizedGuard";
@@ -12,7 +13,7 @@ export const RootRoutes: React.FC = () => {
   const routes: RouteObject[] = [
     {
       element: <AuthorizedGuard isLoggedIn={isLoggedIn} />,
-      children: [...informationRoutes],
+      children: [...informationRoutes, ...homeRoutes],
     },
     {
       element: <UnauthorizedGuard isLoggedIn={isLoggedIn} />,

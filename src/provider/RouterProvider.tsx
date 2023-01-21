@@ -1,4 +1,6 @@
+import { CircularProgress } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
+import { Container } from "@mui/system";
 import { atom } from "jotai";
 import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -19,7 +21,19 @@ export const RouterProvider: AppReact.FC.Children = ({ children }) => {
         />
       }
     >
-      {isPending && <div>Loading...</div>}
+      {isPending && (
+        <Container
+          sx={{
+            height: "100vh",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Container>
+      )}
       {!isPending && <BrowserRouter>{children}</BrowserRouter>}
     </Suspense>
   );

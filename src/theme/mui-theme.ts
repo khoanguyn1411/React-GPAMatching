@@ -13,7 +13,7 @@ export const muiTheme = createTheme({
   components: {
     MuiTypography: {
       styleOverrides: {
-        h1: { fontSize: "25px", fontWeight: "bold" },
+        h1: { fontSize: "25px", fontWeight: "bold", letterSpacing: "1.2px" },
         h2: { fontSize: "20px", fontWeight: "bold" },
       },
     },
