@@ -14,9 +14,16 @@ export const useAuth = () => {
   const [isPending, setIsPending] = useState<boolean>(true);
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged((user) => {
+      const timeoutId = setTimeout(() => {
+        setIsPending(false);
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+        return;
+      }, 10000);
       setIsPending(false);
       setIsLoggedIn(!!user);
       setCurrentUser(user);
+      clearTimeout(timeoutId);
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps

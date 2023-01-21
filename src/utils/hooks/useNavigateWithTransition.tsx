@@ -10,6 +10,7 @@ import { isRouteLoadingAtom } from "@/provider/RouterProvider";
  */
 export const useNavigateWithTransition = () => {
   const [isPending, startTransition] = useTransition();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
   const rootNavigate = useNavigate();
 
