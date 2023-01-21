@@ -7,7 +7,8 @@ import { defineConfig } from "vite";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), viteTsconfigPaths(), checker({ typescript: true }), svgr()],
-  server: { port: 5000, host: true },
+  server: { port: 5001, host: true },
+  preview: { port: 5000, host: true },
   build: {
     outDir: "./build",
   },

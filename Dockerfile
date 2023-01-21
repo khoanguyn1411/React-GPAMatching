@@ -10,5 +10,6 @@ COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 
 EXPOSE 5000
+RUN yarn build
 
-CMD yarn build
+CMD yarn preview
