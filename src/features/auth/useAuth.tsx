@@ -12,7 +12,6 @@ export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
   const [isPending, setIsPending] = useState<boolean>(true);
-  // Listen to the Firebase Auth state and set the local state.
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged((user) => {
       setIsPending(false);
