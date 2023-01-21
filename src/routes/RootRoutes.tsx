@@ -9,7 +9,6 @@ import { UnauthorizedGuard } from "@/guards/UnauthorizedGuard";
 import { notFoundRoutes } from "@/shared/layouts/not-found-container/not-found-routes";
 
 export const RootRoutes: React.FC = () => {
-  console.log(import.meta.env.VITE_FIREBASE_API_KEY);
   const { isLoggedIn } = useAuth();
   const routes: RouteObject[] = [
     {
