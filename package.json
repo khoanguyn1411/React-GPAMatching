@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "node src/patches/collect-env.js && tsc && vite build && rm .env",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"./src/**/*.{html,css}\" --config ./.prettierrc",
     "lint": "eslint --fix \"./src/**/*.{ts,tsx,json}\"",
