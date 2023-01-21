@@ -3,6 +3,7 @@ import firebase from "firebase/compat/app";
 // Please do not remove this or pressing `ctrl + shift + O`.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as firebaseUI from "react-firebaseui/StyledFirebaseAuth";
+
 // Configure FirebaseUI.
 export const firebaseUIConfig: firebaseui.auth.Config = {
   // Popup signin flow rather than redirect flow.
