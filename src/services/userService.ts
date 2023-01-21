@@ -1,56 +1,27 @@
-import { AxiosRequestConfig } from "axios";
-
-import { LocalStorage } from "@/utils/funcs/local-storage";
-
-interface Token {
-  access: string;
-  refresh: string;
-}
-
-const TOKEN_KEY = "Test";
+import { firebaseAuth } from "@/firebase/firebase-config";
 
 export namespace UserService {
-  /**
-   * Check if token is required for request or not.
-   * @param request Request need to be checked.
-   */
-  export function shouldInterceptToken(request: AxiosRequestConfig): boolean {
-    if (request.url?.includes("login") && request.method === "post") {
-      return false;
+  /** Get firebase token of user. */
+  export function getFirebaseToken(): Promise<string> {
+    const currentUser = firebaseAuth.currentUser;
+    if (currentUser) {
+      return currentUser.getIdToken();
     }
-    return true;
-  }
-
-  /**
-   * Get token from local storage.
-   * @returns Return null if there is no token in local storage.
-   */
-  export function getToken(): Token | null {
-    return LocalStorage.getValue<Token>(TOKEN_KEY);
-  }
-
-  /**
-   * Save token to local storage.
-   * @param token Token need to be saved.
-   */
-  export function setToken(token: Token): void {
-    LocalStorage.setValue<Token>(TOKEN_KEY, token);
-  }
-
-  /** Remove token out of local storage. */
-  export function clearToken(): void {
-    LocalStorage.remove(TOKEN_KEY);
-  }
-
-  /**
-   * Check if token is valid (Check if token != null).
-   * @returns Return false when token is null, otherwise true.
-   */
-  export function isValid(): boolean {
-    const token = getToken();
-    if (token == null) {
-      return false;
-    }
-    return true;
+    return new Promise((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(null);
+        return;
+      }, 10000);
+      const unregisterAuthObserver = firebaseAuth.onAuthStateChanged(async (user) => {
+        if (user == null) {
+          reject(null);
+          return;
+        }
+        const token = await user.getIdToken();
+        resolve(token);
+        unregisterAuthObserver();
+        clearTimeout(timeoutId);
+      });
+    });
   }
 }

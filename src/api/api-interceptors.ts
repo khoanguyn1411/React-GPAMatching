@@ -1,12 +1,9 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig } from "axios";
 
 import { UserService } from "@/services/userService";
 
-export function interceptToken(config: AxiosRequestConfig): AxiosRequestConfig {
-  if (!UserService.shouldInterceptToken(config)) {
-    return config;
-  }
-  const token = UserService.getToken();
+export async function interceptToken(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
+  const token = await UserService.getFirebaseToken();
   if (token == null) {
     return config;
   }
@@ -17,38 +14,7 @@ export function interceptToken(config: AxiosRequestConfig): AxiosRequestConfig {
     // @ts-ignore: https://github.com/axios/axios/issues/5034
     headers: {
       ...headers,
-      Authorization: `Bearer ${token.access}`,
+      Authorization: `Bearer ${token}`,
     },
-  };
-}
-export function refreshToken() {
-  return async (error: AxiosError): Promise<AxiosResponse> => {
-    // const config = error.config;
-    // if (!config) {
-    //   return Promise.reject(error);
-    // }
-    // const token = UserService.getToken();
-    // if (token == null) {
-    //   return Promise.reject(error);
-    // }
-    // if (error.response == null) {
-    //   return Promise.reject(error);
-    // }
-    // if (config.url?.includes("refresh")) {
-    //   UserService.clearToken();
-    //   return Promise.reject(error);
-    // }
-    // if (error.response.status === 401) {
-    //   const result = await AuthApi.refreshToken(token);
-    //   if (result.kind !== "ok") {
-    //     UserService.clearToken();
-    //     return Promise.reject(error);
-    //   }
-    //   const newTokenModel = tokenMapper.fromRefreshTokenDto(result.result_dto);
-    //   UserService.setToken(newTokenModel);
-    //   config.headers["Authorization"] = `Bearer ${newTokenModel.access}`;
-    //   return http.request(config);
-    // }
-    return Promise.reject(error);
   };
 }
