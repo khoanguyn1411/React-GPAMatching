@@ -74,7 +74,7 @@ jobs:
           username: ${{secrets.DOCKER_HUB_USERNAME}}
           password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}} 
       
-      - name: Deploy to develop server.
+      - name: Deploy to development server.
         uses: appleboy/ssh-action@master
         if: github.ref == 'refs/heads/develop'
         with: 
