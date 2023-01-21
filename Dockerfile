@@ -11,4 +11,4 @@ COPY --from=deps /app/node_modules ./node_modules
 
 EXPOSE 5000
 
-CMD yarn build
+CMD yarn start
