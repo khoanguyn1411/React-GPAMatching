@@ -18,3 +18,9 @@ body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+
+#firebaseui_container {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}

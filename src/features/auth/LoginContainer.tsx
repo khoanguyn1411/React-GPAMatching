@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Card, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { StyledFirebaseAuth } from "react-firebaseui";
 
@@ -13,7 +13,6 @@ export const LoginContainer: FC = () => {
   return (
     <Stack
       sx={{
-        backgroundImage: `url(images/background.png)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
       }}
@@ -21,24 +20,29 @@ export const LoginContainer: FC = () => {
       alignItems="center"
       height={"100vh"}
     >
-      <Stack
-        sx={{ backgroundColor: appColors.backgroundBlur, borderRadius: "5px" }}
-        width={"400px"}
-        padding={"20px"}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        spacing={2}
-      >
-        <img src={images.gpaLogo} className={style["logo-images"]} alt="GPA logo" />
-        <Typography color={appColors.primary} textAlign={"center"} variant="h1">
-          KHỞI NGHIỆP KINH DOANH
-        </Typography>
-        <Typography color={appColors.primary} variant="h2">
-          Mùa 5
-        </Typography>
-        <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={firebaseAuth} />
-      </Stack>
+      <Card>
+        <Stack
+          sx={{ backgroundColor: appColors.backgroundBlur, borderRadius: "5px" }}
+          width={"400px"}
+          padding={"20px"}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          spacing={3.2}
+        >
+          <Stack direction="row" spacing={3}>
+            <img src={images.gpaLogo} className={style["logo-images"]} alt="GPA logo" />
+            <img src={images.symlodyLogo} className={style["logo-images"]} alt="GPA logo" />
+          </Stack>
+          <Typography textAlign={"center"} variant="h1">
+            Nền tảng kết nối các ý tưởng và tìm kiếm đồng đội
+          </Typography>
+          <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={firebaseAuth} />
+          <Typography color={appColors.textPrimaryLight} fontSize={"15px"} fontWeight={500}>
+            Powed by Symlody Team
+          </Typography>
+        </Stack>
+      </Card>
     </Stack>
   );
 };

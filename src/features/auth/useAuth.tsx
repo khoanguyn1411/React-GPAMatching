@@ -9,7 +9,6 @@ const currentUserAtom = atom<null | User>(null);
 const isLoggedInAtom = atom<boolean>(true);
 
 export const useAuth = () => {
-  console.log(import.meta.env.VITE_FIREBASE_API_KEY);
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
   const [isPending, setIsPending] = useState<boolean>(true);
