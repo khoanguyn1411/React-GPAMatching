@@ -78,7 +78,7 @@ module.exports = {
         selector: "variable",
         types: ["boolean"],
         format: ["PascalCase"],
-        prefix: ["is", "should", "has", "can", "did", "will"],
+        prefix: ["is", "should", "has", "can", "did", "will", "_"],
       },
       {
         selector: ["function", "typeProperty"],

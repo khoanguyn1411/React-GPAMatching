@@ -13,7 +13,8 @@
     "prepare": "husky install",
     "docker:permission": "chmod +x docker.sh",
     "docker": "./docker.sh",
-    "redeploy": "git add . && git commit -m \"Redeploy\" && git push"
+    "redeploy": "git add . && git commit -m \"Redeploy\" && git push",
+    "commit": "git add . && git commit -m"
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx,json,html,css}": [
@@ -30,9 +31,11 @@
     "animate.css": "^4.1.1",
     "axios": "^1.2.2",
     "dayjs": "^1.11.7",
+    "firebase": "^9.16.0",
     "jotai": "^1.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-firebaseui": "^6.0.0",
     "react-hook-form": "^7.41.5",
     "react-router-dom": "^6.6.1",
     "yarn": "^1.22.19",
