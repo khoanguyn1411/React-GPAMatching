@@ -84,6 +84,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/gpa-matching-frontend:develop
             cd /home/halo/gpa-matching-deployment/
             docker-compose up -d --no-deps --remove-orphans develop
             docker image prune -f
@@ -98,6 +99,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/gpa-matching-frontend:release
             cd /home/halo/gpa-matching-deployment/
             docker-compose up -d --no-deps --remove-orphans production
             docker image prune -f
