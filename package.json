@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "node src/patches/collect-env.js && tsc && vite build && rm .env",
     "preview": "vite preview",
     "format": "prettier --write \"./src/**/*.{html,css}\" --config ./.prettierrc",
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
@@ -17,7 +17,7 @@
     "commit": "git add . && git commit -m"
   },
   "lint-staged": {
-    "./src/**/*.{js,jsx,ts,tsx,json,html,css}": [
+    "./src/**/*.{ts,tsx,json,html,css}": [
       "yarn fix-all"
     ]
   },
