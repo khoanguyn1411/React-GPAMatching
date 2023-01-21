@@ -8,7 +8,7 @@
     "build": "node src/patches/collect-env.js && tsc && vite build && rm .env",
     "preview": "vite preview",
     "format": "prettier --write \"./src/**/*.{html,css}\" --config ./.prettierrc",
-    "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
+    "lint": "eslint --fix \"./src/**/*.{ts,tsx,json}\"",
     "fix-all": "yarn lint && yarn format",
     "prepare": "husky install",
     "docker:permission": "chmod +x docker.sh",
