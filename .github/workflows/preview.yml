@@ -21,10 +21,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 16.15.0
-
+    - name: Install dependencies
+      run: yarn
     - name: Install and Build
       run: |
-        npm ci
+        yarn install --frozen-lockfile
         PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
         REPO_NAME=gpa-matching-frontend
         yarn build -- --baseHref=/$REPO_NAME/pr-preview/pr-$PR_NUMBER/
