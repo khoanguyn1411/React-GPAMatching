@@ -1,24 +1,38 @@
-import { Button, Container, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
+import classNames from "classnames";
+import { useAtom } from "jotai";
 import { FC } from "react";
 
-import { firebaseAuth } from "@/firebase/firebase-config";
+import { images } from "@/assets/images";
 
-import { useAuth } from "../auth/useAuth";
+import { InformationContent } from "./components/InformationContent";
+import { informationActivePageAtom } from "./information-atoms";
+import style from "./InformationContainer.module.css";
 
 export const InformationContainer: FC = () => {
-  const { currentUser } = useAuth();
+  const [activePage] = useAtom(informationActivePageAtom);
   return (
-    <Container>
-      <Typography>
-        Chúc mừng bạn {currentUser?.displayName} đã bị hack mất tài khoản Google.
-      </Typography>
-      <Button
-        onClick={() => {
-          firebaseAuth.signOut();
-        }}
-      >
-        SignOut
-      </Button>
-    </Container>
+    <Stack display="grid" gridTemplateColumns="1fr 1fr">
+      <Stack spacing={2} direction="column" padding={3}>
+        <Stack height={"calc(100vh - 80px)"}>
+          <InformationContent />
+        </Stack>
+        <Stack direction="row" spacing={1} justifyContent="center">
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className={classNames(style["information-direct-circle"], {
+                [style["information-direct-circle_active"]]: activePage === index + 1,
+              })}
+            />
+          ))}
+        </Stack>
+      </Stack>
+      <img
+        className={style["information-background"]}
+        src={images.gpaBackground}
+        alt="GPA Background"
+      />
+    </Stack>
   );
 };
