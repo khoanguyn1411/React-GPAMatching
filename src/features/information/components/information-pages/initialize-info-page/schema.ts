@@ -14,11 +14,8 @@ export const schema = yup.object().shape<YupValidation<User>>({
   dateOfBirth: yup.date().required(APP_ERROR_MESSAGE.REQUIRED),
   phoneNumber: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   facebookUrl: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
-  studyUnit: yup
-    .mixed<StudyYear>()
-    .oneOf(enumToArray(StudyYear))
-    .required(APP_ERROR_MESSAGE.REQUIRED),
-  year: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
+  studyUnit: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
+  year: yup.mixed<StudyYear>().oneOf(enumToArray(StudyYear)).required(APP_ERROR_MESSAGE.REQUIRED),
   knownVia: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   isReadyToJoin: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   avatarUrl: yup.string(),
