@@ -42,6 +42,10 @@ const knownViaList: Option[] = enumToArray(KnownVia).map((knownVia) => ({
   value: knownVia,
 }));
 
+// type Columns = ToTupleFromUnion<keyof Pick<UserShort,
+//   'name' | 'role' | 'department' | 'lastLoginDate'
+// > | 'edit' | 'delete'>;
+
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
   const { currentUser } = useAuth();
@@ -55,6 +59,7 @@ export const InitializeInfoPage: FC = () => {
     resolver: yupResolver(schema),
     defaultValues: userInformation
       ? {
+          email: currentUser?.email ?? "",
           fullName: userInformation.fullName,
           gender: userInformation.gender,
           dateOfBirth: userInformation.dateOfBirth,
@@ -65,7 +70,13 @@ export const InitializeInfoPage: FC = () => {
           year: userInformation.year,
           isReadyToJoin: userInformation.isReadyToJoin,
         }
-      : { email: currentUser?.email ?? "" },
+      : {
+          email: currentUser?.email ?? "",
+          fullName: "",
+          facebookUrl: "",
+          phoneNumber: "",
+          studyUnit: "",
+        },
   });
 
   const handleSubmitPage1 = (data: User): void => {
