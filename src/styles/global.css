@@ -24,3 +24,10 @@ body {
   display: flex;
   align-items: center;
 }
+
+.Mui-disabled .MuiOutlinedInput-notchedOutline {
+  border-color: #f3f4f6 !important;
+}
+.Mui-disabled .MuiInputBase-input {
+  cursor: not-allowed;
+}

@@ -13,8 +13,8 @@ export const InformationContainer: FC = () => {
   const [activePage] = useAtom(informationActivePageAtom);
   return (
     <Stack display="grid" gridTemplateColumns="1fr 1fr">
-      <Stack spacing={2} direction="column" padding={3}>
-        <Stack height={"calc(100vh - 80px)"}>
+      <Stack spacing={2} direction="column">
+        <Stack>
           <InformationContent />
         </Stack>
         <Stack direction="row" spacing={1} justifyContent="center">
