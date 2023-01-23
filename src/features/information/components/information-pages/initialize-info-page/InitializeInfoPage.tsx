@@ -5,9 +5,9 @@ import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Gender } from "@/core/models/gender";
-import { IsReadyToJoin } from "@/core/models/isReadyToJoin";
-import { KnownVia } from "@/core/models/knownVia";
-import { StudyYear } from "@/core/models/studyYear";
+import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
+import { KnownVia } from "@/core/models/known-via";
+import { StudyYear } from "@/core/models/study-year";
 import { User } from "@/core/models/user";
 import { useAuth } from "@/features/auth/useAuth";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
@@ -130,6 +130,7 @@ export const InitializeInfoPage: FC = () => {
                 name="email"
                 render={({ field: { value, onChange } }) => (
                   <TextField
+                    type="email"
                     disabled
                     placeholder="Vd: abc@gmail.com"
                     value={value}
@@ -175,7 +176,12 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="phoneNumber"
                 render={({ field: { value, onChange } }) => (
-                  <TextField value={value} onChange={onChange} placeholder="Vd: 0909090902" />
+                  <TextField
+                    inputProps={{ maxLength: 12 }}
+                    value={value}
+                    onChange={onChange}
+                    placeholder="Vd: 0909090902"
+                  />
                 )}
               />
             </FormItem>

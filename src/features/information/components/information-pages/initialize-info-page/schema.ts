@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
 import { Gender } from "@/core/models/gender";
-import { StudyYear } from "@/core/models/studyYear";
+import { StudyYear } from "@/core/models/study-year";
 import { User } from "@/core/models/user";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";

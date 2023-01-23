@@ -9,21 +9,27 @@ import { informationActivePageAtomFn } from "../../../information-atoms";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
+import { NoIdeaTab } from "./idea-tabs/NoIdeaTab";
+
+enum TabValue {
+  GotIdea = "gotIdea",
+  NoIdea = "noIdea",
+}
 
 export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
-  const [fg, setFr] = useState("");
-  console.log(fg);
+  const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
   return (
-    <>
+    <form>
       <InformationContentWrapper>
-        <AppRadioGroup value={fg} onChange={setFr}>
-          <Stack justifyContent={"space-between"} direction="row">
-            <AppRadio label="Bạn đã có ý tưởng" value="got-idea" />
-            <AppRadio label="Bạn chưa có ý tưởng" value="no-idea" />
+        <AppRadioGroup value={activeTab} onChange={setActiveTab}>
+          <Stack justifyContent="space-between" direction="row">
+            <AppRadio label="Bạn đã có ý tưởng" value={TabValue.GotIdea} />
+            <AppRadio label="Bạn chưa có ý tưởng" value={TabValue.NoIdea} />
           </Stack>
         </AppRadioGroup>
-        <GotIdeaTab />
+        {activeTab === TabValue.GotIdea && <GotIdeaTab />}
+        {activeTab === TabValue.NoIdea && <NoIdeaTab />}
       </InformationContentWrapper>
       <InformationActionWrapper>
         <Button onClick={decreasePage} variant="outlined">
@@ -32,6 +38,6 @@ export const IdeaPage: FC = () => {
 
         <Button variant="contained">Hoàn thành</Button>
       </InformationActionWrapper>
-    </>
+    </form>
   );
 };
