@@ -4,7 +4,6 @@ import { useAtom } from "jotai";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { images } from "@/assets/images";
 import { Gender } from "@/core/models/gender";
 import { IsReadyToJoin } from "@/core/models/isReadyToJoin";
 import { KnownVia } from "@/core/models/knownVia";

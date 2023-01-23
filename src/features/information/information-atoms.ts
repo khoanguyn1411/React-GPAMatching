@@ -3,7 +3,7 @@ import { atom } from "jotai";
 import { User, UserSkillSet } from "@/core/models/user";
 
 /** Atoms for page interaction. */
-export const informationActivePageAtom = atom<number>(2);
+export const informationActivePageAtom = atom<number>(3);
 
 const increasePage = atom(informationActivePageAtom, (get, set) =>
   set(informationActivePageAtom, get(informationActivePageAtom) + 1),
