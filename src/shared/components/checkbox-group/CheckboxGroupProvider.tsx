@@ -13,7 +13,7 @@ const CheckboxGroupContext = createContext<CheckboxGroupContext>({
 });
 
 export const CheckboxGroupProvider: AppReact.FC.PropsWithChildren<CheckboxGroupContext> = ({
-  value,
+  value = [],
   onChange,
   children,
 }) => {

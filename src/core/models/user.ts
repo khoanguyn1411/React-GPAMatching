@@ -1,4 +1,5 @@
 import { Gender } from "./gender";
+import { Skill } from "./skills";
 
 export interface User {
   readonly fullName: string;
@@ -13,4 +14,8 @@ export interface User {
   readonly isReadyToJoin: boolean;
   readonly avatarUrl: string;
   readonly avatar: File;
+}
+
+export interface UserSkillSet {
+  readonly skillSet: readonly Skill[];
 }
