@@ -22,7 +22,7 @@ export const LoginContainer: FC = () => {
     >
       <Card>
         <Stack
-          sx={{ backgroundColor: appColors.backgroundBlur, borderRadius: "5px" }}
+          sx={{ backgroundColor: appColors.backgroundBlur, borderRadius: "8px" }}
           width={"400px"}
           padding={"20px"}
           direction="column"
@@ -38,7 +38,7 @@ export const LoginContainer: FC = () => {
             Nền tảng kết nối các ý tưởng và tìm kiếm đồng đội
           </Typography>
           <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={firebaseAuth} />
-          <Typography color={appColors.textPrimaryLight} fontSize={"15px"} fontWeight={500}>
+          <Typography color={appColors.textPrimaryLight} fontSize={"12px"} fontWeight={500}>
             Powed by Symlody Team
           </Typography>
         </Stack>

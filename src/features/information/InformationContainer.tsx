@@ -9,9 +9,7 @@ export const InformationContainer: FC = () => {
   const { currentUser } = useAuth();
   return (
     <Container>
-      <Typography>
-        Chúc mừng bạn {currentUser?.displayName} đã bị hack mất tài khoản Google.
-      </Typography>
+      <Typography>Chúc mừng bạn {currentUser?.displayName}</Typography>
       <Button
         onClick={() => {
           firebaseAuth.signOut();
