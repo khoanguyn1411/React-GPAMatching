@@ -16,12 +16,19 @@ import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
+import { initializeEmptyValue } from "@/utils/funcs/initialize-default-value";
+import { UnionToTuple } from "@/utils/types/union-to-turple";
 
 import { informationActivePageAtomFn, informationUserAtom } from "../../../information-atoms";
+import { InformationGPALogo } from "../../information-gpa-logo/InformationGPALogo";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
-import style from "./InitializeInfoPage.module.css";
 import { schema } from "./schema";
+
+type DefaultEmptyValue = UnionToTuple<
+  keyof Pick<User, "fullName" | "facebookUrl" | "phoneNumber" | "studyUnit">
+>;
+
 const genderList: Option[] = enumToArray(Gender).map((gender) => ({
   label: Gender.toReadable(gender),
   value: gender,
@@ -42,9 +49,12 @@ const knownViaList: Option[] = enumToArray(KnownVia).map((knownVia) => ({
   value: knownVia,
 }));
 
-// type Columns = ToTupleFromUnion<keyof Pick<UserShort,
-//   'name' | 'role' | 'department' | 'lastLoginDate'
-// > | 'edit' | 'delete'>;
+const emptyValues = initializeEmptyValue<DefaultEmptyValue>([
+  "fullName",
+  "facebookUrl",
+  "phoneNumber",
+  "studyUnit",
+]);
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
@@ -72,10 +82,7 @@ export const InitializeInfoPage: FC = () => {
         }
       : {
           email: currentUser?.email ?? "",
-          fullName: "",
-          facebookUrl: "",
-          phoneNumber: "",
-          studyUnit: "",
+          ...emptyValues,
         },
   });
 
@@ -88,7 +95,7 @@ export const InitializeInfoPage: FC = () => {
     <form onSubmit={handleSubmit(handleSubmitPage1)}>
       <InformationContentWrapper>
         <Stack direction="row" alignItems="center" padding="10px 0" spacing={1}>
-          <img alt="GPA logo" src={images.gpaLogo} className={style["gpa-logo"]} />
+          <InformationGPALogo />
           <Typography fontWeight={600}>Khởi tạo thông tin cá nhân</Typography>
         </Stack>
         <FormItem label="Avatar" error={errors.avatar?.message}>
