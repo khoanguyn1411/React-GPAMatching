@@ -5,10 +5,11 @@ import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { Project } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
+import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";
 
-export const schema = yup.object().shape<YupValidation<Project>>({
+export const projectSchema = yup.object().shape<YupValidation<Project>>({
   name: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   description: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   field: yup
@@ -41,4 +42,12 @@ export const schema = yup.object().shape<YupValidation<Project>>({
     .mixed<IsReadyToJoin.ThreeChoices>()
     .oneOf(enumToArray(IsReadyToJoin.ThreeChoices))
     .required(APP_ERROR_MESSAGE.REQUIRED),
+});
+
+export const userWithNoIdeaSchema = yup.object().shape<YupValidation<UserWithNoIdea>>({
+  readyToJoin: yup
+    .mixed<IsReadyToJoin.ThreeChoices>()
+    .oneOf(enumToArray(IsReadyToJoin.ThreeChoices))
+    .required(APP_ERROR_MESSAGE.REQUIRED),
+  experience: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
 });

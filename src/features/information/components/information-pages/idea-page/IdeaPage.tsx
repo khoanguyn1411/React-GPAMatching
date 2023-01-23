@@ -22,12 +22,14 @@ export const IdeaPage: FC = () => {
   return (
     <form>
       <InformationContentWrapper>
-        <AppRadioGroup value={activeTab} onChange={setActiveTab}>
-          <Stack justifyContent="space-between" direction="row">
-            <AppRadio label="Bạn đã có ý tưởng" value={TabValue.GotIdea} />
-            <AppRadio label="Bạn chưa có ý tưởng" value={TabValue.NoIdea} />
-          </Stack>
-        </AppRadioGroup>
+        <Stack marginBottom={2}>
+          <AppRadioGroup value={activeTab} onChange={setActiveTab}>
+            <Stack direction="row" justifyContent="space-between">
+              <AppRadio label="Bạn đã có ý tưởng" value={TabValue.GotIdea} />
+              <AppRadio label="Bạn chưa có ý tưởng" value={TabValue.NoIdea} />
+            </Stack>
+          </AppRadioGroup>
+        </Stack>
         {activeTab === TabValue.GotIdea && <GotIdeaTab />}
         {activeTab === TabValue.NoIdea && <NoIdeaTab />}
       </InformationContentWrapper>

@@ -2,9 +2,11 @@ import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { FC, useEffect, useRef } from "react";
 
+import { appColors } from "@/theme/mui-theme";
+
 type Props = {
   label?: string;
-  subLabel?: JSX.Element;
+  subLabel?: string;
   error?: string;
   description?: string;
   isRequired?: boolean;
@@ -42,8 +44,16 @@ export const FormItem: FC<Props> = ({
             ) : null}
           </Typography>
         )}
-
-        {subLabel ? subLabel : <React.Fragment />}
+        {subLabel && (
+          <Typography
+            fontSize="15px"
+            fontStyle="italic"
+            color={appColors.textPrimaryLight}
+            sx={{ marginBottom: 1, marginTop: -1 }}
+          >
+            {subLabel}
+          </Typography>
+        )}
       </Stack>
       <div ref={focusRef}>{children}</div>
 

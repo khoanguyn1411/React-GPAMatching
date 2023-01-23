@@ -13,7 +13,7 @@ import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 
-import { schema } from "./schema";
+import { projectSchema } from "./schema";
 
 const skillSetList: Option[] = enumToArray(Skill).map((skill) => ({
   value: skill,
@@ -30,7 +30,7 @@ const projectStatusList: Option[] = enumToArray(ProjectStatus).map((status) => (
   label: ProjectStatus.toReadable(status),
 }));
 
-const isReadyToJoinList: Option[] = enumToArray(IsReadyToJoin.ThreeChoices).map((ready) => ({
+export const isReadyToJoinList: Option[] = enumToArray(IsReadyToJoin.ThreeChoices).map((ready) => ({
   value: ready,
   label: IsReadyToJoin.ThreeChoices.toReadable(ready),
 }));
@@ -41,7 +41,7 @@ export const GotIdeaTab: FC = () => {
     formState: { errors },
     handleSubmit,
   } = useForm<Project>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(projectSchema),
   });
   return (
     <>

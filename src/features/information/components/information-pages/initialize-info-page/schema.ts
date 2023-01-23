@@ -2,8 +2,8 @@ import * as yup from "yup";
 
 import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
 import { Gender } from "@/core/models/gender";
-import { StudyYear } from "@/core/models/study-year";
 import { User } from "@/core/models/user";
+import { UserStudyYear } from "@/core/models/user-study-year";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";
 
@@ -18,7 +18,10 @@ export const schema = yup.object().shape<YupValidation<User>>({
   phoneNumber: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   facebookUrl: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   studyUnit: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
-  year: yup.mixed<StudyYear>().oneOf(enumToArray(StudyYear)).required(APP_ERROR_MESSAGE.REQUIRED),
+  year: yup
+    .mixed<UserStudyYear>()
+    .oneOf(enumToArray(UserStudyYear))
+    .required(APP_ERROR_MESSAGE.REQUIRED),
   knownVia: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   isReadyToJoin: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   avatarUrl: yup.string(),

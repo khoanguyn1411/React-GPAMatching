@@ -7,8 +7,8 @@ import { Controller, useForm } from "react-hook-form";
 import { Gender } from "@/core/models/gender";
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { KnownVia } from "@/core/models/known-via";
-import { StudyYear } from "@/core/models/study-year";
 import { User } from "@/core/models/user";
+import { UserStudyYear } from "@/core/models/user-study-year";
 import { useAuth } from "@/features/auth/useAuth";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
@@ -33,8 +33,8 @@ const genderList: Option[] = enumToArray(Gender).map((gender) => ({
   value: gender,
 }));
 
-const studyYearList: Option[] = enumToArray(StudyYear).map((year) => ({
-  label: StudyYear.toReadable(year),
+const studyYearList: Option[] = enumToArray(UserStudyYear).map((year) => ({
+  label: UserStudyYear.toReadable(year),
   value: year,
 }));
 
