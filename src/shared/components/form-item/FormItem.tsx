@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import classNames from "classnames";
 import React, { FC, useEffect, useRef } from "react";
 
 type Props = {
