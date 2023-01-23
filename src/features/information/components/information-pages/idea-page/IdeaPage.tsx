@@ -8,6 +8,7 @@ import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 import { informationActivePageAtomFn } from "../../../information-atoms";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
+import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
 
 export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
@@ -22,6 +23,7 @@ export const IdeaPage: FC = () => {
             <AppRadio label="Bạn chưa có ý tưởng" value="no-idea" />
           </Stack>
         </AppRadioGroup>
+        <GotIdeaTab />
       </InformationContentWrapper>
       <InformationActionWrapper>
         <Button onClick={decreasePage} variant="outlined">

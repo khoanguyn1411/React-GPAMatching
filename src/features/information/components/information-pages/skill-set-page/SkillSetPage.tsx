@@ -21,7 +21,7 @@ export const SkillSetPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
 
-  const [userSkillSet, setUserSkillset] = useAtom(skillSetAtom);
+  const [userSkillSet, setUserSkillSet] = useAtom(skillSetAtom);
   const {
     control,
     formState: { errors },
@@ -33,7 +33,7 @@ export const SkillSetPage: FC = () => {
 
   const handleSubmitPage2 = (data: UserSkillSet): void => {
     increasePage();
-    setUserSkillset(data);
+    setUserSkillSet(data);
   };
   return (
     <form onSubmit={handleSubmit(handleSubmitPage2)}>
