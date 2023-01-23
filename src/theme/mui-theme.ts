@@ -41,8 +41,10 @@ export const muiTheme = createTheme({
     },
     MuiTypography: {
       styleOverrides: {
-        h1: { fontSize: "25px", fontWeight: 500, letterSpacing: "0.8px" },
-        h2: { fontSize: "20px", fontWeight: "bold" },
+        h1: { fontSize: "20px", fontWeight: 500, letterSpacing: "0.8px" },
+        h2: { fontSize: "18px", fontWeight: 500 },
+        h3: { fontSize: "16px", fontWeight: 500 },
+        h4: { fontSize: "14px", fontWeight: 500 },
       },
     },
     MuiButton: {
@@ -68,7 +70,7 @@ export const muiTheme = createTheme({
       main: appColors.primary,
     },
     background: {
-      default: "#333",
+      default: "#f9fafb",
     },
   },
 });
