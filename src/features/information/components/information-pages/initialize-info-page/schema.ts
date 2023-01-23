@@ -11,7 +11,10 @@ export const schema = yup.object().shape<YupValidation<User>>({
   fullName: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   email: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   gender: yup.mixed<Gender>().oneOf(enumToArray(Gender)).required(APP_ERROR_MESSAGE.REQUIRED),
-  dateOfBirth: yup.date().required(APP_ERROR_MESSAGE.REQUIRED),
+  dateOfBirth: yup
+    .date()
+    .required(APP_ERROR_MESSAGE.REQUIRED)
+    .typeError("Vui lòng nhập ngày đúng định dạng dd/mm/yyyy."),
   phoneNumber: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   facebookUrl: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   studyUnit: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
