@@ -22,18 +22,21 @@ export const projectSchema = yup.object().shape<YupValidation<Project>>({
     .required(APP_ERROR_MESSAGE.REQUIRED),
   currentMemberQuantity: yup
     .string()
-    .required(APP_ERROR_MESSAGE.MIN_NUMBER(0))
-    .test("is-over-0", APP_ERROR_MESSAGE.REQUIRED, (value) => {
-      return value ? Number(value) > 0 : false;
-    }),
-  findingMemberQuantity: yup
-    .string()
-    .required(APP_ERROR_MESSAGE.MIN_NUMBER(0))
-    .test("is-over-0", APP_ERROR_MESSAGE.REQUIRED, (value) => {
+    .required(APP_ERROR_MESSAGE.REQUIRED)
+    .test("is-over-0", APP_ERROR_MESSAGE.MIN_NUMBER(0), (value) => {
       return value ? Number(value) > 0 : false;
     })
     .test("is-integer", APP_ERROR_MESSAGE.INTEGER, (value) => {
-      return value ? Number.isInteger(value) : false;
+      return value ? Number.isInteger(Number(value)) : false;
+    }),
+  findingMemberQuantity: yup
+    .string()
+    .required(APP_ERROR_MESSAGE.REQUIRED)
+    .test("is-over-0", APP_ERROR_MESSAGE.MIN_NUMBER(0), (value) => {
+      return value ? Number(value) > 0 : false;
+    })
+    .test("is-integer", APP_ERROR_MESSAGE.INTEGER, (value) => {
+      return value ? Number.isInteger(Number(value)) : false;
     }),
   requiredSkills: yup
     .array()

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { Project } from "@/core/models/project";
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
+import { useAuth } from "@/features/auth/useAuth";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
@@ -24,6 +25,7 @@ enum TabValue {
 export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
   const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
+  const { currentUser } = useAuth();
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
@@ -34,10 +36,10 @@ export const IdeaPage: FC = () => {
   });
 
   const submitGotIdeaForm = (data: Project) => {
-    console.log(data);
+    alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {
-    console.log(data);
+    alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
   };
 
   const initializeSubmitFn = () => {

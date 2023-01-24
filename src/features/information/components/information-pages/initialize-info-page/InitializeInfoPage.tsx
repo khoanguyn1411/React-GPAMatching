@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -14,19 +14,14 @@ import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
+import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
-import { initializeEmptyValue } from "@/utils/funcs/initialize-default-value";
-import { UnionToTuple } from "@/utils/types/union-to-turple";
 
 import { informationActivePageAtomFn, informationUserAtom } from "../../../information-atoms";
 import { InformationGPALogo } from "../../information-gpa-logo/InformationGPALogo";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { schema } from "./schema";
-
-type DefaultEmptyValue = UnionToTuple<
-  keyof Pick<User, "fullName" | "facebookUrl" | "phoneNumber" | "studyUnit">
->;
 
 const genderList: Option[] = enumToArray(Gender).map((gender) => ({
   label: Gender.toReadable(gender),
@@ -47,13 +42,6 @@ const knownViaList: Option[] = enumToArray(KnownVia).map((knownVia) => ({
   label: KnownVia.toReadable(knownVia),
   value: knownVia,
 }));
-
-const emptyValues = initializeEmptyValue<DefaultEmptyValue>([
-  "fullName",
-  "facebookUrl",
-  "phoneNumber",
-  "studyUnit",
-]);
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
@@ -81,7 +69,6 @@ export const InitializeInfoPage: FC = () => {
         }
       : {
           email: currentUser?.email ?? "",
-          ...emptyValues,
         },
   });
 
@@ -117,7 +104,7 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="fullName"
                 render={({ field: { value, onChange } }) => (
-                  <TextField placeholder="Họ và tên" value={value} onChange={onChange} />
+                  <AppTextField placeholder="Họ và tên" value={value} onChange={onChange} />
                 )}
               />
             </FormItem>
@@ -129,7 +116,7 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="email"
                 render={({ field: { value, onChange } }) => (
-                  <TextField
+                  <AppTextField
                     type="email"
                     disabled
                     placeholder="Vd: abc@gmail.com"
@@ -176,7 +163,7 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="phoneNumber"
                 render={({ field: { value, onChange } }) => (
-                  <TextField
+                  <AppTextField
                     inputProps={{ maxLength: 12 }}
                     value={value}
                     onChange={onChange}
@@ -193,7 +180,7 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="facebookUrl"
                 render={({ field: { value, onChange } }) => (
-                  <TextField value={value} onChange={onChange} placeholder="http://..." />
+                  <AppTextField value={value} onChange={onChange} placeholder="http://..." />
                 )}
               />
             </FormItem>
@@ -205,7 +192,7 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="studyUnit"
                 render={({ field: { value, onChange } }) => (
-                  <TextField
+                  <AppTextField
                     value={value}
                     onChange={onChange}
                     placeholder="Vd: Đại học Kinh tế - Luật"

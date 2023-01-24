@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 
@@ -10,6 +10,7 @@ import { Skill } from "@/core/models/skills";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
+import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 
 type Props = {
@@ -48,7 +49,7 @@ export const GotIdeaTab: FC<Props> = ({ formProps }) => {
           control={control}
           name="name"
           render={({ field: { value, onChange } }) => (
-            <TextField placeholder="Tên dự án" value={value} onChange={onChange} />
+            <AppTextField placeholder="Tên dự án" value={value} onChange={onChange} />
           )}
         />
       </FormItem>
@@ -58,7 +59,7 @@ export const GotIdeaTab: FC<Props> = ({ formProps }) => {
           control={control}
           name="description"
           render={({ field: { value, onChange } }) => (
-            <TextField
+            <AppTextField
               rows={3}
               multiline
               placeholder="Mô tả dự án ..."
@@ -113,7 +114,7 @@ export const GotIdeaTab: FC<Props> = ({ formProps }) => {
               control={control}
               name="currentMemberQuantity"
               render={({ field: { value, onChange } }) => (
-                <TextField
+                <AppTextField
                   type="number"
                   placeholder="Số thành viên hiện tại"
                   value={value}
@@ -134,7 +135,7 @@ export const GotIdeaTab: FC<Props> = ({ formProps }) => {
               control={control}
               name="findingMemberQuantity"
               render={({ field: { value, onChange } }) => (
-                <TextField
+                <AppTextField
                   type="number"
                   placeholder="Số thành viên đang tìm kiếm"
                   value={value}
