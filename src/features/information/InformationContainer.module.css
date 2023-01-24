@@ -1,0 +1,17 @@
+.information-background {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.information-direct-circle {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+}
+
+.information-direct-circle_active {
+  background-color: #0066ff;
+  border: 1px solid #0066ff;
+}

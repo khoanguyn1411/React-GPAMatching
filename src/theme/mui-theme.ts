@@ -1,10 +1,10 @@
 import { createTheme } from "@mui/material";
-
+import type {} from "@mui/x-date-pickers/themeAugmentation";
 export const appColors = {
-  primary: "#455A64",
+  primary: "#0066FF",
   backgroundBlur: "rgba(255, 255, 255, 0.8)",
   textPrimary: "black",
-  textPrimaryLight: "#AAA4A4",
+  textPrimaryLight: "rgba(170, 164, 164, 0.8)",
 };
 
 /**
@@ -13,6 +13,32 @@ export const appColors = {
  */
 export const muiTheme = createTheme({
   components: {
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          borderColor: "#F3F4F6",
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+          background: "#F3F4F6",
+          border: "none",
+        },
+        input: {
+          padding: "10px !important",
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         h1: { fontSize: "20px", fontWeight: 500, letterSpacing: "0.8px" },
@@ -24,6 +50,7 @@ export const muiTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
+          textTransform: "none",
           padding: "10px",
           borderRadius: "10px",
         },
