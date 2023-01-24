@@ -26,9 +26,11 @@ export const IdeaPage: FC = () => {
   const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
+    shouldUnregister: true,
   });
   const gotIdeaFormProps = useForm<Project>({
     resolver: yupResolver(projectSchema),
+    shouldUnregister: true,
   });
 
   const submitGotIdeaForm = (data: Project) => {
