@@ -1,7 +1,6 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Grid, TextField } from "@mui/material";
 import { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, UseFormReturn } from "react-hook-form";
 
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { Project } from "@/core/models/project";
@@ -13,7 +12,9 @@ import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 
-import { projectSchema } from "./schema";
+type Props = {
+  formProps: UseFormReturn<Project>;
+};
 
 const skillSetList: Option[] = enumToArray(Skill).map((skill) => ({
   value: skill,
@@ -35,14 +36,11 @@ export const isReadyToJoinList: Option[] = enumToArray(IsReadyToJoin.ThreeChoice
   label: IsReadyToJoin.ThreeChoices.toReadable(ready),
 }));
 
-export const GotIdeaTab: FC = () => {
+export const GotIdeaTab: FC<Props> = ({ formProps }) => {
   const {
     control,
     formState: { errors },
-    handleSubmit,
-  } = useForm<Project>({
-    resolver: yupResolver(projectSchema),
-  });
+  } = formProps;
   return (
     <>
       <FormItem label="Tên dự án" isRequired error={errors.name?.message}>

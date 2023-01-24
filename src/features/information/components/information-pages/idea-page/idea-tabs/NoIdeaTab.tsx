@@ -1,25 +1,24 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { TextField } from "@mui/material";
 import { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, UseFormReturn } from "react-hook-form";
 
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect } from "@/shared/components/select/Select";
 
 import { isReadyToJoinList } from "./GotIdeaTab";
-import { userWithNoIdeaSchema } from "./schema";
 
-export const NoIdeaTab: FC = () => {
+type Props = {
+  formProps: UseFormReturn<UserWithNoIdea>;
+};
+
+export const NoIdeaTab: FC<Props> = ({ formProps }) => {
   const {
     control,
     formState: { errors },
-    handleSubmit,
-  } = useForm<UserWithNoIdea>({
-    resolver: yupResolver(userWithNoIdeaSchema),
-  });
+  } = formProps;
   return (
-    <form>
+    <>
       <FormItem
         subLabel="Bạn có thể mô tả ở dưới hoặc chèn link drive chi tiết."
         label="Kinh nghiệm cá nhân"
@@ -59,6 +58,6 @@ export const NoIdeaTab: FC = () => {
           )}
         />
       </FormItem>
-    </form>
+    </>
   );
 };

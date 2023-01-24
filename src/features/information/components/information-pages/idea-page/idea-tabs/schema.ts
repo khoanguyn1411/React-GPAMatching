@@ -31,6 +31,9 @@ export const projectSchema = yup.object().shape<YupValidation<Project>>({
     .required(APP_ERROR_MESSAGE.MIN_NUMBER(0))
     .test("is-over-0", APP_ERROR_MESSAGE.REQUIRED, (value) => {
       return value ? Number(value) > 0 : false;
+    })
+    .test("is-integer", APP_ERROR_MESSAGE.INTEGER, (value) => {
+      return value ? Number.isInteger(value) : false;
     }),
   requiredSkills: yup
     .array()
