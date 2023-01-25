@@ -12,11 +12,9 @@ import style from "./InformationContainer.module.css";
 export const InformationContainer: FC = () => {
   const [activePage] = useAtom(informationActivePageAtom);
   return (
-    <Stack direction="row" gridTemplateColumns="1fr 1fr">
-      <Stack spacing={2} direction="column">
-        <Stack>
-          <InformationContent />
-        </Stack>
+    <Stack direction="row" justifyContent="space-between">
+      <Stack sx={{ width: "100%" }} spacing={2} direction="column">
+        <InformationContent />
         <Stack direction="row" spacing={1} justifyContent="center">
           {[...Array(3)].map((_, index) => (
             <div

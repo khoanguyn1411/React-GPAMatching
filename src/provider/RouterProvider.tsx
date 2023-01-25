@@ -13,7 +13,7 @@ export const RouterProvider: AppReact.FC.Children = ({ children }) => {
   const { isPending } = useAuth();
   const [isRouteLoading] = useAtom(isRouteLoadingAtom);
   return (
-    <Suspense fallback={<CircleLoading />}>
+    <Suspense fallback={<LinearLoading />}>
       {isRouteLoading && <LinearLoading />}
       {isPending ? <CircleLoading /> : <BrowserRouter>{children}</BrowserRouter>}
     </Suspense>

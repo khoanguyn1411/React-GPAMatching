@@ -7,7 +7,7 @@ const { LoginContainer } = lazyImport(() => import("./LoginContainer"), "LoginCo
 
 export const authRoutes: RouteObject[] = [
   {
-    path: routePaths.login.url,
+    path: routePaths.login.path,
     element: <LoginContainer />,
   },
 ];

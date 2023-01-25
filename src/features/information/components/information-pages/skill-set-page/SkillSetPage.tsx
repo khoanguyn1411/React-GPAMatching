@@ -41,7 +41,10 @@ export const SkillSetPage: FC = () => {
         <Stack direction="row" alignItems="center" padding="10px 0" spacing={1}>
           <InformationGPALogo />
           <Typography variant="h2" fontWeight={600}>
-            Kỹ năng nổi trội của bạn là gì?
+            Kỹ năng nổi trội của bạn là gì?{" "}
+            <Typography component="span" color="error">
+              *
+            </Typography>
           </Typography>
         </Stack>
         <FormItem error={errors.skillSet?.message}>

@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import React, { useRef, useState } from "react";
 
-import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
+import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { DEFAULT_LIMIT_FILE_SIZE_READABLE, EFile, usePickImage } from "@/utils/hooks/usePickImage";
 
 type Props = {
@@ -54,7 +54,9 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
           >
             Chọn ảnh
           </Button>
-          <Typography>Cho phép upload file dưới {DEFAULT_LIMIT_FILE_SIZE_READABLE}</Typography>
+          <Typography component="span">
+            Cho phép upload file dưới {DEFAULT_LIMIT_FILE_SIZE_READABLE}
+          </Typography>
         </>
       )}
 
@@ -75,7 +77,11 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
           )}
         </Stack>
       )}
-      {message && <Typography color={"error"}>{message}</Typography>}
+      {message && (
+        <Typography component="span" color={"error"}>
+          {message}
+        </Typography>
+      )}
     </Stack>
   );
 };

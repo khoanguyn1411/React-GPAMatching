@@ -41,7 +41,9 @@ export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, 
       renderValue={(selected) => {
         if (!selected) {
           return (
-            <Typography color={appColors.textPrimaryLight}>{placeholder ?? "Chọn"}</Typography>
+            <Typography component="span" color={appColors.textPrimaryLight}>
+              {placeholder ?? "Chọn"}
+            </Typography>
           );
         }
 
@@ -51,7 +53,9 @@ export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, 
     >
       {list.map(({ label, value, ...optionProps }, index) => (
         <MenuItem {...optionProps} key={`${value}-${index}`} value={value}>
-          {label}
+          <Typography component="span" sx={{ maxWidth: "500px", whiteSpace: "initial" }}>
+            {label}
+          </Typography>
         </MenuItem>
       ))}
     </Select>

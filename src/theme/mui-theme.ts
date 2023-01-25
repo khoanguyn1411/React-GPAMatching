@@ -1,10 +1,19 @@
 import { createTheme } from "@mui/material";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 export const appColors = {
-  primary: "#007EA4",
+  primary: "rgba(0,126,164,1)",
+  primaryLight: "rgba(0,126,164,0.05)",
   backgroundBlur: "rgba(255, 255, 255, 0.8)",
-  textPrimary: "black",
+  textPrimary: "#333",
   textPrimaryLight: "rgba(170, 164, 164, 0.8)",
+};
+
+export const appShadows = {
+  main: "1px 1px 5px rgb(0 0 0 / 40%)",
+};
+
+export const appPadding = {
+  layout: "15px 0",
 };
 
 /**
@@ -51,7 +60,7 @@ export const muiTheme = createTheme({
     },
     MuiTypography: {
       styleOverrides: {
-        h1: { fontSize: "20px", fontWeight: 500, letterSpacing: "0.8px" },
+        h1: { fontSize: "22px", fontWeight: 600, letterSpacing: "0.5" },
         h2: { fontSize: "18px", fontWeight: 500 },
         h3: { fontSize: "16px", fontWeight: 500 },
         h4: { fontSize: "14px", fontWeight: 500 },
@@ -61,8 +70,9 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          padding: "10px",
-          borderRadius: "10px",
+          padding: "8px 10px",
+          borderRadius: "8px",
+          fontWeight: 500,
         },
       },
     },

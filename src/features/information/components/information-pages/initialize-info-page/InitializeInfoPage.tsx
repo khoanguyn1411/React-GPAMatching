@@ -4,7 +4,6 @@ import { useAtom } from "jotai";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-import { UNIVERSITY_LIST } from "@/constants/university";
 import { Gender } from "@/core/models/gender";
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { KnownVia } from "@/core/models/known-via";
@@ -17,6 +16,7 @@ import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
+import { UNIVERSITY_LIST } from "@/shared/constants/university";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { generateArrayWithNoDuplicate } from "@/utils/funcs/generate-array-with-no-duplicate";
 

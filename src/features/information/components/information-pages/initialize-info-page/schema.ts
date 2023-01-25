@@ -1,9 +1,9 @@
 import * as yup from "yup";
 
-import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
 import { Gender } from "@/core/models/gender";
 import { User } from "@/core/models/user";
 import { UserStudyYear } from "@/core/models/user-study-year";
+import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";
 

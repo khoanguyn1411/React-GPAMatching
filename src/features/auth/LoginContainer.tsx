@@ -38,7 +38,12 @@ export const LoginContainer: FC = () => {
             Nền tảng kết nối các ý tưởng và tìm kiếm đồng đội
           </Typography>
           <StyledFirebaseAuth uiConfig={firebaseUIConfig} firebaseAuth={firebaseAuth} />
-          <Typography color={appColors.textPrimaryLight} fontSize={"12px"} fontWeight={500}>
+          <Typography
+            component="span"
+            color={appColors.textPrimaryLight}
+            fontSize={"12px"}
+            fontWeight={500}
+          >
             Powed by Symlody Team
           </Typography>
         </Stack>

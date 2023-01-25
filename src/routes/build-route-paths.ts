@@ -23,7 +23,7 @@ interface RoutePathOptions extends RoutePathBaseOptions {
 type RoutePathsConfig = Record<string, RoutePathOptions>;
 
 /** Returned types. */
-interface RoutePathBaseReturned {
+export interface RoutePathBaseReturned {
   readonly path: string;
   readonly url: string;
   readonly title?: string;
