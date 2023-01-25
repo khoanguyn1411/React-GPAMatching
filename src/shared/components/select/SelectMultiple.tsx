@@ -2,7 +2,7 @@ import { Clear } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select, { SelectChangeEvent, SelectProps } from "@mui/material/Select";
 import Typography from "@mui/material/Typography/Typography";
 import { FC } from "react";
 
@@ -27,9 +27,16 @@ type Props = {
   value: string[];
   onChange: AppReact.State.Dispatch<string[]>;
   placeholder?: string;
+  otherProps?: SelectProps<string[]>;
 };
 
-export const SelectMultiple: FC<Props> = ({ list, value = [], onChange, placeholder }) => {
+export const SelectMultiple: FC<Props> = ({
+  list,
+  value = [],
+  onChange,
+  placeholder,
+  otherProps,
+}) => {
   const handleChange = (event: SelectChangeEvent<typeof value>) => {
     const {
       target: { value },
@@ -45,6 +52,11 @@ export const SelectMultiple: FC<Props> = ({ list, value = [], onChange, placehol
       multiple
       value={value}
       displayEmpty
+      sx={{
+        "& .MuiInputBase-root": {
+          paddingRight: "30px",
+        },
+      }}
       onChange={handleChange}
       renderValue={(selected) => {
         if (selected.length === 0) {
@@ -61,6 +73,7 @@ export const SelectMultiple: FC<Props> = ({ list, value = [], onChange, placehol
         );
       }}
       MenuProps={MenuProps}
+      {...otherProps}
     >
       {list.map(({ label, value: _value, ...optionProps }, index) => (
         <MenuItem

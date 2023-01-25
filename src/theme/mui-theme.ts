@@ -42,6 +42,13 @@ export const muiTheme = createTheme({
         },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         h1: { fontSize: "20px", fontWeight: 500, letterSpacing: "0.8px" },
@@ -71,9 +78,6 @@ export const muiTheme = createTheme({
   palette: {
     primary: {
       main: appColors.primary,
-    },
-    background: {
-      default: "#f9fafb",
     },
   },
 });

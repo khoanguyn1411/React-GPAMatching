@@ -4,18 +4,21 @@ import { useAtom } from "jotai";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
+import { UNIVERSITY_LIST } from "@/constants/university";
 import { Gender } from "@/core/models/gender";
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { KnownVia } from "@/core/models/known-via";
 import { User } from "@/core/models/user";
 import { UserStudyYear } from "@/core/models/user-study-year";
 import { useAuth } from "@/features/auth/useAuth";
+import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
+import { generateArrayWithNoDuplicate } from "@/utils/funcs/generate-array-with-no-duplicate";
 
 import { informationActivePageAtomFn, informationUserAtom } from "../../../information-atoms";
 import { InformationGPALogo } from "../../information-gpa-logo/InformationGPALogo";
@@ -42,6 +45,13 @@ const knownViaList: Option[] = enumToArray(KnownVia).map((knownVia) => ({
   label: KnownVia.toReadable(knownVia),
   value: knownVia,
 }));
+
+const universityList: Option[] = generateArrayWithNoDuplicate(UNIVERSITY_LIST).map(
+  (university) => ({
+    label: university,
+    value: university,
+  }),
+);
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
@@ -195,10 +205,11 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="studyUnit"
                 render={({ field: { value, onChange } }) => (
-                  <AppTextField
+                  <AppAutocomplete
+                    placeholder="Tìm và chọn trường"
+                    list={universityList}
                     value={value}
                     onChange={onChange}
-                    placeholder="Vd: Đại học Kinh tế - Luật"
                   />
                 )}
               />
