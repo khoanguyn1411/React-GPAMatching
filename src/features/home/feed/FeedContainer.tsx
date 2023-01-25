@@ -1,5 +1,5 @@
 import { FC } from "react";
 
-export const HomeContainer: FC = () => {
+export const FeedContainer: FC = () => {
   return <div>Home page</div>;
 };

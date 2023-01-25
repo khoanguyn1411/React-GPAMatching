@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import React, { useRef, useState } from "react";
 
-import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
+import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { DEFAULT_LIMIT_FILE_SIZE_READABLE, EFile, usePickImage } from "@/utils/hooks/usePickImage";
 
 type Props = {

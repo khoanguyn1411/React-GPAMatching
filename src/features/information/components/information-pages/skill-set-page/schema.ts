@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
-import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
 import { UserSkillSet } from "@/core/models/user";
+import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { YupValidation } from "@/utils/types/yup";
 
 export const schema = yup.object().shape<YupValidation<UserSkillSet>>({

@@ -16,17 +16,26 @@ const loginRoutePaths = buildRoutePaths({
 } as const);
 const informationRoutePaths = buildRoutePaths({
   information: { path: "information" },
-});
+} as const);
+const homeRoutePaths = buildRoutePaths({
+  home: {
+    path: "home",
+    children: {
+      feed: { path: "feed" },
+      project: { path: "project" },
+      account: { path: "account" },
+    },
+  },
+} as const);
 
 // Add new module route path here.
 const appRoutePaths = {
   ...loginRoutePaths,
   ...informationRoutePaths,
+  ...homeRoutePaths,
 };
 
 export const routePaths = {
   ...baseRoutePaths,
   ...appRoutePaths,
 };
-
-export const APP_DEFAULT_ROUTE_URL = routePaths.information.url;

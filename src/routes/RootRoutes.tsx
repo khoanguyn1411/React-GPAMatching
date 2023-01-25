@@ -4,9 +4,9 @@ import { authRoutes } from "@/features/auth/routes";
 import { useAuth } from "@/features/auth/useAuth";
 import { homeRoutes } from "@/features/home/routes";
 import { informationRoutes } from "@/features/information/routes";
-import { AuthorizedGuard } from "@/guards/AuthorizedGuard";
-import { UnauthorizedGuard } from "@/guards/UnauthorizedGuard";
-import { notFoundRoutes } from "@/shared/layouts/not-found-container/not-found-routes";
+import { notFoundRoutes } from "@/features/not-found/routes";
+import { AuthorizedGuard } from "@/guards/auth-guards/AuthorizedGuard";
+import { UnauthorizedGuard } from "@/guards/auth-guards/UnauthorizedGuard";
 
 export const RootRoutes: React.FC = () => {
   const { isLoggedIn } = useAuth();

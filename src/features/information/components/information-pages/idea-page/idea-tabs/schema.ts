@@ -1,11 +1,11 @@
 import * as yup from "yup";
 
-import { APP_ERROR_MESSAGE } from "@/constants/error-messages";
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { Project } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
+import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";
 

@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-import { APP_DEFAULT_ROUTE_URL, routePaths } from "@/routes";
+import { routePaths } from "@/routes";
+import { compareUrl } from "@/utils/funcs/compare-url";
 
 type Props = {
   isLoggedIn: boolean;
@@ -10,8 +11,8 @@ type Props = {
 export const AuthorizedGuard: FC<Props> = ({ isLoggedIn }) => {
   const location = useLocation();
   if (isLoggedIn) {
-    if (location.pathname === routePaths.root.url) {
-      return <Navigate to={APP_DEFAULT_ROUTE_URL} replace />;
+    if (compareUrl(routePaths.root.url, location.pathname)) {
+      return <Navigate to={routePaths.home.url} replace />;
     }
     return <Outlet />;
   }

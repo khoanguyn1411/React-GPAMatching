@@ -1,5 +1,6 @@
 import { RouteObject } from "react-router-dom";
 
+import { NonInformationGuard } from "@/guards/information-guards/NonInformationGuard";
 import { routePaths } from "@/routes";
 import { lazyImport } from "@/utils/funcs/lazy-import";
 
@@ -11,6 +12,7 @@ const { InformationContainer } = lazyImport(
 export const informationRoutes: RouteObject[] = [
   {
     path: routePaths.information.url,
-    element: <InformationContainer />,
+    element: <NonInformationGuard />,
+    children: [{ path: "", element: <InformationContainer /> }],
   },
 ];

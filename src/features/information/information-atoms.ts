@@ -18,3 +18,6 @@ export const informationActivePageAtomFn = {
 /** Atoms for storing user information each page. */
 export const informationUserAtom = atom<User | null>(null);
 export const skillSetAtom = atom<UserSkillSet | null>(null);
+
+/** Atoms to check whether user filled information form or not. */
+export const isAlreadyFilledInformationFormAtom = atom<boolean>(true);
