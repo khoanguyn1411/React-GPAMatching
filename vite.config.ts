@@ -1,8 +1,8 @@
 import react from "@vitejs/plugin-react-swc";
-import viteTsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
 import svgr from "vite-plugin-svgr";
-import { defineConfig, loadEnv } from "vite";
+import viteTsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +11,7 @@ export default defineConfig({
   preview: { port: 5000, host: true },
   build: {
     outDir: "./build",
+    // Setup rollupOptions to avoid issue: https://programmerah.com/solved-vite-packing-error-some-chunks-are-larger-than-500kb-after-minification-33922/
     rollupOptions: {
       output: {
         manualChunks(id) {
