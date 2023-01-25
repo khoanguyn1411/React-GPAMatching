@@ -54,7 +54,7 @@ export const SelectMultiple: FC<Props> = ({
       displayEmpty
       sx={{
         "& .MuiInputBase-root": {
-          paddingRight: "30px",
+          paddingRight: "30px !import",
         },
       }}
       onChange={handleChange}

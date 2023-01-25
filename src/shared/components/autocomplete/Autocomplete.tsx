@@ -39,7 +39,7 @@ export const AppAutocomplete: FC<Props> = ({ list, value, placeholder, onChange 
               padding: 0,
             },
             "& .MuiInputBase-root": {
-              paddingRight: "50px",
+              paddingRight: "50px !important",
             },
           }}
           {...params}

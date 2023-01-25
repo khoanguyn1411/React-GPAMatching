@@ -34,7 +34,7 @@ export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, 
       displayEmpty
       sx={{
         "& .MuiInputBase-input": {
-          paddingRight: "30px",
+          paddingRight: "30px !important",
         },
       }}
       value={value}

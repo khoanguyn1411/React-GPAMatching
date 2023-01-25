@@ -27,7 +27,6 @@ export const AppDatePicker: FC<Props> = ({ value, onChange, ...datePickerProps }
 
   return (
     <DatePicker
-      {...datePickerProps}
       PopperProps={{
         placement: "bottom-start",
         anchorEl: inputRef.current,
@@ -44,6 +43,7 @@ export const AppDatePicker: FC<Props> = ({ value, onChange, ...datePickerProps }
       value={selectedDate}
       onChange={handleChange}
       renderInput={(params) => <TextField {...params} ref={inputRef} error={false} />}
+      {...datePickerProps}
     />
   );
 };
