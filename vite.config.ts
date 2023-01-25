@@ -11,15 +11,7 @@ export default defineConfig({
   preview: { port: 5000, host: true },
   build: {
     outDir: "./build",
-    // Setup rollupOptions to avoid issue: https://programmerah.com/solved-vite-packing-error-some-chunks-are-larger-than-500kb-after-minification-33922/
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return id.toString().split("node_modules/")[1].split("/")[0].toString();
-          }
-        },
-      },
-    },
+    // Issue: https://programmerah.com/solved-vite-packing-error-some-chunks-are-larger-than-500kb-after-minification-33922/
+    chunkSizeWarningLimit: 1500,
   },
 });
