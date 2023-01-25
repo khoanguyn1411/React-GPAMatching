@@ -12,7 +12,7 @@ import style from "./InformationContainer.module.css";
 export const InformationContainer: FC = () => {
   const [activePage] = useAtom(informationActivePageAtom);
   return (
-    <Stack display="grid" gridTemplateColumns="1fr 1fr">
+    <Stack direction="row" gridTemplateColumns="1fr 1fr">
       <Stack spacing={2} direction="column">
         <Stack>
           <InformationContent />

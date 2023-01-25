@@ -1,5 +1,4 @@
 .information-background {
-  width: 100%;
   height: 100vh;
   object-fit: cover;
 }
@@ -12,6 +11,6 @@
 }
 
 .information-direct-circle_active {
-  background-color: #0066ff;
-  border: 1px solid #0066ff;
+  background-color: #007ea4;
+  border: 1px solid #007ea4;
 }

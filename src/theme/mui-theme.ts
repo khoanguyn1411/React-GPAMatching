@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 export const appColors = {
-  primary: "#0066FF",
+  primary: "#007EA4",
   backgroundBlur: "rgba(255, 255, 255, 0.8)",
   textPrimary: "black",
   textPrimaryLight: "rgba(170, 164, 164, 0.8)",
@@ -12,6 +12,9 @@ export const appColors = {
  * Learn more: https://mui.com/customization/theming/.
  */
 export const muiTheme = createTheme({
+  typography: {
+    fontFamily: "Inter",
+  },
   components: {
     MuiFormControl: {
       styleOverrides: {

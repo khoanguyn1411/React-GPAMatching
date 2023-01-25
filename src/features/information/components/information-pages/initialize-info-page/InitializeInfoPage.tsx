@@ -69,6 +69,7 @@ export const InitializeInfoPage: FC = () => {
         }
       : {
           email: currentUser?.email ?? "",
+          fullName: currentUser?.displayName ?? "",
         },
   });
 
@@ -82,7 +83,9 @@ export const InitializeInfoPage: FC = () => {
       <InformationContentWrapper>
         <Stack direction="row" alignItems="center" padding="10px 0" spacing={1}>
           <InformationGPALogo />
-          <Typography fontWeight={600}>Khởi tạo thông tin cá nhân</Typography>
+          <Typography variant="h2" fontWeight={600}>
+            Khởi tạo thông tin cá nhân
+          </Typography>
         </Stack>
         <FormItem label="Avatar" error={errors.avatar?.message}>
           <Controller

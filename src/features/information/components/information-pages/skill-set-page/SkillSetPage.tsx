@@ -40,7 +40,9 @@ export const SkillSetPage: FC = () => {
       <InformationContentWrapper>
         <Stack direction="row" alignItems="center" padding="10px 0" spacing={1}>
           <InformationGPALogo />
-          <Typography fontWeight={600}>Kỹ năng nổi trội của bạn là gì?</Typography>
+          <Typography variant="h2" fontWeight={600}>
+            Kỹ năng nổi trội của bạn là gì?
+          </Typography>
         </Stack>
         <FormItem error={errors.skillSet?.message}>
           <Controller
