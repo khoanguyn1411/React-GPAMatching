@@ -10,7 +10,7 @@ const { AccountManagementContainer } = lazyImport(
 
 export const accountManagementRoutes: RouteObject[] = [
   {
-    path: routePaths.home.children.account.url,
+    path: routePaths.home.children.account.path,
     element: <AccountManagementContainer />,
   },
 ];
