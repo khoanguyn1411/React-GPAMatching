@@ -61,7 +61,6 @@ export const FormItem: FC<Props> = ({
         <Typography
           marginTop={1}
           display="block"
-          component="span"
           color="error"
           className="animate__animated animate__fadeIn animate__faster"
         >

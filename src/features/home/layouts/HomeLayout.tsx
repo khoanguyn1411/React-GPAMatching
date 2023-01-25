@@ -1,9 +1,10 @@
+import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
 import { Header } from "./Header";
 import { Main } from "./Main";
 
-export const HomeLayout = () => {
+export const HomeLayout: FC = () => {
   return (
     <>
       <Header />

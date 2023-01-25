@@ -61,7 +61,9 @@ export const SelectMultiple: FC<Props> = ({
       renderValue={(selected) => {
         if (selected.length === 0) {
           return (
-            <Typography color={appColors.textPrimaryLight}>{placeholder ?? "Chọn"}</Typography>
+            <Typography component="span" color={appColors.textPrimaryLight}>
+              {placeholder ?? "Chọn"}
+            </Typography>
           );
         }
         return (
@@ -82,8 +84,10 @@ export const SelectMultiple: FC<Props> = ({
           key={`${_value}-${index}`}
           value={_value}
         >
-          {label}
-          {value.includes(_value) && <Clear />}
+          <Typography component="span" sx={{ maxWidth: "500px", whiteSpace: "initial" }}>
+            {label}
+            {value.includes(_value) && <Clear />}
+          </Typography>
         </MenuItem>
       ))}
     </Select>
