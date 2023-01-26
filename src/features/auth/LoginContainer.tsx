@@ -13,8 +13,7 @@ export const LoginContainer: FC = () => {
   return (
     <Stack
       sx={{
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
+        backgroundColor: appColors.backgroundBlur,
       }}
       justifyContent="center"
       alignItems="center"
@@ -22,7 +21,7 @@ export const LoginContainer: FC = () => {
     >
       <Card>
         <Stack
-          sx={{ backgroundColor: appColors.backgroundBlur, borderRadius: "8px" }}
+          sx={{ borderRadius: "8px" }}
           width={"400px"}
           padding={"20px"}
           direction="column"

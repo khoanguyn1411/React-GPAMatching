@@ -10,7 +10,10 @@ import { useAuth } from "@/features/auth/useAuth";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
-import { informationActivePageAtomFn } from "../../../information-atoms";
+import {
+  informationActivePageAtomFn,
+  isAlreadyFilledInformationFormAtom,
+} from "../../../information-atoms";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
@@ -26,6 +29,7 @@ export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
   const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
   const { currentUser } = useAuth();
+  const [, setIsFilledInfo] = useAtom(isAlreadyFilledInformationFormAtom);
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
@@ -37,9 +41,11 @@ export const IdeaPage: FC = () => {
 
   const submitGotIdeaForm = (data: Project) => {
     alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
+    setIsFilledInfo(true);
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {
     alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
+    setIsFilledInfo(true);
   };
 
   const initializeSubmitFn = () => {

@@ -13,7 +13,7 @@ export enum Skill {
   Marketing = "Marketing",
 }
 
-export const TO_READABLE_SKILL: Readonly<Record<Skill, string>> = {
+const TO_READABLE_SKILL: Readonly<Record<Skill, string>> = {
   ForeignLanguage: "Ngoại ngữ",
   Planning: "Lên kế hoạch",
   Presentation: "Thuyết trình",

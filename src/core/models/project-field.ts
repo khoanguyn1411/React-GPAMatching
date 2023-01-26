@@ -1,10 +1,10 @@
 export enum ProjectField {
   ScienceAndTechnology = "ScienceAndTechnology",
   IndustryAndProduct = "IndustryAndProduct",
-  AgroforestryAndFishery = "ScienceAndTechnology",
-  EducationAndMedican = "ScienceAndTechnology",
-  ServiceAndTourism = "ScienceAndTechnology",
-  FinanceAndBanking = "ScienceAndTechnology",
+  AgroforestryAndFishery = "AgroforestryAndFishery",
+  EducationAndMedican = "EducationAndMedican",
+  ServiceAndTourism = "ServiceAndTourism",
+  FinanceAndBanking = "FinanceAndBanking",
   Other = "Other",
 }
 

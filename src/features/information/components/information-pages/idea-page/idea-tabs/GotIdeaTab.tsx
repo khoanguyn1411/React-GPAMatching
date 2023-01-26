@@ -22,7 +22,7 @@ const skillSetList: Option[] = enumToArray(Skill).map((skill) => ({
   label: Skill.toReadable(skill),
 }));
 
-const projectFieldList: Option[] = enumToArray(ProjectField).map((field) => ({
+export const projectFieldList: Option[] = enumToArray(ProjectField).map((field) => ({
   value: field,
   label: ProjectField.toReadable(field),
 }));
