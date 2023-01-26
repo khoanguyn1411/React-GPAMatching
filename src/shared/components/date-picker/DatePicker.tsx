@@ -39,6 +39,7 @@ export const AppDatePicker: FC<Props> = ({ value, onChange, ...datePickerProps }
           },
         ],
       }}
+      dayOfWeekFormatter={(day: string) => `${day}`}
       inputFormat="DD/MM/YYYY"
       value={selectedDate}
       onChange={handleChange}

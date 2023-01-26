@@ -252,7 +252,7 @@ export const InitializeInfoPage: FC = () => {
         <FormItem
           isNoSpace
           error={errors.isReadyToJoin?.message}
-          label="Bạn sẵn sàng tham gia Networking Day (25/02/2023) của KNKD để có thêm cơ hội giao lưu học hỏi và trực tiếp ghép đội thi không? (trắc nghiệm) (bắt buộc)"
+          label="Bạn sẵn sàng tham gia Networking Day (25/02/2023) của KNKD để có thêm cơ hội giao lưu học hỏi và trực tiếp ghép đội thi không?"
           isRequired
         >
           <Controller
