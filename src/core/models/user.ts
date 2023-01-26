@@ -12,5 +12,6 @@ export interface User {
   readonly knownVia: string;
   readonly isReadyToJoin: boolean;
   readonly avatarUrl: string;
+  readonly city: string;
   readonly avatar: File;
 }

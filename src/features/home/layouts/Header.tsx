@@ -47,6 +47,7 @@ export const Header: FC = () => {
               <Button
                 key={link.routePath.path}
                 sx={{
+                  fontSize: "15px",
                   fontWeight: 600,
                   cursor: "pointer",
                   bgcolor: pathname.includes(link.routePath.path) ? appColors.primaryLight : null,
