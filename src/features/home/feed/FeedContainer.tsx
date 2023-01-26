@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { FilterAlt, Search } from "@mui/icons-material";
 import { Grid, Stack, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
+import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { Skill } from "@/core/models/skills";
 import { projectFieldList } from "@/features/information/components/information-pages/idea-page/idea-tabs/GotIdeaTab";
 import { AppCheckbox } from "@/shared/components/checkbox-group/AppCheckbox";
@@ -11,6 +12,7 @@ import { AppSelect } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useDebounce } from "@/utils/hooks/useDebounce";
+import { useQueryParam } from "@/utils/hooks/useQueryParam";
 
 export const Theme = styled.div`
   .MuiInputBase-root {
@@ -20,16 +22,29 @@ export const Theme = styled.div`
 `;
 
 export const FeedContainer: FC = () => {
-  const [selectedField, setSelectedField] = useState<string>("");
-  const { inputValue, setInputValue } = useDebounce();
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const { queryMethods } = useQueryParam<ProjectFilterParams>();
+  const [selectedSkills, setSelectedSkills] = useState<string[]>(
+    queryMethods.get("skill")?.split(",") ?? [],
+  );
+  const { inputValue, setInputValue, debounceValue } = useDebounce(
+    queryMethods.get("search") ?? "",
+  );
+  const [selectedField, setSelectedField] = useState<string>(queryMethods.get("field") ?? "");
+
   const handleChangeSelectedField = (value: string) => {
+    queryMethods.set("field", value);
     setSelectedField(value);
   };
 
   const handleChangeSelectedSkills = (value: string[]) => {
+    queryMethods.set("skill", value.join(","));
     setSelectedSkills(value);
   };
+
+  useEffect(() => {
+    queryMethods.set("search", debounceValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounceValue]);
 
   return (
     <Theme>
