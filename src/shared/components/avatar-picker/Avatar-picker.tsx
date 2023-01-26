@@ -1,13 +1,21 @@
-import { Camera, CameraAlt, Warning } from "@mui/icons-material";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
+import { CameraAlt, Warning } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { bgcolor } from "@mui/system";
 import React, { useRef, useState } from "react";
 
 import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { appColors } from "@/theme/mui-theme";
-import { DEFAULT_LIMIT_FILE_SIZE_READABLE, EFile, usePickImage } from "@/utils/hooks/usePickImage";
+import { EFile, usePickImage } from "@/utils/hooks/usePickImage";
 
 type Props = {
   defaultImageLink?: string;
@@ -62,33 +70,41 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
       {
         <Stack spacing={1} direction="column" position="relative">
           {fileData.type === EFile.Image && (
-            <>
-              <Avatar
-                onClick={handleOpenSelectFile}
-                sx={{
-                  width: 80,
-                  height: 80,
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8, transition: "0.3s ease" },
-                }}
-                alt="User avatar"
-                src={fileData.url?.toString() ?? ""}
-              />
-              <CameraAlt
-                fontSize="medium"
-                sx={{
-                  position: "absolute",
-                  right: "-3px",
-                  bottom: "-3px",
-                  bgcolor: appColors.backgroundBlur,
-                  borderRadius: "8px",
-                  padding: "3px",
-                }}
-              />
-              {/* <Typography component="span">
+            <Tooltip
+              enterDelay={500}
+              leaveDelay={300}
+              placement="bottom-start"
+              arrow
+              title="Nhấn vào để chọn avatar"
+            >
+              <Box>
+                <Avatar
+                  onClick={handleOpenSelectFile}
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.8, transition: "0.3s ease" },
+                  }}
+                  alt="User avatar"
+                  src={fileData.url?.toString() ?? ""}
+                />
+                <CameraAlt
+                  fontSize="medium"
+                  sx={{
+                    position: "absolute",
+                    right: "-3px",
+                    bottom: "-3px",
+                    bgcolor: appColors.backgroundBlur,
+                    borderRadius: "8px",
+                    padding: "3px",
+                  }}
+                />
+                {/* <Typography component="span">
                 Dung lượng ảnh tối đa: {DEFAULT_LIMIT_FILE_SIZE_READABLE}
               </Typography> */}
-            </>
+              </Box>
+            </Tooltip>
           )}
         </Stack>
       }

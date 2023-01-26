@@ -2,9 +2,10 @@ import { PublishTwoTone } from "@mui/icons-material";
 import { Button, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FC } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
+import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
@@ -16,6 +17,10 @@ export const Header: FC = () => {
   const { pathname } = useLocation();
   const handleSwitchPage = (url: string) => () => {
     navigate(url);
+  };
+
+  const handleNavigateToHome = () => {
+    navigate(routePaths.home.children.feed.url);
   };
 
   return (
@@ -36,7 +41,14 @@ export const Header: FC = () => {
           spacing={2}
           alignItems="center"
         >
-          <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            component="div"
+            sx={{ cursor: "pointer" }}
+            onClick={handleNavigateToHome}
+          >
             <InformationGPALogo />
             <Typography component="span" fontWeight={600}>
               Matching System
