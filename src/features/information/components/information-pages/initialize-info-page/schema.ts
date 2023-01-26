@@ -15,7 +15,7 @@ export const schema = yup.object().shape<YupValidation<User>>({
     .date()
     .required(APP_ERROR_MESSAGE.REQUIRED)
     .typeError("Vui lòng nhập ngày đúng định dạng dd/mm/yyyy."),
-  phoneNumber: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
+  phoneNumber: yup.string().required(APP_ERROR_MESSAGE.REQUIRED).min(10, "Vui lòng nhập 10 ký tự"),
   facebookUrl: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   studyUnit: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   year: yup

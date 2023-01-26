@@ -86,8 +86,8 @@ export const SelectMultiple: FC<Props> = ({
         >
           <Typography component="span" sx={{ maxWidth: "500px", whiteSpace: "initial" }}>
             {label}
-            {value.includes(_value) && <Clear />}
           </Typography>
+          {value.includes(_value) && <Clear />}
         </MenuItem>
       ))}
     </Select>

@@ -164,7 +164,7 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="dateOfBirth"
                 render={({ field: { value, onChange } }) => (
-                  <AppDatePicker value={value} onChange={onChange} />
+                  <AppDatePicker disableFuture value={value} onChange={onChange} />
                 )}
               />
             </FormItem>
@@ -177,7 +177,7 @@ export const InitializeInfoPage: FC = () => {
                 name="phoneNumber"
                 render={({ field: { value, onChange } }) => (
                   <AppTextField
-                    inputProps={{ maxLength: 12 }}
+                    inputProps={{ maxLength: 10 }}
                     value={value}
                     onChange={onChange}
                     placeholder="Vd: 0909090902"
