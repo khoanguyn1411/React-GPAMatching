@@ -17,7 +17,7 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleSetOverSizeMessage = () => {
-    setMessage(APP_ERROR_MESSAGE.FILE_ERROR.OVERSIZE(DEFAULT_LIMIT_FILE_SIZE_READABLE));
+    setMessage(APP_ERROR_MESSAGE.FILE_ERROR.OVERSIZE);
   };
 
   const handleResetMessage = () => {
@@ -55,7 +55,7 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
             Chọn ảnh
           </Button>
           <Typography component="span">
-            Cho phép upload file dưới {DEFAULT_LIMIT_FILE_SIZE_READABLE}
+            Dung lượng ảnh tối đa: {DEFAULT_LIMIT_FILE_SIZE_READABLE}
           </Typography>
         </>
       )}
