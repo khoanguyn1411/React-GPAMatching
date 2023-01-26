@@ -42,7 +42,15 @@ export const Header: FC = () => {
     }
   };
   return (
-    <Stack boxShadow={appShadows.main} component="header">
+    <Stack
+      bgcolor={"white"}
+      boxShadow={appShadows.main}
+      position="sticky"
+      zIndex={999}
+      top={0}
+      width="100%"
+      component="header"
+    >
       <Container>
         <Stack
           padding={appPadding.layout}
@@ -104,6 +112,7 @@ export const Header: FC = () => {
             <Menu
               anchorEl={anchorEl}
               id="home-menu"
+              disableScrollLock={true}
               open={isMenuOpen}
               onClose={handleCloseMenu(null)}
               transformOrigin={{ horizontal: "right", vertical: "top" }}

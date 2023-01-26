@@ -1,14 +1,23 @@
-import { Checkbox, CheckboxProps, FormControlLabel } from "@mui/material";
+import { Checkbox, CheckboxProps, FormControlLabel, FormControlLabelProps } from "@mui/material";
 import { FC } from "react";
+
+import { StrictOmit } from "@/utils/types/common";
 
 import { useCheckboxGroupContext } from "./CheckboxGroupProvider";
 
-interface Props extends CheckboxProps {
+interface Props {
+  checkboxProps?: CheckboxProps;
+  formControlLabelProps?: StrictOmit<FormControlLabelProps, "control" | "label">;
   value: string;
   label: string;
 }
 
-export const AppCheckbox: FC<Props> = ({ value: muiValue, label, ...props }) => {
+export const AppCheckbox: FC<Props> = ({
+  value: muiValue,
+  label,
+  checkboxProps,
+  formControlLabelProps,
+}) => {
   const { value, onChange } = useCheckboxGroupContext();
 
   const handleSetSelectedItem = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +35,10 @@ export const AppCheckbox: FC<Props> = ({ value: muiValue, label, ...props }) => 
 
   return (
     <FormControlLabel
+      {...formControlLabelProps}
       control={
         <Checkbox
-          {...props}
+          {...checkboxProps}
           value={muiValue}
           onChange={handleSetSelectedItem}
           checked={value.includes(muiValue)}

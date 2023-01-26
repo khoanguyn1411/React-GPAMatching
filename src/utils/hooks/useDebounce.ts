@@ -6,7 +6,7 @@ type THookSearch = {
   setInputValue: (inputValue: string) => void;
 };
 
-const DEBOUNCE_TIME = 0;
+const DEBOUNCE_TIME = 300;
 
 /**
  * Add debounce time to input.

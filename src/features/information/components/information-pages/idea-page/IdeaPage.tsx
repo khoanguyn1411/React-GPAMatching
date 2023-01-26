@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,10 @@ import { useAuth } from "@/features/auth/useAuth";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
-import { informationActivePageAtomFn } from "../../../information-atoms";
+import {
+  informationActivePageAtomFn,
+  isAlreadyFilledInformationFormAtom,
+} from "../../../information-atoms";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
@@ -26,6 +29,7 @@ export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
   const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
   const { currentUser } = useAuth();
+  const [, setIsFilledInfo] = useAtom(isAlreadyFilledInformationFormAtom);
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
@@ -37,9 +41,11 @@ export const IdeaPage: FC = () => {
 
   const submitGotIdeaForm = (data: Project) => {
     alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
+    setIsFilledInfo(true);
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {
     alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
+    setIsFilledInfo(true);
   };
 
   const initializeSubmitFn = () => {
@@ -51,14 +57,14 @@ export const IdeaPage: FC = () => {
   return (
     <form onSubmit={initializeSubmitFn()}>
       <InformationContentWrapper>
-        <Stack marginBottom={2}>
+        <Box marginBottom={2}>
           <AppRadioGroup value={activeTab} onChange={setActiveTab}>
             <Stack direction="row" justifyContent="space-between">
               <AppRadio label="Bạn đã có ý tưởng" value={TabValue.GotIdea} />
               <AppRadio label="Bạn chưa có ý tưởng" value={TabValue.NoIdea} />
             </Stack>
           </AppRadioGroup>
-        </Stack>
+        </Box>
         {activeTab === TabValue.GotIdea && <GotIdeaTab formProps={gotIdeaFormProps} />}
         {activeTab === TabValue.NoIdea && <NoIdeaTab formProps={noIdeaFormProps} />}
       </InformationContentWrapper>

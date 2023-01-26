@@ -4,7 +4,7 @@ import { AppReact } from "@/utils/types/react";
 
 export type CheckboxGroupContext = {
   value: string[];
-  onChange: AppReact.State.Dispatch<string[]> | null;
+  onChange: ((value: string[]) => void) | null;
 };
 
 const CheckboxGroupContext = createContext<CheckboxGroupContext>({

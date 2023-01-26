@@ -3,9 +3,14 @@ import type {} from "@mui/x-date-pickers/themeAugmentation";
 export const appColors = {
   primary: "rgba(0,126,164,1)",
   primaryLight: "rgba(0,126,164,0.05)",
-  backgroundBlur: "rgba(255, 255, 255, 0.8)",
+
+  backgroundBlur: "rgba(251, 251, 251, 1)",
+
   textPrimary: "#333",
   textPrimaryLight: "rgba(170, 164, 164, 0.8)",
+
+  warning: "rgba(250,204,21,1)",
+  warningLight: "rgba(250,204,21,0.05)",
 };
 
 export const appShadows = {
@@ -61,9 +66,9 @@ export const muiTheme = createTheme({
     MuiTypography: {
       styleOverrides: {
         h1: { fontSize: "22px", fontWeight: 600, letterSpacing: "0.5" },
-        h2: { fontSize: "18px", fontWeight: 500 },
-        h3: { fontSize: "16px", fontWeight: 500 },
-        h4: { fontSize: "14px", fontWeight: 500 },
+        h2: { fontSize: "18px", fontWeight: 600 },
+        h3: { fontSize: "16px", fontWeight: 600 },
+        h4: { fontSize: "14px", fontWeight: 600 },
       },
     },
     MuiButton: {

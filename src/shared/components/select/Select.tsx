@@ -19,7 +19,7 @@ export interface Option extends MenuItemProps {
 type Props = {
   list: Option[];
   value: string;
-  onChange: AppReact.State.Dispatch<string>;
+  onChange: (param: string) => void;
   placeholder?: string;
   otherProps?: SelectProps<string>;
 };
