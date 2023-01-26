@@ -3,9 +3,14 @@ import type {} from "@mui/x-date-pickers/themeAugmentation";
 export const appColors = {
   primary: "rgba(0,126,164,1)",
   primaryLight: "rgba(0,126,164,0.05)",
+
   backgroundBlur: "rgba(251, 251, 251, 1)",
+
   textPrimary: "#333",
   textPrimaryLight: "rgba(170, 164, 164, 0.8)",
+
+  warning: "rgba(250,204,21,1)",
+  warningLight: "rgba(250,204,21,0.05)",
 };
 
 export const appShadows = {

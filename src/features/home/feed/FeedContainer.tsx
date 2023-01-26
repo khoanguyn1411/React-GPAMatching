@@ -14,7 +14,10 @@ import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useDebounce } from "@/utils/hooks/useDebounce";
 import { useQueryParam } from "@/utils/hooks/useQueryParam";
 
+import { ProjectWrapper } from "./components/ProjectWrapper";
+
 export const Theme = styled.div`
+  margin-top: 20px;
   .MuiInputBase-root {
     background: white;
     border: 1px solid #e5e7eb;
@@ -48,10 +51,11 @@ export const FeedContainer: FC = () => {
 
   return (
     <Theme>
-      <Stack direction="column" spacing={2}>
-        <Grid container spacing={2}>
+      <Stack direction="column" spacing={3.5}>
+        <Grid container component="section" spacing={2}>
           <Grid xs={4} item>
             <AppSelect
+              placeholder="Chọn lĩnh vực"
               list={projectFieldList}
               value={selectedField}
               onChange={handleChangeSelectedField}
@@ -69,7 +73,7 @@ export const FeedContainer: FC = () => {
             />
           </Grid>
         </Grid>
-        <Stack spacing={0.5}>
+        <Stack component="section" spacing={0.5}>
           <Stack direction="row" spacing={1} alignItems="center">
             <FilterAlt />
             <Typography variant="h3" fontWeight={700}>
@@ -82,7 +86,9 @@ export const FeedContainer: FC = () => {
                 <Grid md={2} sm={4} xs={6} item key={skill}>
                   <AppCheckbox
                     checkboxProps={{ size: "small" }}
-                    formControlLabelProps={{ componentsProps: { typography: { fontWeight: 500 } } }}
+                    formControlLabelProps={{
+                      componentsProps: { typography: { fontWeight: 500 } },
+                    }}
                     label={Skill.toReadable(skill)}
                     value={skill}
                   />
@@ -90,6 +96,9 @@ export const FeedContainer: FC = () => {
               ))}
             </Grid>
           </CheckboxGroup>
+        </Stack>
+        <Stack component="section">
+          <ProjectWrapper />
         </Stack>
       </Stack>
     </Theme>
