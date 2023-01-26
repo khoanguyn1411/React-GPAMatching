@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 
-import { User, UserSkillSet } from "@/core/models/user";
+import { User } from "@/core/models/user";
+import { UserSkillSet } from "@/core/models/user-skill-set";
 
 /** Atoms for page interaction. */
 export const informationActivePageAtom = atom<number>(1);

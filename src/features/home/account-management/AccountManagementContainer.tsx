@@ -3,7 +3,8 @@ import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
-import { User, UserSkillSet } from "@/core/models/user";
+import { User } from "@/core/models/user";
+import { UserSkillSet } from "@/core/models/user-skill-set";
 import { useAuth } from "@/features/auth/useAuth";
 import {
   genderList,

@@ -5,7 +5,7 @@ import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
-import { UserSkillSet } from "@/core/models/user";
+import { UserSkillSet } from "@/core/models/user-skill-set";
 import { AppCheckbox } from "@/shared/components/checkbox-group/AppCheckbox";
 import { CheckboxGroup } from "@/shared/components/checkbox-group/CheckboxGroup";
 import { FormItem } from "@/shared/components/form-item/FormItem";
