@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import React, { FC, useRef } from "react";
+import React, { FC } from "react";
 
 import { StrictOmit } from "@/utils/types/common";
 import { AppReact } from "@/utils/types/react";
@@ -23,18 +23,15 @@ export const AppDatePicker: FC<Props> = ({ value, onChange, ...datePickerProps }
     onChange(newValue ? newValue.toDate() : null);
   };
 
-  const inputRef = useRef(null);
-
   return (
     <DatePicker
       PopperProps={{
         placement: "bottom-start",
-        anchorEl: inputRef.current,
         modifiers: [
           {
             name: "flip",
             options: {
-              fallbackPlacements: ["top", "right"],
+              fallbackPlacements: ["top", "left"],
             },
           },
         ],
@@ -43,7 +40,7 @@ export const AppDatePicker: FC<Props> = ({ value, onChange, ...datePickerProps }
       inputFormat="DD/MM/YYYY"
       value={selectedDate}
       onChange={handleChange}
-      renderInput={(params) => <TextField {...params} ref={inputRef} error={false} />}
+      renderInput={(params) => <TextField {...params} error={false} />}
       {...datePickerProps}
     />
   );

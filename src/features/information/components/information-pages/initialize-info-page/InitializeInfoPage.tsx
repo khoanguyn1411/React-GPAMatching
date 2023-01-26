@@ -26,12 +26,12 @@ import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { schema } from "./schema";
 
-const genderList: Option[] = enumToArray(Gender).map((gender) => ({
+export const genderList: Option[] = enumToArray(Gender).map((gender) => ({
   label: Gender.toReadable(gender),
   value: gender,
 }));
 
-const studyYearList: Option[] = enumToArray(UserStudyYear).map((year) => ({
+export const studyYearList: Option[] = enumToArray(UserStudyYear).map((year) => ({
   label: UserStudyYear.toReadable(year),
   value: year,
 }));
@@ -46,7 +46,7 @@ const knownViaList: Option[] = enumToArray(KnownVia).map((knownVia) => ({
   value: knownVia,
 }));
 
-const universityList: Option[] = generateArrayWithNoDuplicate(UNIVERSITY_LIST).map(
+export const universityList: Option[] = generateArrayWithNoDuplicate(UNIVERSITY_LIST).map(
   (university) => ({
     label: university,
     value: university,

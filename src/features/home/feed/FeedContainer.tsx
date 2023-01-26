@@ -17,7 +17,6 @@ import { useQueryParam } from "@/utils/hooks/useQueryParam";
 import { ProjectWrapper } from "./components/ProjectWrapper";
 
 export const Theme = styled.div`
-  margin-top: 20px;
   .MuiInputBase-root {
     background: white;
     border: 1px solid #e5e7eb;

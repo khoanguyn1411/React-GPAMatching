@@ -1,9 +1,12 @@
-import { Button, Stack } from "@mui/material";
+import { Camera, CameraAlt, Warning } from "@mui/icons-material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
+import { bgcolor } from "@mui/system";
 import React, { useRef, useState } from "react";
 
 import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
+import { appColors } from "@/theme/mui-theme";
 import { DEFAULT_LIMIT_FILE_SIZE_READABLE, EFile, usePickImage } from "@/utils/hooks/usePickImage";
 
 type Props = {
@@ -14,25 +17,36 @@ type Props = {
 
 export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChange }) => {
   const [message, setMessage] = useState<string>("");
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleSetOverSizeMessage = () => {
     setMessage(APP_ERROR_MESSAGE.FILE_ERROR.OVERSIZE);
+    setIsOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
   };
 
   const handleResetMessage = () => {
     setMessage("");
   };
 
-  const { handleResetInput, handleUploadFile, handleOpenSelectFile, handleRemoveFile, fileData } =
-    usePickImage({
-      file: value,
-      defaultImageLink,
-      inputFileRef,
-      onImageOverSize: handleSetOverSizeMessage,
-      onPreviewSuccess: handleResetMessage,
-      setFile: onChange,
-    });
+  const handleOnNotImageType = () => {
+    setIsOpenModal(true);
+    setMessage(APP_ERROR_MESSAGE.FILE_ERROR.NOT_IMAGE);
+  };
+
+  const { handleResetInput, handleUploadFile, handleOpenSelectFile, fileData } = usePickImage({
+    file: value,
+    defaultImageLink,
+    inputFileRef,
+    onImageOverSize: handleSetOverSizeMessage,
+    onPreviewSuccess: handleResetMessage,
+    setFile: onChange,
+    onNotImageType: handleOnNotImageType,
+  });
 
   return (
     <Stack direction="column" spacing={1}>
@@ -44,43 +58,58 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
         onClick={handleResetInput}
         onChange={handleUploadFile}
       />
-      {(!fileData || !fileData.url) && (
-        <>
-          <Button
-            sx={{ width: "fit-content" }}
-            variant="outlined"
-            type="button"
-            onClick={handleOpenSelectFile}
-          >
-            Chọn ảnh
-          </Button>
-          <Typography component="span">
-            Dung lượng ảnh tối đa: {DEFAULT_LIMIT_FILE_SIZE_READABLE}
-          </Typography>
-        </>
-      )}
 
-      {fileData && fileData.url && (
-        <Stack spacing={1} direction="row" alignItems="center">
+      {
+        <Stack spacing={1} direction="column" position="relative">
           {fileData.type === EFile.Image && (
             <>
               <Avatar
-                sx={{ width: 70, height: 70 }}
-                alt="img-preview"
-                className="object-cover object-left h-full rounded-md"
-                src={fileData.url.toString()}
+                onClick={handleOpenSelectFile}
+                sx={{
+                  width: 80,
+                  height: 80,
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.8, transition: "0.3s ease" },
+                }}
+                alt="User avatar"
+                src={fileData.url?.toString() ?? ""}
               />
-              <Button sx={{ height: "fit-content" }} onClick={handleRemoveFile} type="button">
-                Xóa ảnh
-              </Button>
+              <CameraAlt
+                fontSize="medium"
+                sx={{
+                  position: "absolute",
+                  right: "-3px",
+                  bottom: "-3px",
+                  bgcolor: appColors.backgroundBlur,
+                  borderRadius: "8px",
+                  padding: "3px",
+                }}
+              />
+              {/* <Typography component="span">
+                Dung lượng ảnh tối đa: {DEFAULT_LIMIT_FILE_SIZE_READABLE}
+              </Typography> */}
             </>
           )}
         </Stack>
-      )}
+      }
       {message && (
-        <Typography component="span" color={"error"}>
-          {message}
-        </Typography>
+        <Dialog
+          open={isOpenModal}
+          onClose={handleCloseModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <DialogTitle display="flex" alignItems="center" gap={2}>
+            <Warning color="warning" />
+            Lỗi tải lên hình ảnh
+          </DialogTitle>
+          <DialogContent>
+            <Typography component="span">{message}</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal}>OKE</Button>
+          </DialogActions>
+        </Dialog>
       )}
     </Stack>
   );

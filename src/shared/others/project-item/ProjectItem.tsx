@@ -102,7 +102,7 @@ export const ProjectItem: FC = () => {
           <Typography component="em" color={appColors.textPrimaryLight}>
             15:00 27/01/2023
           </Typography>
-          <ProjectButton type={"out"} />
+          <ProjectButton type="cancel" />
         </Stack>
       </Stack>
     </Card>

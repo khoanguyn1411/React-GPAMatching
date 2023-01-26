@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { FC } from "react";
 
 type Props = {
-  type: "cancel" | "join" | "out";
+  type: "cancel" | "join" | "out" | "disable";
 };
 
 export const ProjectButton: FC<Props> = ({ type }) => {
@@ -19,6 +19,7 @@ export const ProjectButton: FC<Props> = ({ type }) => {
     <Button
       variant={type !== "cancel" ? "contained" : "outlined"}
       color={type !== "out" ? "primary" : "error"}
+      disabled={type === "disable"}
     >
       {getButtonText()}
     </Button>
