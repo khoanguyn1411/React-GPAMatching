@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { FC, useEffect, useRef } from "react";
 
@@ -32,7 +32,7 @@ export const FormItem: FC<Props> = ({
     }
   }, [error]);
   return (
-    <Stack sx={{ marginBottom: isNoSpace ? 0 : 1.5, display: isHidden ? "none" : "block" }}>
+    <Box sx={{ marginBottom: isNoSpace ? 0 : 1.5, display: isHidden ? "none" : "block" }}>
       <Stack>
         {label && (
           <Typography marginBottom={1} fontWeight={600} component="label" htmlFor="title">
@@ -69,6 +69,6 @@ export const FormItem: FC<Props> = ({
       )}
 
       {description && <Typography marginTop={2}>{description}</Typography>}
-    </Stack>
+    </Box>
   );
 };

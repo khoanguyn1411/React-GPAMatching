@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -57,14 +57,14 @@ export const IdeaPage: FC = () => {
   return (
     <form onSubmit={initializeSubmitFn()}>
       <InformationContentWrapper>
-        <Stack marginBottom={2}>
+        <Box marginBottom={2}>
           <AppRadioGroup value={activeTab} onChange={setActiveTab}>
             <Stack direction="row" justifyContent="space-between">
               <AppRadio label="Bạn đã có ý tưởng" value={TabValue.GotIdea} />
               <AppRadio label="Bạn chưa có ý tưởng" value={TabValue.NoIdea} />
             </Stack>
           </AppRadioGroup>
-        </Stack>
+        </Box>
         {activeTab === TabValue.GotIdea && <GotIdeaTab formProps={gotIdeaFormProps} />}
         {activeTab === TabValue.NoIdea && <NoIdeaTab formProps={noIdeaFormProps} />}
       </InformationContentWrapper>

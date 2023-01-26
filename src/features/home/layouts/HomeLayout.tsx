@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Box } from "@mui/material";
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 
@@ -9,11 +9,11 @@ import { Main } from "./Main";
 
 export const HomeLayout: FC = () => {
   return (
-    <Stack sx={{ bgcolor: appColors.backgroundBlur, minHeight: "100vh" }}>
+    <Box sx={{ bgcolor: appColors.backgroundBlur, minHeight: "100vh" }}>
       <Header />
       <Main>
         <Outlet />
       </Main>
-    </Stack>
+    </Box>
   );
 };
