@@ -18,3 +18,7 @@
 .Mui-disabled .MuiInputBase-input {
   cursor: not-allowed;
 }
+
+.MuiPickersCalendarHeader-label {
+  text-transform: capitalize;
+}
