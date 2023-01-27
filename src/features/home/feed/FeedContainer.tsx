@@ -17,7 +17,6 @@ import { useQueryParam } from "@/utils/hooks/useQueryParam";
 import { ProjectWrapper } from "./components/ProjectWrapper";
 
 export const Theme = styled.div`
-  margin-top: 20px;
   .MuiInputBase-root {
     background: white;
     border: 1px solid #e5e7eb;
@@ -25,14 +24,10 @@ export const Theme = styled.div`
 `;
 
 export const FeedContainer: FC = () => {
-  const { queryMethods } = useQueryParam<ProjectFilterParams>();
-  const [selectedSkills, setSelectedSkills] = useState<string[]>(
-    queryMethods.get("skill")?.split(",") ?? [],
-  );
-  const { inputValue, setInputValue, debounceValue } = useDebounce(
-    queryMethods.get("search") ?? "",
-  );
-  const [selectedField, setSelectedField] = useState<string>(queryMethods.get("field") ?? "");
+  const { queryMethods, currentQueryParams } = useQueryParam<ProjectFilterParams>();
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search);
+  const [selectedField, setSelectedField] = useState<string>("");
 
   const handleChangeSelectedField = (value: string) => {
     queryMethods.set("field", value);
@@ -48,6 +43,13 @@ export const FeedContainer: FC = () => {
     queryMethods.set("search", debounceValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceValue]);
+
+  useEffect(() => {
+    setInputValue(currentQueryParams.search);
+    setSelectedSkills(currentQueryParams.skill?.split(","));
+    setSelectedField(currentQueryParams.field);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQueryParams.search, currentQueryParams.skill, currentQueryParams.field]);
 
   return (
     <Theme>

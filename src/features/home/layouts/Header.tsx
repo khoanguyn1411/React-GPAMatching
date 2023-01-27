@@ -1,46 +1,28 @@
-import { ArrowDropDown, PublishTwoTone } from "@mui/icons-material";
-import { Avatar, Button, Container, Menu, MenuItem, Typography } from "@mui/material";
+import { PublishTwoTone } from "@mui/icons-material";
+import { Button, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { FC, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { FC } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import { useAuth } from "@/features/auth/useAuth";
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
-import { firebaseAuth } from "@/firebase/firebase-config";
+import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
 import { homeLinks } from "../home-links";
-import { HomeMenu, homeMenus } from "../home-menus";
+import { UserDropdownMenu } from "./UserDropdownMenu";
 
 export const Header: FC = () => {
   const { navigate } = useNavigateWithTransition();
   const { pathname } = useLocation();
-  const { currentUser } = useAuth();
   const handleSwitchPage = (url: string) => () => {
     navigate(url);
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleNavigateToHome = () => {
+    navigate(routePaths.home.children.feed.url);
   };
 
-  const handleCloseMenu = (menu: HomeMenu | null) => () => {
-    setAnchorEl(null);
-    if (menu === null) {
-      return;
-    }
-    if (menu.key === "logout") {
-      firebaseAuth.signOut();
-      return;
-    }
-    if (menu.routePath) {
-      navigate(menu.routePath?.url ?? "");
-    }
-  };
   return (
     <Stack
       bgcolor={"white"}
@@ -59,7 +41,14 @@ export const Header: FC = () => {
           spacing={2}
           alignItems="center"
         >
-          <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            component="div"
+            sx={{ cursor: "pointer" }}
+            onClick={handleNavigateToHome}
+          >
             <InformationGPALogo />
             <Typography component="span" fontWeight={600}>
               Matching System
@@ -70,6 +59,7 @@ export const Header: FC = () => {
               <Button
                 key={link.routePath.path}
                 sx={{
+                  fontSize: "15px",
                   fontWeight: 600,
                   cursor: "pointer",
                   bgcolor: pathname.includes(link.routePath.path) ? appColors.primaryLight : null,
@@ -91,48 +81,7 @@ export const Header: FC = () => {
             >
               Đăng ý tưởng
             </Button>
-            <Button
-              disableRipple
-              sx={{
-                height: "fit-content",
-                padding: 0,
-                "&:hover": {
-                  background: "none",
-                },
-              }}
-              onClick={handleOpenMenu}
-              id="home-menu-button"
-              aria-controls={isMenuOpen ? "home-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={isMenuOpen ? "true" : undefined}
-            >
-              <Avatar sx={{ width: 40, height: 40 }} src={currentUser?.photoURL ?? ""} />
-              <ArrowDropDown sx={{ color: appColors.textPrimary }} />
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              id="home-menu"
-              disableScrollLock={true}
-              open={isMenuOpen}
-              onClose={handleCloseMenu(null)}
-              transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              MenuListProps={{
-                "aria-labelledby": "home-menu-button",
-              }}
-            >
-              {homeMenus.map((menu, index) => (
-                <MenuItem
-                  sx={{
-                    bgcolor: menu.routePath?.url === pathname ? appColors.primaryLight : null,
-                  }}
-                  key={index}
-                  onClick={handleCloseMenu(menu)}
-                >
-                  {menu.name}
-                </MenuItem>
-              ))}
-            </Menu>
+            <UserDropdownMenu />
           </Stack>
         </Stack>
       </Container>

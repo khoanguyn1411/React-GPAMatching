@@ -69,7 +69,11 @@ export const SelectMultiple: FC<Props> = ({
         return (
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
             {selected.map((value) => (
-              <Chip key={value} label={list.find((item) => item.value === value)?.label} />
+              <Chip
+                sx={{ height: "25px" }}
+                key={value}
+                label={list.find((item) => item.value === value)?.label}
+              />
             ))}
           </Box>
         );

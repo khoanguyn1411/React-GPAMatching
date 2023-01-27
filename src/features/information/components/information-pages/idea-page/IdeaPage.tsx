@@ -40,11 +40,9 @@ export const IdeaPage: FC = () => {
   });
 
   const submitGotIdeaForm = (data: Project) => {
-    alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
     setIsFilledInfo(true);
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {
-    alert(`Chúc mừng bạn ${currentUser?.displayName} đã bị hack mất nick.`);
     setIsFilledInfo(true);
   };
 

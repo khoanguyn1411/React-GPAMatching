@@ -1,5 +1,5 @@
 import { Gender } from "./gender";
-import { Skill } from "./skills";
+import { UserSkillSet } from "./user-skill-set";
 
 export interface User {
   readonly fullName: string;
@@ -13,9 +13,21 @@ export interface User {
   readonly knownVia: string;
   readonly isReadyToJoin: boolean;
   readonly avatarUrl: string;
+  readonly city: string;
   readonly avatar: File;
 }
 
-export interface UserSkillSet {
-  readonly skillSet: readonly Skill[];
-}
+export type UserProfile = Pick<
+  User,
+  | "fullName"
+  | "email"
+  | "gender"
+  | "dateOfBirth"
+  | "phoneNumber"
+  | "studyUnit"
+  | "year"
+  | "avatar"
+  | "avatarUrl"
+  | "city"
+> &
+  UserSkillSet;

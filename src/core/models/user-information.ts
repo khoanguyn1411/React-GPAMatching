@@ -1,5 +1,6 @@
 import { Project } from "./project";
-import { User, UserSkillSet } from "./user";
+import { User } from "./user";
+import { UserSkillSet } from "./user-skill-set";
 import { UserWithNoIdea } from "./user-with-no-idea";
 
 export type UserInformation = User &

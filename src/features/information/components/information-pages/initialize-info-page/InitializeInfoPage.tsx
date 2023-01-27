@@ -16,6 +16,7 @@ import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
+import provinces from "@/shared/constants/province.json";
 import { UNIVERSITY_LIST } from "@/shared/constants/university";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { generateArrayWithNoDuplicate } from "@/utils/funcs/generate-array-with-no-duplicate";
@@ -26,12 +27,12 @@ import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { schema } from "./schema";
 
-const genderList: Option[] = enumToArray(Gender).map((gender) => ({
+export const genderList: Option[] = enumToArray(Gender).map((gender) => ({
   label: Gender.toReadable(gender),
   value: gender,
 }));
 
-const studyYearList: Option[] = enumToArray(UserStudyYear).map((year) => ({
+export const studyYearList: Option[] = enumToArray(UserStudyYear).map((year) => ({
   label: UserStudyYear.toReadable(year),
   value: year,
 }));
@@ -46,12 +47,17 @@ const knownViaList: Option[] = enumToArray(KnownVia).map((knownVia) => ({
   value: knownVia,
 }));
 
-const universityList: Option[] = generateArrayWithNoDuplicate(UNIVERSITY_LIST).map(
+export const universityList: Option[] = generateArrayWithNoDuplicate(UNIVERSITY_LIST).map(
   (university) => ({
     label: university,
     value: university,
   }),
 );
+
+export const provinceList: Option[] = provinces.map((province) => ({
+  label: province.city,
+  value: province.city,
+}));
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
@@ -233,6 +239,21 @@ export const InitializeInfoPage: FC = () => {
             </FormItem>
           </Grid>
         </Grid>
+
+        <FormItem label="Chọn tỉnh thành" isRequired error={errors.city?.message}>
+          <Controller
+            control={control}
+            name="city"
+            render={({ field: { value, onChange } }) => (
+              <AppAutocomplete
+                placeholder="Tìm và chọn tỉnh thành"
+                list={provinceList}
+                value={value}
+                onChange={onChange}
+              />
+            )}
+          />
+        </FormItem>
 
         <FormItem label="Bạn biết đến KNKD qua" isRequired error={errors.knownVia?.message}>
           <Controller

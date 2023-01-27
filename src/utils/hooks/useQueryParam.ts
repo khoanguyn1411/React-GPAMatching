@@ -26,7 +26,7 @@ interface QueryMethodsWithKey {
 
 interface UseQueryParamReturnedProps<T> {
   /** Object of current search params on URl. */
-  readonly currentQueryParams: T;
+  readonly currentQueryParams: Record<keyof T, string>;
 
   /** Query method related to search params. */
   readonly queryMethods: QueryMethods<T>;
