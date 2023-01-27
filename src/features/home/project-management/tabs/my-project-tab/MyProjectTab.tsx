@@ -96,7 +96,7 @@ export const MyProjectTab: FC = () => {
         aria-describedby="avatar-picker-modal-description"
       >
         <DialogTitle display="flex" alignItems="center" gap={1}>
-          <QuestionMark color="info" />
+          <QuestionMark color="error" />
           Xác nhận xóa
         </DialogTitle>
         <DialogContent>
@@ -108,8 +108,10 @@ export const MyProjectTab: FC = () => {
           </Typography>
         </DialogContent>
         <DialogActions sx={{ padding: 2 }}>
-          <Button onClick={handleCloseModal}>Hủy</Button>
-          <Button variant="contained" onClick={handleDeleteProject}>
+          <Button color="error" onClick={handleCloseModal}>
+            Hủy
+          </Button>
+          <Button color="error" variant="contained" onClick={handleDeleteProject}>
             Xác nhận
           </Button>
         </DialogActions>

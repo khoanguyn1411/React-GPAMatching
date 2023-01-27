@@ -21,6 +21,8 @@ type TabOptions = {
 
 type Props = {
   listTab: TabOptions[];
+  defaultActive?: string;
+  onChange?: (activeTab: string) => void;
   tabsProps?: TabsProps;
   boxProps?: BoxProps;
 };
@@ -38,13 +40,13 @@ const Theme = styled.div`
   }
 `;
 
-export const AppTab: FC<Props> = ({ listTab, tabsProps, boxProps }) => {
+export const AppTab: FC<Props> = ({ listTab, tabsProps, boxProps, onChange, defaultActive }) => {
   const theme = useTheme();
-  const [value, setValue] = useState<string>(listTab[0].key);
+  const [value, setValue] = useState<string>(defaultActive ?? listTab[0].key);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
-    console.log(newValue);
     setValue(newValue);
+    onChange?.(newValue);
   };
 
   const handleChangeIndex = (index: number) => {
