@@ -1,5 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider } from "@mui/material";
+import { Clear } from "@mui/icons-material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+} from "@mui/material";
 import { FC, useRef } from "react";
 import { useForm } from "react-hook-form";
 
@@ -50,8 +59,18 @@ export const EditProjectDialog: FC<Props> = ({ isOpenEditDialog, setIsOpenEditDi
       aria-labelledby="edit-project-dialog-title"
       aria-describedby="edit-project-dialog-description"
     >
-      <DialogTitle fontWeight={600} color="primary" display="flex" alignItems="center" gap={1}>
+      <DialogTitle
+        fontWeight={600}
+        color="primary"
+        justifyContent="space-between"
+        display="flex"
+        alignItems="center"
+        gap={1}
+      >
         Chỉnh sửa dự án
+        <IconButton onClick={handleCloseModal}>
+          <Clear />
+        </IconButton>
       </DialogTitle>
       <Divider />
       <DialogContent>
