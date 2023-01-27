@@ -65,7 +65,7 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
               <Button
                 key={link.routePath.path}
                 sx={{
-                  fontSize: "15px",
+                  fontSize: "14px",
                   fontWeight: 600,
                   cursor: "pointer",
                   bgcolor: pathname.includes(link.routePath.path) ? appColors.primaryLight : null,
