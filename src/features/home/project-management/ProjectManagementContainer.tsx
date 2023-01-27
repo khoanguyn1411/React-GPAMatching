@@ -38,7 +38,7 @@ export const ProjectManagementContainer: FC = () => {
             zIndex: 100,
             boxShadow: appShadows.main,
             position: "sticky",
-            top: 73,
+            top: 72,
           },
         }}
         listTab={[
