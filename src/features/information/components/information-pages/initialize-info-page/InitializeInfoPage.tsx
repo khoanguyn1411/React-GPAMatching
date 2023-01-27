@@ -183,7 +183,7 @@ export const InitializeInfoPage: FC = () => {
                 name="phoneNumber"
                 render={({ field: { value, onChange } }) => (
                   <AppTextField
-                    inputProps={{ maxLength: 10 }}
+                    inputProps={{ maxLength: 10, pattern: "d*" }}
                     value={value}
                     onChange={onChange}
                     placeholder="Vd: 0909090902"
