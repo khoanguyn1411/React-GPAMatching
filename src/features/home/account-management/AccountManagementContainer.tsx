@@ -1,13 +1,14 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
-import { User } from "@/core/models/user";
-import { UserSkillSet } from "@/core/models/user-skill-set";
+import { UserProfile } from "@/core/models/user";
 import { useAuth } from "@/features/auth/useAuth";
 import {
   genderList,
+  provinceList,
   studyYearList,
   universityList,
 } from "@/features/information/components/information-pages/initialize-info-page/InitializeInfoPage";
@@ -20,6 +21,8 @@ import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { AppReact } from "@/utils/types/react";
+
+import { schema } from "./schema";
 
 const GridItem: AppReact.FC.Children = ({ children }) => {
   return (
@@ -40,10 +43,22 @@ export const AccountManagementContainer: FC = () => {
     control,
     formState: { errors, isDirty },
     handleSubmit,
-  } = useForm<User & UserSkillSet>({});
+  } = useForm<UserProfile>({
+    resolver: yupResolver(schema),
+    defaultValues: { email: currentUser?.email ?? "" },
+  });
+
+  const handleUpdateUserProfile = (user: UserProfile) => {
+    console.log(user);
+  };
 
   return (
-    <Stack component="form" direction="column" spacing={3}>
+    <Stack
+      onSubmit={handleSubmit(handleUpdateUserProfile)}
+      component="form"
+      direction="column"
+      spacing={3}
+    >
       <Typography component="h1" variant="h1">
         Thông tin cá nhân
       </Typography>
@@ -163,24 +178,55 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Kĩ năng" isRequired error={errors.skillSet?.message}>
+            <FormItem label="Số điện thoại" isRequired error={errors.phoneNumber?.message}>
               <Controller
                 control={control}
-                name="skillSet"
+                name="phoneNumber"
                 render={({ field: { value, onChange } }) => (
-                  <SelectMultiple
-                    placeholder="Chọn kĩ năng"
-                    value={value as string[]}
+                  <AppTextField
+                    inputProps={{ maxLength: 10 }}
+                    value={value}
                     onChange={onChange}
-                    list={skillList}
+                    placeholder="Vd: 0909090902"
+                  />
+                )}
+              />
+            </FormItem>
+          </GridItem>
+
+          <GridItem>
+            <FormItem label="Chọn tỉnh thành" isRequired error={errors.city?.message}>
+              <Controller
+                control={control}
+                name="city"
+                render={({ field: { value, onChange } }) => (
+                  <AppAutocomplete
+                    placeholder="Tìm và chọn tỉnh thành"
+                    list={provinceList}
+                    value={value}
+                    onChange={onChange}
                   />
                 )}
               />
             </FormItem>
           </GridItem>
         </Grid>
+        <FormItem label="Kĩ năng" isRequired error={errors.skillSet?.message}>
+          <Controller
+            control={control}
+            name="skillSet"
+            render={({ field: { value, onChange } }) => (
+              <SelectMultiple
+                placeholder="Chọn kĩ năng"
+                value={value as string[]}
+                onChange={onChange}
+                list={skillList}
+              />
+            )}
+          />
+        </FormItem>
       </Stack>
-      <Button disabled={!isDirty} sx={{ alignSelf: "end" }} variant="contained">
+      <Button type="submit" disabled={!isDirty} sx={{ alignSelf: "end" }} variant="contained">
         Cập nhật
       </Button>
     </Stack>
