@@ -6,6 +6,7 @@ import { routePaths } from "@/routes";
 import { accountManagementRoutes } from "./account-management/routes";
 import { feedRoutes } from "./feed/routes";
 import { HomeLayout } from "./layouts/HomeLayout";
+import { HomeLayoutWithTabs } from "./layouts/HomeLayoutWithTabs";
 import { projectManagementRoutes } from "./project-management/routes";
 
 export const homeRoutes: RouteObject[] = [
@@ -20,7 +21,12 @@ export const homeRoutes: RouteObject[] = [
           {
             path: routePaths.root.path,
             element: <HomeLayout />,
-            children: [...projectManagementRoutes, ...feedRoutes, ...accountManagementRoutes],
+            children: [...feedRoutes, ...accountManagementRoutes],
+          },
+          {
+            path: routePaths.root.path,
+            element: <HomeLayoutWithTabs />,
+            children: [...projectManagementRoutes],
           },
         ],
       },

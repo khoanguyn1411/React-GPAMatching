@@ -22,7 +22,13 @@ const homeRoutePaths = buildRoutePaths({
     path: "home",
     children: {
       feed: { path: "feed" },
-      project: { path: "project" },
+      project: {
+        path: "project",
+        children: {
+          myProject: { path: "my-project" },
+          joinedProjects: { path: "joined-projects" },
+        },
+      },
       account: { path: "account" },
     },
   },

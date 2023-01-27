@@ -1,12 +1,26 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import { appPadding } from "@/theme/mui-theme";
 import { AppReact } from "@/utils/types/react";
 
-export const Main: AppReact.FC.Children = ({ children }) => {
+type Props = {
+  shouldNotPadding?: boolean;
+};
+
+export const Main: AppReact.FC.PropsWithChildren<Props> = ({
+  children,
+  shouldNotPadding = false,
+}) => {
+  const Element = (shouldNotPadding ? Box : Container) as React.ElementType;
   return (
-    <Container component="main" sx={{ padding: appPadding.layout, paddingY: "30px" }}>
+    <Element
+      component="main"
+      sx={{
+        padding: !shouldNotPadding ? appPadding.layout : null,
+        paddingY: !shouldNotPadding ? "30px" : null,
+      }}
+    >
       {children}
-    </Container>
+    </Element>
   );
 };

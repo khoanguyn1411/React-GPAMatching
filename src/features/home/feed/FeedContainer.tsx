@@ -5,7 +5,6 @@ import { FC, useEffect, useState } from "react";
 
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { Skill } from "@/core/models/skills";
-import { projectFieldList } from "@/features/information/components/information-pages/idea-page/idea-tabs/GotIdeaTab";
 import { AppCheckbox } from "@/shared/components/checkbox-group/AppCheckbox";
 import { CheckboxGroup } from "@/shared/components/checkbox-group/CheckboxGroup";
 import { AppSelect } from "@/shared/components/select/Select";
@@ -14,6 +13,7 @@ import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useDebounce } from "@/utils/hooks/useDebounce";
 import { useQueryParam } from "@/utils/hooks/useQueryParam";
 
+import { projectFieldList } from "../project-management/tabs/my-project-tab/form/EditProjectForm";
 import { ProjectWrapper } from "./components/ProjectWrapper";
 
 export const Theme = styled.div`

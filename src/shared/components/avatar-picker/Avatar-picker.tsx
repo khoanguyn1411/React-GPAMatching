@@ -68,15 +68,9 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
       />
 
       {
-        <Stack spacing={1} direction="column" position="relative">
+        <Stack spacing={1} direction="column" position="relative" width="fit-content">
           {fileData.type === EFile.Image && (
-            <Tooltip
-              enterDelay={500}
-              leaveDelay={300}
-              placement="bottom-start"
-              arrow
-              title="Nhấn vào để chọn avatar"
-            >
+            <Tooltip placement="bottom-start" arrow title="Nhấn vào để chọn avatar">
               <Box>
                 <Avatar
                   onClick={handleOpenSelectFile}
@@ -112,8 +106,8 @@ export const AvatarPicker: React.FC<Props> = ({ value, defaultImageLink, onChang
         <Dialog
           open={isOpenModal}
           onClose={handleCloseModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+          aria-labelledby="avatar-picker-modal-title"
+          aria-describedby="avatar-picker-modal-description"
         >
           <DialogTitle display="flex" alignItems="center" gap={2}>
             <Warning color="warning" />
