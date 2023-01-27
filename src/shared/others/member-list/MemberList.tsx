@@ -1,5 +1,5 @@
 import { Avatar, Box, Stack, Tooltip } from "@mui/material";
-import { FC, Fragment } from "react";
+import { FC } from "react";
 
 import { LeaderAvatarIcon } from "@/assets/images/leader-avatar-icon";
 
@@ -16,7 +16,7 @@ type Props = {
 
 export const MemberList: FC<Props> = ({ list }) => {
   return (
-    <Stack direction="row" spacing={1.5}>
+    <Stack direction="row" gap={1.5} flexWrap="wrap">
       {list.map((member) => (
         <Tooltip arrow key={member.id} title={member.fullName}>
           <Box>

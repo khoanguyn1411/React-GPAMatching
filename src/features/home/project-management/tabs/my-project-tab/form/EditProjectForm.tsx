@@ -16,6 +16,7 @@ import { enumToArray } from "@/utils/funcs/enum-to-array";
 type Props = {
   formProps: UseFormReturn<Project>;
   mode: "edit" | "create";
+  shouldHideIsReadyToJoinField?: boolean;
 };
 
 const skillSetList: Option[] = enumToArray(Skill).map((skill) => ({
@@ -38,7 +39,11 @@ export const isReadyToJoinList: Option[] = enumToArray(IsReadyToJoin.ThreeChoice
   label: IsReadyToJoin.ThreeChoices.toReadable(ready),
 }));
 
-export const EditProjectForm: FC<Props> = ({ formProps }) => {
+export const EditProjectForm: FC<Props> = ({
+  formProps,
+  shouldHideIsReadyToJoinField = false,
+  mode,
+}) => {
   const {
     control,
     formState: { errors },
@@ -163,24 +168,26 @@ export const EditProjectForm: FC<Props> = ({ formProps }) => {
         />
       </FormItem>
 
-      <FormItem
-        label="Trong trường hợp bạn không thể ghép đội cùng các cá nhân bạn mong muốn, bạn có sẵn sàng tham gia KNKD lần thứ XI – 2023 với số lượng thành viên hiện tại không?"
-        isRequired
-        error={errors.readyToJoin?.message}
-      >
-        <Controller
-          control={control}
-          name="readyToJoin"
-          render={({ field: { value, onChange } }) => (
-            <AppSelect
-              placeholder="Chọn câu trả lời"
-              value={value}
-              onChange={onChange}
-              list={isReadyToJoinList}
-            />
-          )}
-        />
-      </FormItem>
+      {!shouldHideIsReadyToJoinField && (
+        <FormItem
+          label="Trong trường hợp bạn không thể ghép đội cùng các cá nhân bạn mong muốn, bạn có sẵn sàng tham gia KNKD lần thứ XI – 2023 với số lượng thành viên hiện tại không?"
+          isRequired
+          error={errors.readyToJoin?.message}
+        >
+          <Controller
+            control={control}
+            name="readyToJoin"
+            render={({ field: { value, onChange } }) => (
+              <AppSelect
+                placeholder="Chọn câu trả lời"
+                value={value}
+                onChange={onChange}
+                list={isReadyToJoinList}
+              />
+            )}
+          />
+        </FormItem>
+      )}
     </>
   );
 };

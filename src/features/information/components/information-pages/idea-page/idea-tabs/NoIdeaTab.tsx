@@ -3,7 +3,7 @@ import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
-import { isReadyToJoinList } from "@/features/home/project-management/tabs/my-project-tab/EditProjectForm";
+import { isReadyToJoinList } from "@/features/home/project-management/tabs/my-project-tab/form/EditProjectForm";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect } from "@/shared/components/select/Select";
 

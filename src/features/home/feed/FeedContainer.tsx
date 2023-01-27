@@ -13,7 +13,7 @@ import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useDebounce } from "@/utils/hooks/useDebounce";
 import { useQueryParam } from "@/utils/hooks/useQueryParam";
 
-import { projectFieldList } from "../project-management/tabs/my-project-tab/EditProjectForm";
+import { projectFieldList } from "../project-management/tabs/my-project-tab/form/EditProjectForm";
 import { ProjectWrapper } from "./components/ProjectWrapper";
 
 export const Theme = styled.div`

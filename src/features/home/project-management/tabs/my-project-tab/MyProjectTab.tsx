@@ -1,4 +1,4 @@
-import { Delete, Edit, QuestionAnswer, QuestionMark, Warning } from "@mui/icons-material";
+import { Delete, Edit, QuestionMark } from "@mui/icons-material";
 import {
   Button,
   Container,
@@ -17,6 +17,7 @@ import { ProjectDetail } from "@/shared/others/project-detail/ProjectDetail";
 import { appColors } from "@/theme/mui-theme";
 import { AppReact } from "@/utils/types/react";
 
+import { EditProjectDialog } from "./components/EditProjectDialog";
 import { MyRequestsSection } from "./components/MyRequestsSection";
 
 const Wrapper: AppReact.FC.Children = ({ children }) => {
@@ -36,6 +37,8 @@ const Wrapper: AppReact.FC.Children = ({ children }) => {
 
 export const MyProjectTab: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
+
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
@@ -46,6 +49,10 @@ export const MyProjectTab: FC = () => {
 
   const handleDeleteProject = () => {
     console.log("Delete here");
+  };
+
+  const handleOpenEditDialog = () => {
+    setIsOpenEditDialog(true);
   };
 
   return (
@@ -63,7 +70,9 @@ export const MyProjectTab: FC = () => {
                 <Button onClick={handleOpenModal} startIcon={<Delete />} color="inherit">
                   Xóa dự án
                 </Button>
-                <Button startIcon={<Edit />}>Chỉnh sửa</Button>
+                <Button onClick={handleOpenEditDialog} startIcon={<Edit />}>
+                  Chỉnh sửa
+                </Button>
               </Stack>
             </Stack>
           </Wrapper>
@@ -74,6 +83,11 @@ export const MyProjectTab: FC = () => {
           </Wrapper>
         </Grid>
       </Grid>
+
+      <EditProjectDialog
+        isOpenEditDialog={isOpenEditDialog}
+        setIsOpenEditDialog={setIsOpenEditDialog}
+      />
 
       <Dialog
         open={isOpenModal}

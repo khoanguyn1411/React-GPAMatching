@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { Project } from "@/core/models/project";
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
-import { useAuth } from "@/features/auth/useAuth";
+import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
@@ -18,7 +18,7 @@ import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
 import { NoIdeaTab } from "./idea-tabs/NoIdeaTab";
-import { projectSchema, userWithNoIdeaSchema } from "./idea-tabs/schema";
+import { userWithNoIdeaSchema } from "./idea-tabs/schema";
 
 enum TabValue {
   GotIdea = "gotIdea",
@@ -28,14 +28,13 @@ enum TabValue {
 export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
   const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
-  const { currentUser } = useAuth();
   const [, setIsFilledInfo] = useAtom(isAlreadyFilledInformationFormAtom);
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
   });
   const gotIdeaFormProps = useForm<Project>({
-    resolver: yupResolver(projectSchema),
+    resolver: yupResolver(projectSchema("full")),
     shouldUnregister: true,
   });
 

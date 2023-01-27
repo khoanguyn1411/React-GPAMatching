@@ -64,6 +64,9 @@ export const ProjectDetail: FC = () => {
             list={[
               { id: 1, avatarUrl: "", isLeader: true, fullName: "Khoa Nguyen" },
               { id: 2, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
+              { id: 3, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
+              { id: 4, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
+              { id: 5, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
             ]}
           />
         </Stack>
