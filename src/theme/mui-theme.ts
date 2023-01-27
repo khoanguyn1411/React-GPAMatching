@@ -7,7 +7,7 @@ export const appColors = {
   backgroundBlur: "rgba(251, 251, 251, 1)",
 
   textPrimary: "#333",
-  textPrimaryLight: "rgba(170, 164, 164, 0.8)",
+  textPrimaryLight: "rgba(19, 15, 38, 0.6)",
 
   warning: "rgba(250,204,21,1)",
   warningLight: "rgba(250,204,21,0.05)",
@@ -19,6 +19,7 @@ export const appShadows = {
 
 export const appPadding = {
   layout: "15px 0",
+  container: "60px",
 };
 
 /**

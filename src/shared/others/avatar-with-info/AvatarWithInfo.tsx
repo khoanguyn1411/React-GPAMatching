@@ -15,7 +15,7 @@ export const AvatarWithInfo: FC<Props> = ({ name, university, avatarUrl }) => {
         <Typography component="h2" fontWeight={600}>
           {name}
         </Typography>
-        <Typography component="em" fontSize={"13px"}>
+        <Typography component="em" fontSize={"13px"} maxWidth="220px">
           {university}
         </Typography>
       </Stack>

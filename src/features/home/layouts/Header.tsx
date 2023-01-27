@@ -1,18 +1,22 @@
 import { PublishTwoTone } from "@mui/icons-material";
 import { Button, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { FC } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
 import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
+import { AppReact } from "@/utils/types/react";
 
 import { homeLinks } from "../home-links";
 import { UserDropdownMenu } from "./UserDropdownMenu";
 
-export const Header: FC = () => {
+type Props = {
+  shouldBorderBottom?: boolean;
+};
+
+export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBottom = false }) => {
   const { navigate } = useNavigateWithTransition();
   const { pathname } = useLocation();
   const handleSwitchPage = (url: string) => () => {
@@ -26,7 +30,9 @@ export const Header: FC = () => {
   return (
     <Stack
       bgcolor={"white"}
-      boxShadow={appShadows.main}
+      boxShadow={!shouldBorderBottom ? appShadows.main : undefined}
+      borderBottom={shouldBorderBottom ? 1.5 : undefined}
+      borderColor={shouldBorderBottom ? "divider" : undefined}
       position="sticky"
       zIndex={999}
       top={0}
