@@ -4,7 +4,7 @@ import { User } from "@/core/models/user";
 import { UserSkillSet } from "@/core/models/user-skill-set";
 
 /** Atoms for page interaction. */
-export const informationActivePageAtom = atom<number>(1);
+export const informationActivePageAtom = atom<number>(3);
 const increasePage = atom(informationActivePageAtom, (get, set) =>
   set(informationActivePageAtom, get(informationActivePageAtom) + 1),
 );
@@ -21,4 +21,4 @@ export const informationUserAtom = atom<User | null>(null);
 export const skillSetAtom = atom<UserSkillSet | null>(null);
 
 /** Atoms to check whether user filled information form or not. */
-export const isAlreadyFilledInformationFormAtom = atom<boolean>(true);
+export const isAlreadyFilledInformationFormAtom = atom<boolean>(false);

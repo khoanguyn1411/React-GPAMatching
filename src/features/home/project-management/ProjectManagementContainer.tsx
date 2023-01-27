@@ -8,7 +8,7 @@ import { MyProjectTab } from "./tabs/my-project-tab/MyProjectTab";
 
 export const ProjectManagementContainer: FC = () => {
   return (
-    <Box bgcolor={appColors.backgroundBlur}>
+    <Box bgcolor={appColors.backgroundBlur} minHeight="calc(100vh - 75px)">
       <AppTab
         boxProps={{
           sx: {

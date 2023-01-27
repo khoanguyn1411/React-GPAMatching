@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FC } from "react";
 
@@ -18,6 +18,7 @@ export const RequestItem: FC<Props> = ({ onRejected, onApproved }) => {
   };
   return (
     <Stack spacing={1.5}>
+      <Divider />
       <AvatarWithInfo avatarUrl={""} name={"123"} university={"1231231312"} />
       <Stack direction="row" spacing={2}>
         <Button onClick={handleApproved} sx={{ flex: 1 }} variant="contained">

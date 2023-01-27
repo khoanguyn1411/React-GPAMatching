@@ -1,6 +1,17 @@
-import { Delete, Edit } from "@mui/icons-material";
-import { Button, Container, Divider, Grid, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Delete, Edit, QuestionAnswer, QuestionMark, Warning } from "@mui/icons-material";
+import {
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { FC, useState } from "react";
 
 import { ProjectDetail } from "@/shared/others/project-detail/ProjectDetail";
 import { appColors } from "@/theme/mui-theme";
@@ -16,6 +27,7 @@ const Wrapper: AppReact.FC.Children = ({ children }) => {
       padding={3}
       bgcolor="white"
       border={"1.5px solid rgba(170, 164, 164, 0.1)"}
+      borderRadius="8px"
     >
       {children}
     </Stack>
@@ -23,6 +35,19 @@ const Wrapper: AppReact.FC.Children = ({ children }) => {
 };
 
 export const MyProjectTab: FC = () => {
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
+  };
+
+  const handleDeleteProject = () => {
+    console.log("Delete here");
+  };
+
   return (
     <Container component="section">
       <Grid container spacing={3}>
@@ -35,7 +60,7 @@ export const MyProjectTab: FC = () => {
                 Đăng tải: 15:00 27/01/2023
               </Typography>
               <Stack direction="row" spacing={1.5}>
-                <Button startIcon={<Delete />} color="inherit">
+                <Button onClick={handleOpenModal} startIcon={<Delete />} color="inherit">
                   Xóa dự án
                 </Button>
                 <Button startIcon={<Edit />}>Chỉnh sửa</Button>
@@ -49,6 +74,32 @@ export const MyProjectTab: FC = () => {
           </Wrapper>
         </Grid>
       </Grid>
+
+      <Dialog
+        open={isOpenModal}
+        onClose={handleCloseModal}
+        aria-labelledby="avatar-picker-modal-title"
+        aria-describedby="avatar-picker-modal-description"
+      >
+        <DialogTitle display="flex" alignItems="center" gap={1}>
+          <QuestionMark color="info" />
+          Xác nhận xóa
+        </DialogTitle>
+        <DialogContent>
+          <Typography component="span">
+            Bạn có chắc muốn xóa dự án này? Bạn sẽ không thể hoàn tác khi đã nhấn{" "}
+            <Typography color="error" component="span" fontWeight={600}>
+              Xác nhận
+            </Typography>
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ padding: 2 }}>
+          <Button onClick={handleCloseModal}>Hủy</Button>
+          <Button variant="contained" onClick={handleDeleteProject}>
+            Xác nhận
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

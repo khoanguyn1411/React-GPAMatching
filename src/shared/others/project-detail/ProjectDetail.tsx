@@ -62,8 +62,8 @@ export const ProjectDetail: FC = () => {
           </Typography>
           <MemberList
             list={[
-              { id: 1, avatarUrl: "", isLeader: true },
-              { id: 2, avatarUrl: "", isLeader: false },
+              { id: 1, avatarUrl: "", isLeader: true, fullName: "Khoa Nguyen" },
+              { id: 2, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
             ]}
           />
         </Stack>
