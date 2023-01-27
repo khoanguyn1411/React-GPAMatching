@@ -12,5 +12,5 @@ export const AppTextField: FC<Props> = ({ value = "", onChange, ...others }) => 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     onChange(event.target.value);
   };
-  return <TextField onChange={handleInputChange} value={value} {...others} />;
+  return <TextField autoComplete="off" onChange={handleInputChange} value={value} {...others} />;
 };
