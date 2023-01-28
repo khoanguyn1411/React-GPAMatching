@@ -8,8 +8,10 @@ import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo"
 import { MemberList } from "@/shared/others/member-list/MemberList";
 import { ProjectItem } from "@/shared/others/project-item/ProjectItem";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
+import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 export const ProjectDetail: FC = () => {
+  useScrollToTop();
   const [, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
   useEffect(() => {
     setIsRouteLoading(false);

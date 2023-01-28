@@ -20,6 +20,7 @@ import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
+import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 import { AppReact } from "@/utils/types/react";
 
 import { schema } from "./schema";
@@ -38,6 +39,7 @@ const skillList: Option[] = enumToArray(Skill).map((skill) => ({
 }));
 
 export const AccountManagementContainer: FC = () => {
+  useScrollToTop();
   const { currentUser } = useAuth();
   const {
     control,

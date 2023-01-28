@@ -12,6 +12,7 @@ import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useDebounce } from "@/utils/hooks/useDebounce";
 import { useQueryParam } from "@/utils/hooks/useQueryParam";
+import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 import { projectFieldList } from "../project-management/tabs/my-project-tab/form/EditProjectForm";
 import { ProjectWrapper } from "./components/ProjectWrapper";
@@ -24,6 +25,7 @@ export const Theme = styled.div`
 `;
 
 export const FeedContainer: FC = () => {
+  useScrollToTop();
   const { queryMethods, currentQueryParams } = useQueryParam<ProjectFilterParams>();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search);
