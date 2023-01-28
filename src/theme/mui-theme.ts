@@ -11,6 +11,9 @@ export const appColors = {
 
   warning: "rgba(250,204,21,1)",
   warningLight: "rgba(250,204,21,0.05)",
+
+  success: "rgba(58,178,102,1)",
+  successLight: "rgba(58,178,102,0.05)",
 };
 
 export const appShadows = {

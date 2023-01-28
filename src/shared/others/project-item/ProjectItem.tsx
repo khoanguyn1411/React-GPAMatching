@@ -1,5 +1,5 @@
 import { Description, PersonAdd } from "@mui/icons-material";
-import { Box, Card, Divider, Stack, Typography } from "@mui/material";
+import { Card, Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
@@ -20,16 +20,20 @@ export const ProjectItem: FC = () => {
         >
           <AvatarWithInfo avatarUrl={""} name={"Nguyen Van A"} university={"Dai hoc kinh te"} />
 
-          <Box
+          <Typography
             borderRadius="8px"
             padding="2px 7px"
-            color={appColors.warning}
+            component="span"
+            noWrap
+            sx={{ maxWidth: 220 }}
+            title="Đang phát triển"
+            color={appColors.success}
             fontWeight={500}
-            bgcolor={appColors.warningLight}
-            border={`1.5px solid ${appColors.warning}`}
+            bgcolor={appColors.successLight}
+            border={`1.5px solid ${appColors.success}`}
           >
             Đang phát triển
-          </Box>
+          </Typography>
         </Stack>
         <Stack sx={{ paddingX: 2.5 }} spacing={1.5}>
           <Typography component="a" fontSize={"18px"} fontWeight={700}>
