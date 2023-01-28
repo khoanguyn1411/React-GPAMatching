@@ -3,7 +3,10 @@ import { RouteObject } from "react-router-dom";
 import { routePaths } from "@/routes";
 import { lazyImport } from "@/utils/funcs/lazy-import";
 
-const { ProjectDetail } = lazyImport(() => import("./ProjectDetail"), "ProjectDetail");
+const { ProjectDetailContainer } = lazyImport(
+  () => import("./ProjectDetailContainer"),
+  "ProjectDetailContainer",
+);
 
 export const projectDetailRoutes: RouteObject[] = [
   {
@@ -11,7 +14,7 @@ export const projectDetailRoutes: RouteObject[] = [
     children: [
       {
         path: routePaths.home.children.projectDetail.children.id.path,
-        element: <ProjectDetail />,
+        element: <ProjectDetailContainer />,
       },
     ],
   },

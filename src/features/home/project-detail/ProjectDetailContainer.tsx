@@ -3,19 +3,33 @@ import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC, useEffect } from "react";
 
+import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
+import { ProjectField } from "@/core/models/project-field";
 import { isRouteLoadingAtom } from "@/provider/RouterProvider";
+import { routePaths } from "@/routes";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
 import { MemberList } from "@/shared/others/member-list/MemberList";
 import { ProjectItem } from "@/shared/others/project-item/ProjectItem";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
+import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
-export const ProjectDetail: FC = () => {
+export const ProjectDetailContainer: FC = () => {
   useScrollToTop();
   const [, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
   useEffect(() => {
     setIsRouteLoading(false);
   }, [setIsRouteLoading]);
+
+  const { navigate } = useNavigateWithTransition();
+
+  const handleNavigateHomePage = () => {
+    const key: keyof ProjectFilterParams = "field";
+    navigate({
+      pathname: routePaths.home.children.feed.url,
+      search: `${key}=${ProjectField.EducationAndMedican}`,
+    });
+  };
 
   return (
     <Stack gap={2}>
@@ -104,7 +118,7 @@ export const ProjectDetail: FC = () => {
 
       <Stack direction="row" justifyContent="space-between" spacing={2} alignItems="center">
         <Typography variant="h1">Các dự án cùng lĩnh vực</Typography>
-        <Button sx={{ fontWeight: 600 }} endIcon={<ArrowRight />}>
+        <Button onClick={handleNavigateHomePage} sx={{ fontWeight: 600 }} endIcon={<ArrowRight />}>
           Xem tất cả
         </Button>
       </Stack>

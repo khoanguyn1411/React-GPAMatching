@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "@/features/auth/useAuth";
 import { firebaseAuth } from "@/firebase/firebase-config";
 import { appColors } from "@/theme/mui-theme";
+import { CompareURL } from "@/utils/funcs/compare-url";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
 import { HomeMenu, homeMenus } from "../home-menus";
@@ -69,13 +70,13 @@ export const UserDropdownMenu: FC = () => {
         }}
       >
         {homeMenus.map((menu, index) => {
-          const shouldActivateMenuItem = menu.routePath?.url === pathname;
+          const isActiveMenu = CompareURL.isInclude(menu.routePath?.path, pathname);
           return (
             <MenuItem
               sx={{
-                bgcolor: shouldActivateMenuItem ? appColors.primaryLight : null,
-                color: shouldActivateMenuItem ? appColors.primary : null,
-                fontWeight: shouldActivateMenuItem ? 600 : null,
+                bgcolor: isActiveMenu ? appColors.primaryLight : null,
+                color: isActiveMenu ? appColors.primary : null,
+                fontWeight: isActiveMenu ? 600 : null,
               }}
               key={index}
               onClick={handleCloseMenu(menu)}

@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useTransition } from "react";
-import { NavigateOptions, useNavigate } from "react-router-dom";
+import { NavigateOptions, To, useNavigate } from "react-router-dom";
 
 import { isRouteLoadingAtom } from "@/provider/RouterProvider";
 
@@ -14,7 +14,7 @@ export const useNavigateWithTransition = () => {
   const [, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
   const rootNavigate = useNavigate();
 
-  const navigate = (path: string, options?: NavigateOptions) => {
+  const navigate = (path: To, options?: NavigateOptions) => {
     startTransition(() => rootNavigate(path, options));
   };
 

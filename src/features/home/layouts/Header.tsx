@@ -10,6 +10,7 @@ import { Project } from "@/core/models/project";
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
 import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
+import { CompareURL } from "@/utils/funcs/compare-url";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 import { AppReact } from "@/utils/types/react";
 
@@ -77,23 +78,24 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
             </Typography>
           </Stack>
           <Stack component="nav" direction="row" justifyContent="space-between" spacing={2}>
-            {homeLinks.map((link) => (
-              <Button
-                key={link.routePath.path}
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  bgcolor: pathname.includes(link.routePath.path) ? appColors.primaryLight : null,
-                  color: pathname.includes(link.routePath.path)
-                    ? appColors.primary
-                    : appColors.textPrimary,
-                }}
-                onClick={handleSwitchPage(link.routePath.url)}
-              >
-                {link.name}
-              </Button>
-            ))}
+            {homeLinks.map((link) => {
+              const isLinkActive = CompareURL.isInclude(link.routePath.path, pathname);
+              return (
+                <Button
+                  key={link.routePath.path}
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    bgcolor: isLinkActive ? appColors.primaryLight : null,
+                    color: isLinkActive ? appColors.primary : appColors.textPrimary,
+                  }}
+                  onClick={handleSwitchPage(link.routePath.url)}
+                >
+                  {link.name}
+                </Button>
+              );
+            })}
           </Stack>
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <Button
