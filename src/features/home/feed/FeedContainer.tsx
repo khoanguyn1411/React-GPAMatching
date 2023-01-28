@@ -26,6 +26,7 @@ export const Theme = styled.div`
 
 export const FeedContainer: FC = () => {
   useScrollToTop();
+
   const { queryMethods, currentQueryParams } = useQueryParam<ProjectFilterParams>();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search);

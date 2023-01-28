@@ -97,6 +97,9 @@ export const muiTheme = createTheme({
     },
   },
   palette: {
+    success: {
+      main: appColors.success,
+    },
     primary: {
       main: appColors.primary,
     },
