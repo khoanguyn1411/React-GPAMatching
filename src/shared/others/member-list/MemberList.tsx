@@ -1,7 +1,9 @@
-import { Avatar, Box, Stack, Tooltip } from "@mui/material";
-import { FC } from "react";
+import { Avatar, Box, Button, Stack, Tooltip } from "@mui/material";
+import { FC, useState } from "react";
 
 import { LeaderAvatarIcon } from "@/assets/images/leader-avatar-icon";
+
+import { UserInfoDialog } from "../user-info-dialog/UserInfoDialog";
 
 type MemberList = {
   id: number;
@@ -15,23 +17,41 @@ type Props = {
 };
 
 export const MemberList: FC<Props> = ({ list }) => {
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const handleOpenDialog = () => {
+    setIsOpenDialog(true);
+  };
   return (
-    <Stack direction="row" gap={1.5} flexWrap="wrap">
-      {list.map((member) => (
-        <Tooltip arrow key={member.id} title={member.fullName}>
-          <Box>
-            {member.isLeader && (
-              <Box position="relative">
-                <Box position="absolute" right={-12} top={-10} zIndex={2}>
-                  <LeaderAvatarIcon />
+    <>
+      <Stack direction="row" rowGap={1} columnGap={0.2} flexWrap="wrap">
+        {list.map((member) => (
+          <Tooltip arrow key={member.id} title={member.fullName}>
+            <Button
+              onClick={handleOpenDialog}
+              disableRipple
+              sx={{
+                height: "fit-content",
+                width: 50,
+                padding: 0,
+                "&:hover": {
+                  background: "none",
+                },
+              }}
+            >
+              {member.isLeader && (
+                <Box position="relative">
+                  <Box position="absolute" right={-12} top={-10} zIndex={2}>
+                    <LeaderAvatarIcon />
+                  </Box>
+                  <Avatar sx={{ width: 50, height: 50 }} src={member.avatarUrl} />
                 </Box>
-                <Avatar sx={{ width: 50, height: 50 }} src={member.avatarUrl} />
-              </Box>
-            )}
-            {!member.isLeader && <Avatar sx={{ width: 50, height: 50 }} src={member.avatarUrl} />}
-          </Box>
-        </Tooltip>
-      ))}
-    </Stack>
+              )}
+              {!member.isLeader && <Avatar sx={{ width: 50, height: 50 }} src={member.avatarUrl} />}
+            </Button>
+          </Tooltip>
+        ))}
+      </Stack>
+      <UserInfoDialog isOpen={isOpenDialog} setIsOpen={setIsOpenDialog} />
+    </>
   );
 };
