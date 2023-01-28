@@ -1,4 +1,4 @@
-import { AppProvider } from "./provider";
+import { AppProvider } from "./providers";
 import { RootRoutes } from "./routes/RootRoutes";
 
 const App: React.FC = () => {

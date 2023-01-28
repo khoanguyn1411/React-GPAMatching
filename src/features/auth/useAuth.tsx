@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 
-import { currentUserAtom, isAuthPendingAtom, isLoggedInAtom } from "@/provider/AuthProvider";
+import { currentUserAtom, isAuthPendingAtom, isLoggedInAtom } from "@/providers/AuthProvider";
 
 export const useAuth = () => {
   const [isLoggedIn] = useAtom(isLoggedInAtom);

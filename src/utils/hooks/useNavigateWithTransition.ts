@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect, useTransition } from "react";
 import { NavigateOptions, To, useNavigate } from "react-router-dom";
 
-import { isRouteLoadingAtom } from "@/provider/RouterProvider";
+import { isRouteLoadingAtom } from "@/providers/RouterProvider";
 
 /**
  * Navigate to route with top progress bar animation.

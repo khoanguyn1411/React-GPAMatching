@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 
-import { isRouteLoadingAtom } from "@/provider/RouterProvider";
+import { isRouteLoadingAtom } from "@/providers/RouterProvider";
 
 export const useStopLoadingRoute = (): void => {
   const [isRouteLoading, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
