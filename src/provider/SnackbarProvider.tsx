@@ -33,7 +33,7 @@ export const SnackbarProvider: AppReact.FC.Children = ({ children }) => {
           variant="filled"
           onClose={handleClose}
           severity={snackbarStatus.variant}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", color: "white" }}
         >
           {snackbarStatus.message}
         </Alert>

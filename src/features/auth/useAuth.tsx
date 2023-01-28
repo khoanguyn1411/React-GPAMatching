@@ -11,7 +11,7 @@ export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(false);
 
 export const useAuth = () => {
-  const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
   const [, setIsPending] = useAtom(isAuthPendingAtom);
   const { notify } = useNotify();
@@ -67,5 +67,5 @@ export const useAuth = () => {
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn]);
 };
