@@ -1,9 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
-import { UserService } from "@/services/userService";
-
 export async function interceptToken(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
-  const token = await UserService.getFirebaseToken();
+  const token = null;
   if (token == null) {
     return config;
   }
