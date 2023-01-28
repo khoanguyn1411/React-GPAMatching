@@ -17,27 +17,12 @@ import { useForm } from "react-hook-form";
 
 import { Project } from "@/core/models/project";
 import { ProjectDetail } from "@/shared/others/project-detail/ProjectDetail";
+import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
 import { appColors } from "@/theme/mui-theme";
-import { AppReact } from "@/utils/types/react";
 
 import { EditProjectDialog } from "./components/EditProjectDialog";
 import { MyRequestsSection } from "./components/MyRequestsSection";
 import { projectSchema } from "./form/shema";
-
-const Wrapper: AppReact.FC.Children = ({ children }) => {
-  return (
-    <Stack
-      spacing={2}
-      component="section"
-      padding={3}
-      bgcolor="white"
-      border={"1.5px solid rgba(170, 164, 164, 0.1)"}
-      borderRadius="8px"
-    >
-      {children}
-    </Stack>
-  );
-};
 
 export const MyProjectTab: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -68,7 +53,7 @@ export const MyProjectTab: FC = () => {
     <Container component="section">
       <Grid container spacing={3}>
         <Grid item xs={8}>
-          <Wrapper>
+          <SectionCardWrapper>
             <ProjectDetail />
             <Divider />
             <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -84,12 +69,12 @@ export const MyProjectTab: FC = () => {
                 </Button>
               </Stack>
             </Stack>
-          </Wrapper>
+          </SectionCardWrapper>
         </Grid>
         <Grid item xs={4}>
-          <Wrapper>
+          <SectionCardWrapper>
             <MyRequestsSection />
-          </Wrapper>
+          </SectionCardWrapper>
         </Grid>
       </Grid>
 
