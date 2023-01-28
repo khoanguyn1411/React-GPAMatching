@@ -1,4 +1,3 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Clear } from "@mui/icons-material";
 import {
   Button,
@@ -10,30 +9,31 @@ import {
   IconButton,
 } from "@mui/material";
 import { FC, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { Project } from "@/core/models/project";
 import { FormService } from "@/utils/funcs/form-service";
 import { AppReact } from "@/utils/types/react";
 
 import { EditProjectForm } from "../form/EditProjectForm";
-import { projectSchema } from "../form/shema";
 
 type Props = {
   isOpenEditDialog: boolean;
   setIsOpenEditDialog: AppReact.State.Dispatch<boolean>;
+  mode: "edit" | "create";
+  formProps: UseFormReturn<Project>;
 };
 
-export const EditProjectDialog: FC<Props> = ({ isOpenEditDialog, setIsOpenEditDialog }) => {
-  const projectFormProps = useForm<Project>({
-    resolver: yupResolver(projectSchema("project")),
-    shouldUnregister: true,
-  });
-
+export const EditProjectDialog: FC<Props> = ({
+  mode,
+  formProps,
+  isOpenEditDialog,
+  setIsOpenEditDialog,
+}) => {
   const {
     handleSubmit,
     formState: { dirtyFields },
-  } = projectFormProps;
+  } = formProps;
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const handleCloseModal = () => {
@@ -67,7 +67,7 @@ export const EditProjectDialog: FC<Props> = ({ isOpenEditDialog, setIsOpenEditDi
         alignItems="center"
         gap={1}
       >
-        Chỉnh sửa dự án
+        {mode === "create" ? "Đăng ý tưởng" : "Chỉnh sửa dự án"}
         <IconButton onClick={handleCloseModal}>
           <Clear />
         </IconButton>
@@ -75,7 +75,7 @@ export const EditProjectDialog: FC<Props> = ({ isOpenEditDialog, setIsOpenEditDi
       <Divider />
       <DialogContent>
         <form onSubmit={handleSubmit(handleEditProject)}>
-          <EditProjectForm shouldHideIsReadyToJoinField formProps={projectFormProps} mode="edit" />
+          <EditProjectForm mode={mode} shouldHideIsReadyToJoinField formProps={formProps} />
           <button ref={buttonRef} type="submit" hidden />
         </form>
       </DialogContent>
@@ -89,7 +89,7 @@ export const EditProjectDialog: FC<Props> = ({ isOpenEditDialog, setIsOpenEditDi
           variant="contained"
           onClick={handleDispatchClickEvent}
         >
-          Cập nhật
+          {mode === "create" ? "Đăng ý tưởng" : "Cập nhật"}
         </Button>
       </DialogActions>
     </Dialog>

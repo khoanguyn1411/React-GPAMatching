@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Delete, Edit, QuestionMark } from "@mui/icons-material";
 import {
   Button,
@@ -12,13 +13,16 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, useState } from "react";
+import { useForm } from "react-hook-form";
 
+import { Project } from "@/core/models/project";
 import { ProjectDetail } from "@/shared/others/project-detail/ProjectDetail";
 import { appColors } from "@/theme/mui-theme";
 import { AppReact } from "@/utils/types/react";
 
 import { EditProjectDialog } from "./components/EditProjectDialog";
 import { MyRequestsSection } from "./components/MyRequestsSection";
+import { projectSchema } from "./form/shema";
 
 const Wrapper: AppReact.FC.Children = ({ children }) => {
   return (
@@ -38,6 +42,11 @@ const Wrapper: AppReact.FC.Children = ({ children }) => {
 export const MyProjectTab: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
+
+  const projectFormProps = useForm<Project>({
+    resolver: yupResolver(projectSchema("project")),
+    shouldUnregister: true,
+  });
 
   const handleCloseModal = () => {
     setIsOpenModal(false);
@@ -85,6 +94,8 @@ export const MyProjectTab: FC = () => {
       </Grid>
 
       <EditProjectDialog
+        mode="edit"
+        formProps={projectFormProps}
         isOpenEditDialog={isOpenEditDialog}
         setIsOpenEditDialog={setIsOpenEditDialog}
       />
