@@ -31,7 +31,7 @@ export const ProjectDetail: FC = () => {
                   { id: 4, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
                 ]}
               />
-              <Stack spacing={1}>
+              <Stack spacing={2}>
                 <Typography variant="h3">Nhóm trưởng:</Typography>
                 <AvatarWithInfo
                   avatarUrl={""}
@@ -70,7 +70,7 @@ export const ProjectDetail: FC = () => {
           <SectionCardWrapper isFullHeight>
             <Stack spacing={1}>
               <Typography variant="h3">Mô tả dự án:</Typography>
-              <Typography>
+              <Typography textAlign="justify">
                 Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain vào quản lý
                 nhà máy Dự án tích hợp bloc Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích
                 hợp blockchain vào quản lý nhà máy Dự án tích hợp bloc Dự án tích hợp blockchain vào
