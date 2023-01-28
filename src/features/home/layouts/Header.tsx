@@ -1,8 +1,12 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { PublishTwoTone } from "@mui/icons-material";
 import { Button, Container, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
+import { Project } from "@/core/models/project";
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
 import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
@@ -10,6 +14,8 @@ import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransiti
 import { AppReact } from "@/utils/types/react";
 
 import { homeLinks } from "../home-links";
+import { EditProjectDialog } from "../project-management/tabs/my-project-tab/components/EditProjectDialog";
+import { projectSchema } from "../project-management/tabs/my-project-tab/form/shema";
 import { UserDropdownMenu } from "./UserDropdownMenu";
 
 type Props = {
@@ -19,12 +25,22 @@ type Props = {
 export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBottom = false }) => {
   const { navigate } = useNavigateWithTransition();
   const { pathname } = useLocation();
+  const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
   const handleSwitchPage = (url: string) => () => {
     navigate(url);
   };
 
+  const projectFormProps = useForm<Project>({
+    resolver: yupResolver(projectSchema("project")),
+    shouldUnregister: true,
+  });
+
   const handleNavigateToHome = () => {
     navigate(routePaths.home.children.feed.url);
+  };
+
+  const handleOpenEditDialog = () => {
+    setIsOpenEditDialog(true);
   };
 
   return (
@@ -81,6 +97,7 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
           </Stack>
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <Button
+              onClick={handleOpenEditDialog}
               sx={{ height: "fit-content" }}
               variant="contained"
               startIcon={<PublishTwoTone />}
@@ -91,6 +108,13 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
           </Stack>
         </Stack>
       </Container>
+
+      <EditProjectDialog
+        mode="create"
+        formProps={projectFormProps}
+        isOpenEditDialog={isOpenEditDialog}
+        setIsOpenEditDialog={setIsOpenEditDialog}
+      />
     </Stack>
   );
 };
