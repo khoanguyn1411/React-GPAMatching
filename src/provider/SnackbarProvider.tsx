@@ -28,7 +28,12 @@ export const SnackbarProvider: AppReact.FC.Children = ({ children }) => {
   return (
     <>
       {children}
-      <Snackbar open={snackbarStatus.isOpen} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={snackbarStatus.isOpen}
+        autoHideDuration={4000}
+        onClose={handleClose}
+      >
         <Alert
           variant="filled"
           onClose={handleClose}
