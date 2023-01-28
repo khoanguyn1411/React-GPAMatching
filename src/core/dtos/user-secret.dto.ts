@@ -4,7 +4,7 @@ export interface UserSecretDto {
 }
 
 export interface UserSecretCreationDto {
-  readonly id_token: string;
+  readonly tokenId: string;
 }
 
 export type UserRefreshSecretDto = Pick<UserSecretDto, "refreshToken">;

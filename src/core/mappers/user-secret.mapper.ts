@@ -19,7 +19,7 @@ class UserSecretMapper
   }
   public toCreationDto(data: UserSecretCreation): UserSecretCreationDto {
     return {
-      id_token: data.idToken,
+      tokenId: data.idToken,
     };
   }
 

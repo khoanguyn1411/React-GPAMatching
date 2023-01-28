@@ -1,10 +1,8 @@
 import styled from "@emotion/styled";
 import { FilterAlt, Search } from "@mui/icons-material";
 import { Grid, Stack, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
 import { FC, useEffect, useState } from "react";
 
-import { http } from "@/api/api-core";
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { Skill } from "@/core/models/skills";
 import { AppCheckbox } from "@/shared/components/checkbox-group/AppCheckbox";
