@@ -23,21 +23,10 @@ export const MemberList: FC<Props> = ({ list }) => {
   };
   return (
     <>
-      <Stack direction="row" rowGap={1} columnGap={0.2} flexWrap="wrap">
+      <Stack direction="row" rowGap={1} columnGap={1.5} flexWrap="wrap">
         {list.map((member) => (
           <Tooltip arrow key={member.id} title={member.fullName}>
-            <Button
-              onClick={handleOpenDialog}
-              disableRipple
-              sx={{
-                height: "fit-content",
-                width: 50,
-                padding: 0,
-                "&:hover": {
-                  background: "none",
-                },
-              }}
-            >
+            <Box sx={{ cursor: "pointer" }} onClick={handleOpenDialog}>
               {member.isLeader && (
                 <Box position="relative">
                   <Box position="absolute" right={-12} top={-10} zIndex={2}>
@@ -47,7 +36,7 @@ export const MemberList: FC<Props> = ({ list }) => {
                 </Box>
               )}
               {!member.isLeader && <Avatar sx={{ width: 50, height: 50 }} src={member.avatarUrl} />}
-            </Button>
+            </Box>
           </Tooltip>
         ))}
       </Stack>

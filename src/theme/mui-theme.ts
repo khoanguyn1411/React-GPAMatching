@@ -6,6 +6,8 @@ export const appColors = {
 
   backgroundBlur: "rgba(251, 251, 251, 1)",
 
+  borderPrimary: "rgba(170, 164, 164, 0.1)",
+
   textPrimary: "#333",
   textPrimaryLight: "rgba(19, 15, 38, 0.6)",
 
@@ -71,7 +73,7 @@ export const muiTheme = createTheme({
       styleOverrides: {
         h1: { fontSize: "22px", fontWeight: 600, letterSpacing: "0.5" },
         h2: { fontSize: "18px", fontWeight: 600 },
-        h3: { fontSize: "16px", fontWeight: 600 },
+        h3: { fontSize: "16px", fontWeight: 700 },
         h4: { fontSize: "14px", fontWeight: 600 },
       },
     },

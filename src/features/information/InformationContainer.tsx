@@ -4,12 +4,14 @@ import { useAtom } from "jotai";
 import { FC } from "react";
 
 import { images } from "@/assets/images";
+import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 import { InformationContent } from "./components/InformationContent";
 import { informationActivePageAtom } from "./information-atoms";
 import style from "./InformationContainer.module.css";
 
 export const InformationContainer: FC = () => {
+  useScrollToTop();
   const [activePage] = useAtom(informationActivePageAtom);
   return (
     <Stack direction="row" justifyContent="space-between">

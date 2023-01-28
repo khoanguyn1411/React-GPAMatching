@@ -6,10 +6,12 @@ import { images } from "@/assets/images";
 import { firebaseAuth } from "@/firebase/firebase-config";
 import { firebaseUIConfig } from "@/firebase/firebase-ui-config";
 import { appColors } from "@/theme/mui-theme";
+import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 import style from "./LoginContainer.module.css";
 
 export const LoginContainer: FC = () => {
+  useScrollToTop();
   return (
     <Stack
       sx={{
