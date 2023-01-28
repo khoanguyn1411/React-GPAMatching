@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
 import { UserProfile } from "@/core/models/user";
-import { useAuthInfo } from "@/features/auth/useAuthInfo";
+import { useAuth } from "@/features/auth/useAuth";
 import {
   genderList,
   provinceList,
@@ -20,7 +20,7 @@ import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
+import { useCommon } from "@/utils/hooks/useCommon";
 import { AppReact } from "@/utils/types/react";
 
 import { schema } from "./schema";
@@ -39,8 +39,8 @@ const skillList: Option[] = enumToArray(Skill).map((skill) => ({
 }));
 
 export const AccountManagementContainer: FC = () => {
-  useScrollToTop();
-  const { currentUser } = useAuthInfo();
+  useCommon();
+  const { currentUser } = useAuth();
   const {
     control,
     formState: { errors, isDirty },

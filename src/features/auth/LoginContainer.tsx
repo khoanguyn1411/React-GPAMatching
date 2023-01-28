@@ -5,12 +5,12 @@ import { FC } from "react";
 import { images } from "@/assets/images";
 import { UserService } from "@/services/userService";
 import { appColors } from "@/theme/mui-theme";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
+import { useCommon } from "@/utils/hooks/useCommon";
 
 import style from "./LoginContainer.module.css";
 
 export const LoginContainer: FC = () => {
-  useScrollToTop();
+  useCommon();
 
   const handleLoginFirebase = () => {
     UserService.signInWithGoogle();

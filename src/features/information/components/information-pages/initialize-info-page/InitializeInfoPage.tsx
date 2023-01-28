@@ -9,7 +9,7 @@ import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { KnownVia } from "@/core/models/known-via";
 import { User } from "@/core/models/user";
 import { UserStudyYear } from "@/core/models/user-study-year";
-import { useAuthInfo } from "@/features/auth/useAuthInfo";
+import { useAuth } from "@/features/auth/useAuth";
 import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
@@ -61,7 +61,7 @@ export const provinceList: Option[] = provinces.map((province) => ({
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
-  const { currentUser } = useAuthInfo();
+  const { currentUser } = useAuth();
 
   const [userInformation, setUserInformation] = useAtom(informationUserAtom);
   const {

@@ -1,26 +1,19 @@
 import { ArrowRight, Description, PersonAdd, Star, WatchLater } from "@mui/icons-material";
 import { Button, Grid, Stack, Typography } from "@mui/material";
-import { useAtom } from "jotai";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { ProjectField } from "@/core/models/project-field";
-import { isRouteLoadingAtom } from "@/provider/RouterProvider";
 import { routePaths } from "@/routes";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
 import { MemberList } from "@/shared/others/member-list/MemberList";
 import { ProjectItem } from "@/shared/others/project-item/ProjectItem";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
+import { useCommon } from "@/utils/hooks/useCommon";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 export const ProjectDetailContainer: FC = () => {
-  useScrollToTop();
-  const [, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
-  useEffect(() => {
-    setIsRouteLoading(false);
-  }, [setIsRouteLoading]);
-
+  useCommon();
   const { navigate } = useNavigateWithTransition();
 
   const handleNavigateHomePage = () => {

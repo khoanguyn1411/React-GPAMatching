@@ -3,7 +3,7 @@ import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { FC, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import { useAuthInfo } from "@/features/auth/useAuthInfo";
+import { useAuth } from "@/features/auth/useAuth";
 import { UserService } from "@/services/userService";
 import { appColors } from "@/theme/mui-theme";
 import { CompareURL } from "@/utils/funcs/compare-url";
@@ -14,7 +14,7 @@ import { HomeMenu, homeMenus } from "../home-menus";
 export const UserDropdownMenu: FC = () => {
   const { navigate } = useNavigateWithTransition();
   const { pathname } = useLocation();
-  const { currentUser } = useAuthInfo();
+  const { currentUser } = useAuth();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
