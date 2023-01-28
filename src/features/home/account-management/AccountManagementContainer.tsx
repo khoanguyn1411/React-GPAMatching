@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
 import { UserProfile } from "@/core/models/user";
-import { useAuth } from "@/features/auth/useAuth";
+import { useAuthInfo } from "@/features/auth/useAuthInfo";
 import {
   genderList,
   provinceList,
@@ -40,7 +40,7 @@ const skillList: Option[] = enumToArray(Skill).map((skill) => ({
 
 export const AccountManagementContainer: FC = () => {
   useScrollToTop();
-  const { currentUser } = useAuth();
+  const { currentUser } = useAuthInfo();
   const {
     control,
     formState: { errors, isDirty },

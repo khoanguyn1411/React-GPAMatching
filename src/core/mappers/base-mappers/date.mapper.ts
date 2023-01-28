@@ -1,6 +1,6 @@
 import { DateUtils } from "@/utils/funcs/date-utils";
 
-export class DateMapper {
+class DateMapper {
   public fromDto(dto: string | undefined): string {
     return dto ? DateUtils.toFormat(dto, "US") : "";
   }

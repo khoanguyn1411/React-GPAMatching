@@ -5,24 +5,15 @@ import { FC } from "react";
 import { images } from "@/assets/images";
 import { UserService } from "@/services/userService";
 import { appColors } from "@/theme/mui-theme";
-import { useNotify } from "@/utils/hooks/useNotify";
 import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 import style from "./LoginContainer.module.css";
 
 export const LoginContainer: FC = () => {
   useScrollToTop();
-  const { notify } = useNotify();
-  const onSignInSuccess = () => {
-    notify({ message: "Đăng nhập thành công!", variant: "success" });
-  };
-
-  const onSignInFailed = () => {
-    notify({ message: "Đăng nhập thất bại!", variant: "error" });
-  };
 
   const handleLoginFirebase = () => {
-    UserService.signInWithGoogle(onSignInSuccess, onSignInFailed);
+    UserService.signInWithGoogle();
   };
   return (
     <Stack
