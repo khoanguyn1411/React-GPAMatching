@@ -6,6 +6,7 @@ import { IMapperFromDto } from "./base-mappers/mapper";
 class UserProfileMapper implements IMapperFromDto<UserProfileDto, UserProfile> {
   public fromDto(data: UserProfileDto): UserProfile {
     return {
+      email: "",
       id: data._id,
       avatarUrl: data.avatar,
       createdAt: dateMapper.fromDto(data.createdAt),

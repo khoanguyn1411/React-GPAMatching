@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
-import { Project } from "@/core/models/project";
+import { ProjectCreation } from "@/core/models/project";
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
 import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
@@ -31,7 +31,7 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
     navigate(url);
   };
 
-  const projectFormProps = useForm<Project>({
+  const projectFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("project")),
     shouldUnregister: true,
   });
@@ -78,11 +78,11 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
             </Typography>
           </Stack>
           <Stack component="nav" direction="row" justifyContent="space-between" spacing={2}>
-            {homeLinks.map((link) => {
+            {homeLinks.map((link, index) => {
               const isLinkActive = CompareURL.isInclude(link.routePath.path, pathname);
               return (
                 <Button
-                  key={link.routePath.path}
+                  key={`${link.routePath.path}-${index}`}
                   sx={{
                     fontSize: "14px",
                     fontWeight: 600,

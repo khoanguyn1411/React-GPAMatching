@@ -13,9 +13,9 @@ export const AppProvider: AppReact.FC.Children = ({ children }) => {
       <AppLocalizationProvider>
         <MediaContextProvider>
           <SnackbarProvider>
-            <RouterProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </RouterProvider>
+            <AuthProvider>
+              <RouterProvider>{children}</RouterProvider>
+            </AuthProvider>
           </SnackbarProvider>
         </MediaContextProvider>
       </AppLocalizationProvider>

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Grid, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
@@ -44,12 +44,16 @@ export const AccountManagementContainer: FC = () => {
   const { currentUser } = useAuth();
   const {
     control,
+    reset,
     formState: { errors, isDirty },
     handleSubmit,
   } = useForm<UserCreation & UserSkillSet>({
     resolver: yupResolver(schema),
-    defaultValues: { email: "123123" },
   });
+
+  useEffect(() => {
+    reset({ email: currentUser?.email ?? "" });
+  }, [currentUser, reset]);
 
   const handleUpdateUserProfile = (user: UserCreation & UserSkillSet) => {
     console.log(user);
@@ -80,9 +84,9 @@ export const AccountManagementContainer: FC = () => {
 
         <Stack>
           <Typography component="span" variant="h2">
-            Đặng Khánh Linh
+            {currentUser?.fullName}
           </Typography>
-          <Typography component="span">linhdk20411c@st.uel.edu.vn</Typography>
+          <Typography component="span">{currentUser?.email}</Typography>
         </Stack>
       </Stack>
       <Stack>

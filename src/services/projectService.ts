@@ -1,5 +1,19 @@
+import { http } from "@/api/api-core";
+import { composeHttpMethodResult } from "@/api/api-utilities";
+import { ProjectDto } from "@/core/dtos/project.dto";
+import { projectMapper } from "@/core/mappers/project.mapper";
+import { Project } from "@/core/models/project";
+import { ComposeUrlService } from "@/utils/funcs/compose-url";
+
 export namespace ProjectService {
-  export function getProjects() {
-    return null;
+  const projectUrlService = new ComposeUrlService("feed");
+  export async function getProjects(): Promise<readonly Project[]> {
+    const projectUrl = projectUrlService.getBaseUrl();
+    const method = http.get<readonly ProjectDto[]>(projectUrl);
+    const result = await composeHttpMethodResult(method);
+    if (result.result_dto == null) {
+      return [];
+    }
+    return result.result_dto.map((project) => projectMapper.fromDto(project));
   }
 }

@@ -7,7 +7,7 @@ export const JoinedProjectTab: FC = () => {
   return (
     <Container>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <ProjectItem />
         </Grid>
         <Grid item xs={6}>
@@ -15,7 +15,7 @@ export const JoinedProjectTab: FC = () => {
         </Grid>
         <Grid item xs={6}>
           <ProjectItem />
-        </Grid>
+        </Grid> */}
       </Grid>
     </Container>
   );

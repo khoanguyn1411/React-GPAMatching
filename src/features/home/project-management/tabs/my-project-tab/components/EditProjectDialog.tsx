@@ -11,7 +11,7 @@ import {
 import { FC, useRef } from "react";
 import { UseFormReturn } from "react-hook-form";
 
-import { Project } from "@/core/models/project";
+import { ProjectCreation } from "@/core/models/project";
 import { FormService } from "@/utils/funcs/form-service";
 import { AppReact } from "@/utils/types/react";
 
@@ -21,7 +21,7 @@ type Props = {
   isOpenEditDialog: boolean;
   setIsOpenEditDialog: AppReact.State.Dispatch<boolean>;
   mode: "edit" | "create";
-  formProps: UseFormReturn<Project>;
+  formProps: UseFormReturn<ProjectCreation>;
 };
 
 export const EditProjectDialog: FC<Props> = ({
@@ -47,7 +47,7 @@ export const EditProjectDialog: FC<Props> = ({
     buttonRef.current.click();
   };
 
-  const handleEditProject = (edit: Project) => {
+  const handleEditProject = (edit: ProjectCreation) => {
     console.log(edit);
   };
 

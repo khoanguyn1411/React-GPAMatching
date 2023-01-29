@@ -2,15 +2,40 @@ import { Description, PersonAdd } from "@mui/icons-material";
 import { Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
+import { Project } from "@/core/models/project";
+import { ProjectStatus } from "@/core/models/project-status";
 import { routePaths } from "@/routes";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
 import { appColors } from "@/theme/mui-theme";
+import { DateUtils } from "@/utils/funcs/date-utils";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
 import { ProjectButton } from "../project-button/ProjectButton";
 
-export const ProjectItem: FC = () => {
+type Props = Project;
+
+export const ProjectItem: FC<Props> = ({
+  status,
+  name,
+  description,
+  field,
+  findingMemberQuantity,
+  createdAt,
+}) => {
   const { navigate } = useNavigateWithTransition();
+
+  const getStatusStyle = () => {
+    if (status === ProjectStatus.NotFinished || status === ProjectStatus.Other) {
+      return {
+        main: appColors.warning,
+        bg: appColors.warningLight,
+      };
+    }
+    return {
+      main: appColors.success,
+      bg: appColors.successLight,
+    };
+  };
   const handleNavigateToDetailProjectPage = () => {
     navigate(routePaths.home.children.projectDetail.children.id.dynamicUrl({ id: "1" }));
   };
@@ -39,12 +64,12 @@ export const ProjectItem: FC = () => {
           noWrap
           sx={{ maxWidth: 220 }}
           title="Đang phát triển"
-          color={appColors.success}
+          color={getStatusStyle().main}
           fontWeight={500}
-          bgcolor={appColors.successLight}
-          border={`1.5px solid ${appColors.success}`}
+          bgcolor={getStatusStyle().bg}
+          border={`1.5px solid ${getStatusStyle().main}`}
         >
-          Đang phát triển
+          {status}
         </Typography>
       </Stack>
       <Stack
@@ -54,7 +79,7 @@ export const ProjectItem: FC = () => {
         component="button"
       >
         <Typography component="a" fontSize={"18px"} fontWeight={700}>
-          Dự án tích hợp blockchain vào quản lý nhà máy
+          {name}
         </Typography>
         <Typography
           sx={{
@@ -66,9 +91,7 @@ export const ProjectItem: FC = () => {
           }}
           textAlign="justify"
         >
-          Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain vào quản lý nhà
-          máy Dự án Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain vào quản
-          lý nhà máy Dự án
+          {description}
         </Typography>
         <Stack>
           <Stack spacing={2}>
@@ -77,7 +100,7 @@ export const ProjectItem: FC = () => {
               <Typography component="span">
                 Lĩnh vực:{" "}
                 <Typography component="span" sx={{ color: appColors.textPrimaryLight }}>
-                  Khoa học - Công nghệ
+                  {field}
                 </Typography>
               </Typography>
             </Stack>
@@ -87,7 +110,7 @@ export const ProjectItem: FC = () => {
               <Typography component="span">
                 Thành viên cần tuyển:{" "}
                 <Typography component="span" sx={{ color: appColors.textPrimaryLight }}>
-                  3
+                  {findingMemberQuantity}
                 </Typography>
               </Typography>
             </Stack>
@@ -102,7 +125,7 @@ export const ProjectItem: FC = () => {
         alignItems="center"
       >
         <Typography component="em" color={appColors.textPrimaryLight}>
-          15:00 27/01/2023
+          {DateUtils.toFormat(createdAt, "VN")}
         </Typography>
         <ProjectButton type="cancel" />
       </Stack>

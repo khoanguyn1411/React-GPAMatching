@@ -1,6 +1,6 @@
 import { Gender } from "./gender";
 import { KnownVia } from "./known-via";
-import { Project } from "./project";
+import { ProjectCreation } from "./project";
 import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
 import { UserWithNoIdea } from "./user-with-no-idea";
@@ -25,6 +25,7 @@ export interface UserProfile {
   readonly avatarUrl: string;
   readonly createdAt: Date;
   readonly fullName: string;
+  readonly email: string;
   readonly isAdmin: boolean;
   readonly isFilledInformation: boolean;
   readonly isOrganizer: boolean;
@@ -35,6 +36,6 @@ export interface UserProfile {
 
 export type UserInformation = UserCreation &
   UserSkillSet & {
-    project: Project | null;
+    project: ProjectCreation | null;
     userWithNoIdea: UserWithNoIdea | null;
   };

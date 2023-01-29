@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Project } from "@/core/models/project";
+import { ProjectCreation } from "@/core/models/project";
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
 import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
 import { AppRadio } from "@/shared/components/radio/Radio";
@@ -33,12 +33,12 @@ export const IdeaPage: FC = () => {
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
   });
-  const gotIdeaFormProps = useForm<Project>({
+  const gotIdeaFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("full")),
     shouldUnregister: true,
   });
 
-  const submitGotIdeaForm = (data: Project) => {
+  const submitGotIdeaForm = (data: ProjectCreation) => {
     setIsFilledInfo(true);
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {

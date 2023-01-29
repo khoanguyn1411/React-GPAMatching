@@ -72,7 +72,7 @@ export const InitializeInfoPage: FC = () => {
     resolver: yupResolver(schema),
     defaultValues: userInformation
       ? {
-          email: "khoa@gmail.com",
+          email: userInformation.email,
           fullName: userInformation.fullName,
           gender: userInformation.gender,
           dob: userInformation.dob,
@@ -84,7 +84,7 @@ export const InitializeInfoPage: FC = () => {
           isReadyToJoin: userInformation.isReadyToJoin,
         }
       : {
-          email: "khoa@gmail.com",
+          email: currentUser?.email ?? "",
           fullName: currentUser?.fullName ?? "",
         },
   });

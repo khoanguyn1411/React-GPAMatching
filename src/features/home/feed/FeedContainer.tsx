@@ -86,8 +86,8 @@ export const FeedContainer: FC = () => {
           </Stack>
           <CheckboxGroup value={selectedSkills} onChange={handleChangeSelectedSkills}>
             <Grid container columnSpacing={0.5}>
-              {enumToArray(Skill).map((skill) => (
-                <Grid md={2} sm={4} xs={6} item key={skill}>
+              {enumToArray(Skill).map((skill, index) => (
+                <Grid md={2} sm={4} xs={6} item key={`${skill}-${index}`}>
                   <AppCheckbox
                     checkboxProps={{ size: "small" }}
                     formControlLabelProps={{

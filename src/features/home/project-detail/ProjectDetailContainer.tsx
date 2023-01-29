@@ -116,7 +116,7 @@ export const ProjectDetailContainer: FC = () => {
         </Button>
       </Stack>
 
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         <Grid item xs={6}>
           <ProjectItem />
         </Grid>
@@ -124,7 +124,7 @@ export const ProjectDetailContainer: FC = () => {
         <Grid item xs={6}>
           <ProjectItem />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Stack>
   );
 };
