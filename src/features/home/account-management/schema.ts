@@ -32,7 +32,6 @@ export const schema = yup.object().shape<YupValidation<UserCreation & UserSkillS
       return value ? value.length > 0 : false;
     }),
   socialLink: yup.string(),
-  googleId: yup.string(),
   knownVia: yup.string(),
   isReadyToJoin: yup.string(),
 });

@@ -29,6 +29,7 @@ export const AppAutocomplete: FC<Props> = ({ list, value, placeholder, onChange 
   return (
     <Autocomplete
       options={list}
+      isOptionEqualToValue={(option, value) => option.value === value.value}
       value={selected}
       onChange={handleInputChange}
       renderInput={(params) => (

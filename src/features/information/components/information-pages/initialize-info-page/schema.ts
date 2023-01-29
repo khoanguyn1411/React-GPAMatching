@@ -27,5 +27,4 @@ export const schema = yup.object().shape<YupValidation<UserCreation>>({
   avatarUrl: yup.string(),
   avatar: yup.mixed(),
   homeAddress: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
-  googleId: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
 });

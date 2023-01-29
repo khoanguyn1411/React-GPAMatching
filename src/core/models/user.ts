@@ -10,7 +10,6 @@ export type UserCreation = Pick<UserProfile, "fullName" | "avatarUrl"> & {
   readonly phoneNumber: string;
   readonly socialLink: string;
   readonly email: string;
-  readonly googleId: string;
   readonly dob: Date;
   readonly gender: Gender;
   readonly yearOfStudent: UserStudyYear;

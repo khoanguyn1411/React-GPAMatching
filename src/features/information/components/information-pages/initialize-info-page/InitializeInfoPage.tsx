@@ -82,7 +82,7 @@ export const InitializeInfoPage: FC = () => {
           knownVia: userInformation.knownVia,
           yearOfStudent: userInformation.yearOfStudent,
           isReadyToJoin: userInformation.isReadyToJoin,
-          googleId: userInformation.googleId,
+          homeAddress: userInformation.homeAddress,
         }
       : {
           email: currentUser?.email ?? "",

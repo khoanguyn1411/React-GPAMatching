@@ -1,8 +1,9 @@
 import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
 import { UserProfileDto } from "@/core/dtos/user.dto";
+import { userMapper } from "@/core/mappers/user.mapper";
 import { userProfileMapper } from "@/core/mappers/user-profile.mapper";
-import { UserProfile } from "@/core/models/user";
+import { UserInformation, UserProfile } from "@/core/models/user";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProfileService {
@@ -19,5 +20,12 @@ export namespace ProfileService {
     } catch (error) {
       return new Error("Login Failed");
     }
+  }
+
+  export async function updateProfile(data: UserInformation) {
+    const url = profileUrlService.getBaseUrl();
+    const dataDto = userMapper.toCreationDto(data);
+    const method = http.put(url, dataDto);
+    return composeHttpMethodResult(method);
   }
 }

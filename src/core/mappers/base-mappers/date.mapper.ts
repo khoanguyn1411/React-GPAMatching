@@ -5,8 +5,8 @@ class DateMapper {
     return new Date(dto);
   }
 
-  public toDto(model: string | null | undefined): string | undefined {
-    return model ? DateUtils.toFormat(model, "API") : undefined;
+  public toDto(model: Date): string {
+    return DateUtils.toFormat(model, "API");
   }
 }
 

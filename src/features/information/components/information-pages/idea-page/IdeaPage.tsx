@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,13 +12,16 @@ import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
 import {
   informationActivePageAtomFn,
+  informationUserAtom,
   isAlreadyFilledInformationFormAtom,
+  skillSetAtom,
 } from "../../../information-atoms";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
 import { NoIdeaTab } from "./idea-tabs/NoIdeaTab";
 import { userWithNoIdeaSchema } from "./idea-tabs/schema";
+import { useIdeaQuery } from "./useIdeaQuery";
 
 enum TabValue {
   GotIdea = "gotIdea",
@@ -27,12 +30,19 @@ enum TabValue {
 
 export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
-  const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
   const [, setIsFilledInfo] = useAtom(isAlreadyFilledInformationFormAtom);
+  const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
+
+  const [userSkillSet] = useAtom(skillSetAtom);
+  const [userCreation] = useAtom(informationUserAtom);
+
+  const { isLoading, mutate } = useIdeaQuery(setIsFilledInfo);
+
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
   });
+
   const gotIdeaFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("full")),
     shouldUnregister: true,
@@ -42,7 +52,16 @@ export const IdeaPage: FC = () => {
     setIsFilledInfo(true);
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {
-    setIsFilledInfo(true);
+    if (userSkillSet == null || userCreation == null) {
+      return;
+    }
+    mutate({
+      ...userSkillSet,
+      ...userCreation,
+      ...data,
+      userWithNoIdea: data,
+      project: null,
+    });
   };
 
   const initializeSubmitFn = () => {
@@ -66,11 +85,16 @@ export const IdeaPage: FC = () => {
         {activeTab === TabValue.NoIdea && <NoIdeaTab formProps={noIdeaFormProps} />}
       </InformationContentWrapper>
       <InformationActionWrapper>
-        <Button onClick={decreasePage} variant="outlined">
+        <Button disabled={isLoading} onClick={decreasePage} variant="outlined">
           Quay lại
         </Button>
 
-        <Button type="submit" variant="contained">
+        <Button
+          startIcon={isLoading && <CircularProgress size={17} color="inherit" />}
+          disabled={isLoading}
+          type="submit"
+          variant="contained"
+        >
           Hoàn thành
         </Button>
       </InformationActionWrapper>
