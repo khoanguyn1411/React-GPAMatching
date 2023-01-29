@@ -21,4 +21,4 @@ export const informationUserAtom = atom<UserCreation | null>(null);
 export const skillSetAtom = atom<UserSkillSet | null>(null);
 
 /** Atoms to check whether user filled information form or not. */
-export const isAlreadyFilledInformationFormAtom = atom<boolean>(true);
+export const isAlreadyFilledInformationFormAtom = atom<boolean>(false);

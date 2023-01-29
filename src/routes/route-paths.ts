@@ -31,7 +31,6 @@ const homeRoutePaths = buildRoutePaths({
       },
       projectDetail: {
         path: "project-detail",
-        children: { id: { path: ":id" } },
       },
       account: { path: "account" },
     },

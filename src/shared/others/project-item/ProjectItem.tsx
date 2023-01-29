@@ -3,6 +3,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { Project } from "@/core/models/project";
+import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
 import { routePaths } from "@/routes";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
@@ -15,6 +16,7 @@ import { ProjectButton } from "../project-button/ProjectButton";
 type Props = Project;
 
 export const ProjectItem: FC<Props> = ({
+  id,
   status,
   name,
   description,
@@ -37,7 +39,7 @@ export const ProjectItem: FC<Props> = ({
     };
   };
   const handleNavigateToDetailProjectPage = () => {
-    navigate(routePaths.home.children.projectDetail.children.id.dynamicUrl({ id: "1" }));
+    navigate({ pathname: routePaths.home.children.projectDetail.url, search: `id=${id}` });
   };
   return (
     <Stack
@@ -63,13 +65,13 @@ export const ProjectItem: FC<Props> = ({
           component="span"
           noWrap
           sx={{ maxWidth: 220 }}
-          title="Đang phát triển"
+          title={ProjectStatus.toReadable(status)}
           color={getStatusStyle().main}
           fontWeight={500}
           bgcolor={getStatusStyle().bg}
           border={`1.5px solid ${getStatusStyle().main}`}
         >
-          {status}
+          {ProjectStatus.toReadable(status)}
         </Typography>
       </Stack>
       <Stack
@@ -100,7 +102,7 @@ export const ProjectItem: FC<Props> = ({
               <Typography component="span">
                 Lĩnh vực:{" "}
                 <Typography component="span" sx={{ color: appColors.textPrimaryLight }}>
-                  {field}
+                  {ProjectField.toReadable(field)}
                 </Typography>
               </Typography>
             </Stack>

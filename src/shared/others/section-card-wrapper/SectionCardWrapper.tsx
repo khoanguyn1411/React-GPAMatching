@@ -15,6 +15,7 @@ export const SectionCardWrapper: AppReact.FC.PropsWithChildren<Props> = ({
     <Stack
       spacing={2}
       component="section"
+      justifyContent="space-between"
       padding={3}
       height={isFullHeight ? "100%" : "fit-content"}
       bgcolor="white"

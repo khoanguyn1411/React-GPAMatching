@@ -61,7 +61,7 @@ export const SelectMultiple: FC<Props> = ({
       renderValue={(selected) => {
         if (selected.length === 0) {
           return (
-            <Typography component="span" color={appColors.textPrimaryLight}>
+            <Typography component="span" color={appColors.placeholder}>
               {placeholder ?? "Chọn"}
             </Typography>
           );

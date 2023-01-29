@@ -14,6 +14,7 @@ export const ProjectWrapper: FC = () => {
     queryFn: () => ProjectService.getProjects(),
   });
   const isNoData = data == null || data.length === 0;
+
   if (isLoading) {
     return <CircleLoading mode="normal" />;
   }

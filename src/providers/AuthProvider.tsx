@@ -21,12 +21,14 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
   const [, setIsPending] = useAtom(isAuthPendingAtom);
+  const controller = new AbortController();
+
   const { notify } = useNotify();
   const notifyLoginFailed = () => notify({ message: "Đăng nhập thất bại!", variant: "error" });
   const notifyLoginSuccess = () => notify({ message: "Đăng nhập thành công!", variant: "success" });
 
   const handleLoginFailed = async () => {
-    await UserService.signOut();
+    UserService.signOut();
     setIsPending(false);
     setIsLoggedIn(false);
     setCurrentUser(null);
@@ -34,17 +36,16 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
 
   const handleAfterFirebaseValidation = async (user: User | null) => {
     const timeoutId = setTimeout(() => {
+      controller.abort();
       handleLoginFailed();
       notifyLoginFailed();
     }, TIMEOUT);
-    const userProfile = await ProfileService.getPersonal();
+    const userProfile = await ProfileService.getPersonal(controller);
     if (userProfile instanceof Error) {
       handleLoginFailed();
       clearTimeout(timeoutId);
       return;
     }
-    setIsPending(false);
-    setIsLoggedIn(true);
     clearTimeout(timeoutId);
     const getUserFullName = () => {
       if (!userProfile.fullName) {
@@ -58,6 +59,8 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       avatarUrl: user?.photoURL ?? "",
       email: user?.email ?? "",
     });
+    setIsPending(false);
+    setIsLoggedIn(true);
   };
 
   const signIn = async (user: User | null) => {
@@ -101,7 +104,7 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
         await handleAfterFirebaseValidation(user);
         return;
       }
-      await signIn(user);
+      signIn(user);
       return;
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.

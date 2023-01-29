@@ -1,5 +1,7 @@
 import { ProjectDto } from "../dtos/project.dto";
 import { Project } from "../models/project";
+import { ProjectField } from "../models/project-field";
+import { ProjectStatus } from "../models/project-status";
 import { Skill } from "../models/skills";
 import { dateMapper } from "./base-mappers/date.mapper";
 import { IMapperFromDto } from "./base-mappers/mapper";
@@ -15,8 +17,10 @@ class ProjectMapper implements IMapperFromDto<ProjectDto, Project> {
       createdAt: dateMapper.fromDto(data.createdAt),
       createdBy: data.createdBy,
       description: data.content,
-      field: projectFieldMapper.fromDto(data.category),
-      status: projectStatusMapper.fromDto(data.currentStage),
+      // field: projectFieldMapper.fromDto(data.category),
+      // status: projectStatusMapper.fromDto(data.currentStage),
+      field: ProjectField.AgroforestryAndFishery,
+      status: ProjectStatus.FinishedButNoProduct,
       followers: data.interesters,
       lastModifiedBy: data.lastModifiedBy,
       currentMemberQuantity: data.currentMemberCount.toString(),

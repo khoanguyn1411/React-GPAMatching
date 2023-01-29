@@ -16,4 +16,14 @@ export namespace ProjectService {
     }
     return result.result_dto.map((project) => projectMapper.fromDto(project));
   }
+
+  export async function getProjectById(id: Project["id"]): Promise<Project | null> {
+    const url = projectUrlService.constructUrlWithParam(id);
+    const method = http.get<ProjectDto>(url);
+    const result = await composeHttpMethodResult(method);
+    if (result.result_dto == null) {
+      return null;
+    }
+    return projectMapper.fromDto(result.result_dto);
+  }
 }

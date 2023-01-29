@@ -7,9 +7,9 @@ import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProfileService {
   const profileUrlService = new ComposeUrlService("profile");
-  export async function getPersonal(): Promise<UserProfile | Error> {
+  export async function getPersonal(controller: AbortController): Promise<UserProfile | Error> {
     const personalUrl = profileUrlService.concatWith(["personal"]);
-    const method = http.get<UserProfileDto>(personalUrl);
+    const method = http.get<UserProfileDto>(personalUrl, { signal: controller.signal });
     try {
       const result = await composeHttpMethodResult(method);
       if (result.result_dto == null) {

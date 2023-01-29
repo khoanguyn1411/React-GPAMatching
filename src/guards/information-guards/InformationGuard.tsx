@@ -9,6 +9,7 @@ import { CompareURL } from "@/utils/funcs/compare-url";
 export const InformationGuard: FC = () => {
   const location = useLocation();
   const [isAlreadyFilledInformation] = useAtom(isAlreadyFilledInformationFormAtom);
+
   if (isAlreadyFilledInformation) {
     if (CompareURL.isMatched(routePaths.home.url, location.pathname)) {
       return <Navigate to={routePaths.home.children.feed.url} replace />;

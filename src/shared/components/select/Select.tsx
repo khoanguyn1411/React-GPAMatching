@@ -9,7 +9,6 @@ import {
 import { FC, ReactNode } from "react";
 
 import { appColors } from "@/theme/mui-theme";
-import { AppReact } from "@/utils/types/react";
 
 export interface Option extends MenuItemProps {
   label: ReactNode;
@@ -41,7 +40,7 @@ export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, 
       renderValue={(selected) => {
         if (!selected) {
           return (
-            <Typography component="span" color={appColors.textPrimaryLight}>
+            <Typography component="span" color={appColors.placeholder}>
               {placeholder ?? "Chọn"}
             </Typography>
           );
