@@ -28,21 +28,21 @@ export namespace UserService {
       .catch((error) => onError?.(error));
   }
 
-  export function saveSecret(secret: UserSecret): void {
-    LocalStorage.setValue<UserSecret>(SECRET_KEY, secret);
+  export async function saveSecret(secret: UserSecret): Promise<void> {
+    return await LocalStorage.setValue<UserSecret>(SECRET_KEY, secret);
   }
 
-  export function getSecret(): UserSecret | null {
-    return LocalStorage.getValue<UserSecret>(SECRET_KEY);
+  export async function getSecret(): Promise<UserSecret | null> {
+    return await LocalStorage.getValue<UserSecret>(SECRET_KEY);
   }
 
-  export function clearSecret(): void {
+  export async function clearSecret(): Promise<void> {
     return LocalStorage.remove(SECRET_KEY);
   }
 
-  export function signOut(): void {
-    firebaseAuth.signOut();
-    UserService.clearSecret();
+  export async function signOut(): Promise<void> {
+    await UserService.clearSecret();
+    await firebaseAuth.signOut();
   }
 
   /**

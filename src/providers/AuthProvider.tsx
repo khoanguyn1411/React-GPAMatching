@@ -1,26 +1,43 @@
 import { GoogleAuthProvider, User } from "firebase/auth";
 import { atom, useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
+import { UserProfile } from "@/core/models/user";
 import { firebaseAuth } from "@/firebase/firebase-config";
+import { ProfileService } from "@/services/profileService";
 import { UserService } from "@/services/userService";
 import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
-export const currentUserAtom = atom<null | User>(null);
+export const currentUserAtom = atom<null | UserProfile>(null);
 export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(false);
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
+  const isAlreadyGetMe = useRef(false);
+
   const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
   const [, setIsPending] = useAtom(isAuthPendingAtom);
   const { notify } = useNotify();
-  const handleLoginFailed = () => {
+  const handleLoginFailed = async () => {
+    await UserService.signOut();
     setIsPending(false);
     setIsLoggedIn(false);
     setCurrentUser(null);
   };
+
+  const handleAfterFirebaseValidation = async (user: User | null) => {
+    const userProfile = await ProfileService.getPersonal();
+    if (userProfile instanceof Error) {
+      handleLoginFailed();
+      return;
+    }
+    setIsPending(false);
+    setIsLoggedIn(true);
+    setCurrentUser({ ...userProfile, avatarUrl: user?.photoURL ?? "" });
+  };
+
   const notifyLoginFailed = () => notify({ message: "Đăng nhập thất bại!", variant: "error" });
   const notifyLoginSuccess = () => notify({ message: "Đăng nhập thành công!", variant: "success" });
   const signIn = async (user: User | null) => {
@@ -36,31 +53,31 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
 
+    if (isAlreadyGetMe.current) {
+      isAlreadyGetMe.current = false;
+      return;
+    }
+
     const userSecret = await UserService.getUserSecret({ idToken: googleCredential.idToken });
     if (userSecret instanceof Error) {
       handleLoginFailed();
       notifyLoginFailed();
       return;
     }
-    UserService.saveSecret(userSecret);
+    await UserService.saveSecret(userSecret);
     const timeoutId = setTimeout(() => {
       handleLoginFailed();
     }, 10000);
-
-    setIsPending(false);
-    setIsLoggedIn(!!user);
-    setCurrentUser(user);
+    isAlreadyGetMe.current = true;
+    handleAfterFirebaseValidation(user);
     clearTimeout(timeoutId);
     notifyLoginSuccess();
   };
-
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged(async (user) => {
-      const existedSecret = UserService.getSecret();
-      if (existedSecret != null) {
-        setIsPending(false);
-        setIsLoggedIn(!!user);
-        setCurrentUser(user);
+      const existedSecret = await UserService.getSecret();
+      if (existedSecret != null && user != null && !isAlreadyGetMe.current) {
+        handleAfterFirebaseValidation(user);
         return;
       }
       await signIn(user);

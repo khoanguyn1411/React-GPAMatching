@@ -54,7 +54,7 @@ export const UserDropdownMenu: FC = () => {
         aria-haspopup="true"
         aria-expanded={isMenuOpen ? "true" : undefined}
       >
-        <Avatar sx={{ width: 40, height: 40 }} src={currentUser?.photoURL ?? ""} />
+        <Avatar sx={{ width: 40, height: 40 }} src={currentUser?.avatarUrl ?? ""} />
         <ArrowDropDown sx={{ color: appColors.textPrimary }} />
       </Button>
       <Menu

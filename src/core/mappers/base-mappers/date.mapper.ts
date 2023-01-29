@@ -1,8 +1,8 @@
 import { DateUtils } from "@/utils/funcs/date-utils";
 
 class DateMapper {
-  public fromDto(dto: string | undefined): string {
-    return dto ? DateUtils.toFormat(dto, "US") : "";
+  public fromDto(dto: string): Date {
+    return new Date(dto);
   }
 
   public toDto(model: string | null | undefined): string | undefined {

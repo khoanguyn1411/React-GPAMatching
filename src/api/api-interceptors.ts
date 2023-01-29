@@ -5,7 +5,7 @@ import { UserService } from "@/services/userService";
 import { http } from "./api-core";
 
 export async function interceptToken(config: AxiosRequestConfig): Promise<AxiosRequestConfig> {
-  const token = UserService.getSecret();
+  const token = await UserService.getSecret();
   if (!UserService.shouldInterceptToken(config) || token == null) {
     return config;
   }
@@ -24,7 +24,7 @@ export async function interceptToken(config: AxiosRequestConfig): Promise<AxiosR
 export function refreshToken() {
   return async (error: AxiosError): Promise<AxiosResponse> => {
     const { config } = error;
-    const token = UserService.getSecret();
+    const token = await UserService.getSecret();
     if (config == null || token == null || error.response == null) {
       return Promise.reject(error);
     }

@@ -4,7 +4,8 @@ import { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
-import { UserProfile } from "@/core/models/user";
+import { UserCreation } from "@/core/models/user";
+import { UserSkillSet } from "@/core/models/user-skill-set";
 import { useAuth } from "@/features/auth/useAuth";
 import {
   genderList,
@@ -45,12 +46,12 @@ export const AccountManagementContainer: FC = () => {
     control,
     formState: { errors, isDirty },
     handleSubmit,
-  } = useForm<UserProfile>({
+  } = useForm<UserCreation & UserSkillSet>({
     resolver: yupResolver(schema),
-    defaultValues: { email: currentUser?.email ?? "" },
+    defaultValues: { email: "123123" },
   });
 
-  const handleUpdateUserProfile = (user: UserProfile) => {
+  const handleUpdateUserProfile = (user: UserCreation & UserSkillSet) => {
     console.log(user);
   };
 
@@ -70,7 +71,7 @@ export const AccountManagementContainer: FC = () => {
           name="avatar"
           render={({ field: { value, onChange } }) => (
             <AvatarPicker
-              defaultImageLink={currentUser?.photoURL ?? ""}
+              defaultImageLink={currentUser?.avatarUrl ?? ""}
               value={value}
               onChange={onChange}
             />
@@ -117,10 +118,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Ngày sinh" isRequired error={errors.dateOfBirth?.message}>
+            <FormItem label="Ngày sinh" isRequired error={errors.dob?.message}>
               <Controller
                 control={control}
-                name="dateOfBirth"
+                name="dob"
                 render={({ field: { value, onChange } }) => (
                   <AppDatePicker disableFuture value={value} onChange={onChange} />
                 )}
@@ -129,10 +130,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Năm" isRequired error={errors.year?.message}>
+            <FormItem label="Năm" isRequired error={errors.yearOfStudent?.message}>
               <Controller
                 control={control}
-                name="year"
+                name="yearOfStudent"
                 render={({ field: { value, onChange } }) => (
                   <AppSelect
                     placeholder="Chọn năm"
@@ -163,10 +164,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Đơn vị học tập" isRequired error={errors.studyUnit?.message}>
+            <FormItem label="Đơn vị học tập" isRequired error={errors.school?.message}>
               <Controller
                 control={control}
-                name="studyUnit"
+                name="school"
                 render={({ field: { value, onChange } }) => (
                   <AppAutocomplete
                     placeholder="Tìm và chọn trường"
@@ -198,10 +199,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Chọn tỉnh thành" isRequired error={errors.city?.message}>
+            <FormItem label="Chọn tỉnh thành" isRequired error={errors.homeAddress?.message}>
               <Controller
                 control={control}
-                name="city"
+                name="homeAddress"
                 render={({ field: { value, onChange } }) => (
                   <AppAutocomplete
                     placeholder="Tìm và chọn tỉnh thành"

@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-import { User } from "@/core/models/user";
+import { UserCreation } from "@/core/models/user";
 import { UserSkillSet } from "@/core/models/user-skill-set";
 
 /** Atoms for page interaction. */
@@ -17,7 +17,7 @@ export const informationActivePageAtomFn = {
 };
 
 /** Atoms for storing user information each page. */
-export const informationUserAtom = atom<User | null>(null);
+export const informationUserAtom = atom<UserCreation | null>(null);
 export const skillSetAtom = atom<UserSkillSet | null>(null);
 
 /** Atoms to check whether user filled information form or not. */
