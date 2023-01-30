@@ -14,7 +14,7 @@ export const CheckProvider: AppReact.FC.Children = ({ children }) => {
     if (!currentUser) {
       return;
     }
-    setIsAlreadyFilledInformation(currentUser?.isFilledInformation);
+    setIsAlreadyFilledInformation(currentUser.isFilledInformation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
   return <>{children}</>;

@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
 import { Option } from "../select/Select";
 
@@ -19,6 +19,7 @@ export const AppAutocomplete: FC<Props> = ({ list, value, placeholder, onChange 
   const [selected, setSelected] = useState<AutocompleteOption | null>(() => {
     return list.find((item) => item.value === value) ?? null;
   });
+
   const handleInputChange = (
     _event: React.SyntheticEvent,
     option: AutocompleteOption | null,
@@ -26,6 +27,11 @@ export const AppAutocomplete: FC<Props> = ({ list, value, placeholder, onChange 
     onChange(option ? option.value : "");
     setSelected(option);
   };
+
+  useEffect(() => {
+    setSelected(list.find((item) => item.value === value) ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
   return (
     <Autocomplete
       options={list}

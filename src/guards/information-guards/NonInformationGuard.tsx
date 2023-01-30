@@ -7,7 +7,6 @@ import { routePaths } from "@/routes";
 
 export const NonInformationGuard: FC = () => {
   const [isAlreadyFilledInformation] = useAtom(isAlreadyFilledInformationFormAtom);
-
   if (!isAlreadyFilledInformation) {
     return <Outlet />;
   }

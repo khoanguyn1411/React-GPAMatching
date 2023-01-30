@@ -1,14 +1,35 @@
-import { UserCreationDto } from "../dtos/user.dto";
+import { UserCreationDto, UserDto } from "../dtos/user.dto";
 import { IsReadyToJoin } from "../models/is-ready-to-join";
 import { KnownVia } from "../models/known-via";
-import { UserInformation } from "../models/user";
+import { User, UserInformation } from "../models/user";
 import { dateMapper } from "./base-mappers/date.mapper";
 import { genderMapper } from "./base-mappers/gender.mapper";
-import { IMapperToCreationDto } from "./base-mappers/mapper";
+import { IMapperFromDto, IMapperToCreationDto } from "./base-mappers/mapper";
 import { skillMapper } from "./skill.mapper";
 import { userStudyYearMapper } from "./user-study-year.mapper";
 
-class UserMapper implements IMapperToCreationDto<UserCreationDto, UserInformation> {
+class UserMapper
+  implements IMapperToCreationDto<UserCreationDto, UserInformation>, IMapperFromDto<UserDto, User>
+{
+  public fromDto(data: UserDto): User {
+    return {
+      fullName: data.fullName,
+      avatarUrl: data.avatar,
+      dob: dateMapper.fromDto(data.dob),
+      experience: data.bio,
+      phoneNumber: data.phoneNumber,
+      gender: genderMapper.fromDto(data.gender),
+      isFilledInformation: data.isFilledInformation,
+      socialLink: data.socialLink,
+      yearOfStudent: userStudyYearMapper.fromDto(data.yearOfStudent),
+      school: data.school,
+      homeAddress: data.homeAddress,
+      knownVia: data.wayToKnow as KnownVia,
+      isReadyToJoin: data.wayToKnow === IsReadyToJoin.toReadable(true) ? true : false,
+      readyToJoin: data.wayToKnow as IsReadyToJoin.ThreeChoices,
+      skillSet: data.skillsSet.map((skill) => skillMapper.fromDto(skill)),
+    };
+  }
   public toCreationDto(data: UserInformation): UserCreationDto {
     return {
       fullName: data.fullName,

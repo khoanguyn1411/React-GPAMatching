@@ -1,6 +1,7 @@
+import { StrictOmit } from "@/utils/types/common";
+
 import { Gender } from "./gender";
 import { KnownVia } from "./known-via";
-import { ProjectCreation } from "./project";
 import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
 import { UserWithNoIdea } from "./user-with-no-idea";
@@ -37,3 +38,4 @@ export interface UserProfile extends UserFilledInformation {
 }
 
 export type UserInformation = UserCreation & UserFilledInformation & UserSkillSet & UserWithNoIdea;
+export type User = StrictOmit<UserInformation, "email">;

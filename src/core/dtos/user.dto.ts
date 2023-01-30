@@ -2,6 +2,10 @@ import { GenderDto } from "./gender.dto";
 import { SkillDto } from "./skill.dto";
 import { UserStudyYearDto } from "./user-study-year.dto";
 
+export type UserDto = UserCreationDto & {
+  readonly teamIds: readonly UserProfileDto["_id"][];
+};
+
 export type UserCreationDto = Pick<
   UserProfileDto,
   "fullName" | "isFilledInformation" | "avatar" | "bio" | "skillsSet"

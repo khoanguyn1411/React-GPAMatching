@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import { StrictOmit } from "@/utils/types/common";
 import { AppReact } from "@/utils/types/react";
@@ -22,6 +22,10 @@ export const AppDatePicker: FC<Props> = ({ value, onChange, ...datePickerProps }
     setSelectedDate(newValue);
     onChange(newValue ? newValue.toDate() : null);
   };
+
+  useEffect(() => {
+    setSelectedDate(value ? dayjs(value) : null);
+  }, [value]);
 
   return (
     <DatePicker

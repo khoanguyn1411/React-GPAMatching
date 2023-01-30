@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, CircularProgress, Grid, Stack, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -13,13 +14,16 @@ import {
   studyYearList,
   universityList,
 } from "@/features/information/components/information-pages/initialize-info-page/InitializeInfoPage";
+import { ProfileService } from "@/services/profileService";
 import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
+import { QUERY_KEY } from "@/store/key";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useCommon } from "@/utils/hooks/useCommon";
 import { AppReact } from "@/utils/types/react";
@@ -42,6 +46,17 @@ const skillList: Option[] = enumToArray(Skill).map((skill) => ({
 export const AccountManagementContainer: FC = () => {
   useCommon();
   const { currentUser } = useAuth();
+
+  const { isLoading, data, isError } = useQuery({
+    queryKey: [QUERY_KEY.PROFILE, currentUser?.id],
+    queryFn: () => {
+      if (currentUser == null) {
+        return;
+      }
+      return ProfileService.getProfileById(currentUser.id);
+    },
+  });
+
   const {
     control,
     reset,
@@ -51,13 +66,32 @@ export const AccountManagementContainer: FC = () => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    reset({ email: currentUser?.email ?? "" });
-  }, [currentUser, reset]);
-
   const handleUpdateUserProfile = (user: UserCreation & UserSkillSet) => {
     console.log(user);
   };
+
+  useEffect(() => {
+    reset({
+      email: currentUser?.email,
+      fullName: data?.fullName,
+      dob: data?.dob,
+      yearOfStudent: data?.yearOfStudent,
+      gender: data?.gender,
+      school: data?.school,
+      phoneNumber: data?.phoneNumber,
+      homeAddress: data?.homeAddress,
+      skillSet: data?.skillSet,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, data]);
+
+  if (isLoading) {
+    return <CircleLoading mode="normal" />;
+  }
+
+  if (isError || data == null) {
+    return <Typography>Không lấy được hồ sơ người dùng. Vui lòng thử lại.</Typography>;
+  }
 
   return (
     <Stack
@@ -84,7 +118,7 @@ export const AccountManagementContainer: FC = () => {
 
         <Stack>
           <Typography component="span" variant="h2">
-            {currentUser?.fullName}
+            {data.fullName}
           </Typography>
           <Typography component="span">{currentUser?.email}</Typography>
         </Stack>
@@ -234,7 +268,13 @@ export const AccountManagementContainer: FC = () => {
           />
         </FormItem>
       </Stack>
-      <Button type="submit" disabled={!isDirty} sx={{ alignSelf: "end" }} variant="contained">
+      <Button
+        startIcon={isLoading && <CircularProgress size={17} color="inherit" />}
+        type="submit"
+        disabled={!isDirty}
+        sx={{ alignSelf: "end" }}
+        variant="contained"
+      >
         Cập nhật
       </Button>
     </Stack>

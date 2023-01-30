@@ -1,6 +1,6 @@
 import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
-import { UserProfileDto } from "@/core/dtos/user.dto";
+import { UserDto, UserProfileDto } from "@/core/dtos/user.dto";
 import { userMapper } from "@/core/mappers/user.mapper";
 import { userProfileMapper } from "@/core/mappers/user-profile.mapper";
 import { UserInformation, UserProfile } from "@/core/models/user";
@@ -31,7 +31,12 @@ export namespace ProfileService {
   }) {
     const url = profileUrlService.constructUrlWithParam(id);
     const dataDto = userMapper.toCreationDto(data);
-    const method = http.put(url, dataDto);
-    return composeHttpMethodResult(method);
+    return http.put(url, dataDto);
+  }
+
+  export async function getProfileById(id: UserProfile["id"]) {
+    const url = profileUrlService.constructUrlWithParam(id);
+    const result = await http.get<UserDto>(url);
+    return userMapper.fromDto(result.data);
   }
 }
