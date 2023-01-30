@@ -1,10 +1,10 @@
 import { StrictOmit } from "@/utils/types/common";
 
 import { Gender } from "./gender";
+import { IsReadyToJoin } from "./is-ready-to-join";
 import { KnownVia } from "./known-via";
 import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
-import { UserWithNoIdea } from "./user-with-no-idea";
 
 export type UserCreation = Pick<UserProfile, "fullName" | "avatarUrl"> & {
   readonly avatar?: File;
@@ -16,9 +16,14 @@ export type UserCreation = Pick<UserProfile, "fullName" | "avatarUrl"> & {
   readonly yearOfStudent: UserStudyYear;
   readonly school: string;
   readonly homeAddress: string;
-  readonly knownVia: KnownVia;
-  readonly isReadyToJoin: boolean;
+  readonly knownVia: KnownVia | null;
+  readonly isReadyToJoin: boolean | null;
 };
+
+export interface UserWithNoIdea {
+  readonly experience: string | null;
+  readonly readyToJoin: IsReadyToJoin.ThreeChoices | null;
+}
 
 export interface UserFilledInformation {
   readonly isFilledInformation: boolean;

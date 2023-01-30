@@ -5,7 +5,7 @@ import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
-import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
+import { UserWithNoIdea } from "@/core/models/user";
 import { useAuth } from "@/features/auth/useAuth";
 import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
 import { AppRadio } from "@/shared/components/radio/Radio";

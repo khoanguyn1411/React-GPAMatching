@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
-import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
+import { UserWithNoIdea } from "@/core/models/user";
 import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";

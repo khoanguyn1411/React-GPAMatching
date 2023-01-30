@@ -44,8 +44,9 @@ class UserMapper
       yearOfStudent: userStudyYearMapper.toDto(data.yearOfStudent),
       school: data.school,
       homeAddress: data.homeAddress,
-      wayToKnow: KnownVia.toReadable(data.knownVia),
-      willingToAttendOffline: IsReadyToJoin.toReadable(data.isReadyToJoin),
+      wayToKnow: data.knownVia != null ? KnownVia.toReadable(data.knownVia) : undefined,
+      willingToAttendOffline:
+        data.isReadyToJoin != null ? IsReadyToJoin.toReadable(data.isReadyToJoin) : undefined,
       willingToJoinCompetition: data.readyToJoin
         ? IsReadyToJoin.ThreeChoices.toReadable(data.readyToJoin)
         : "Không",
