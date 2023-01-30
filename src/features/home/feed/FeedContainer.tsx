@@ -28,7 +28,7 @@ export const FeedContainer: FC = () => {
   useCommon();
   const { queryMethods, currentQueryParams } = useQueryParam<ProjectFilterParams>();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search);
+  const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search ?? "");
   const [selectedField, setSelectedField] = useState<string>("");
 
   const handleChangeSelectedField = (value: string) => {
@@ -47,9 +47,9 @@ export const FeedContainer: FC = () => {
   }, [debounceValue]);
 
   useEffect(() => {
-    setInputValue(currentQueryParams.search);
-    setSelectedSkills(currentQueryParams.skill?.split(","));
-    setSelectedField(currentQueryParams.field);
+    setInputValue(currentQueryParams.search ?? "");
+    setSelectedSkills(currentQueryParams.skill ? currentQueryParams.skill.split(",") : []);
+    setSelectedField(currentQueryParams.field ?? "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQueryParams.search, currentQueryParams.skill, currentQueryParams.field]);
 

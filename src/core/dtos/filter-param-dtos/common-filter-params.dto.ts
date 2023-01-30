@@ -4,7 +4,7 @@ export namespace CommonFilterParamsDto {
     readonly limit: number;
   }
   export interface SearchDto {
-    readonly search: string;
+    readonly search: string | undefined;
   }
   export type Combined = PaginationDto & SearchDto;
 }

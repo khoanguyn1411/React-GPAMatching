@@ -14,3 +14,7 @@ export type Primitive = string | number | boolean;
 export type IsInclude<T extends RecordObject, P extends string> = T[P] extends string
   ? true
   : false;
+
+export type Nullable<T extends Record<string, any>> = {
+  [K in keyof T]: T[K] | null;
+};

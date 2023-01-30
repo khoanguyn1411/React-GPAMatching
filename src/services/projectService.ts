@@ -1,15 +1,18 @@
 import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
 import { ProjectDto } from "@/core/dtos/project.dto";
+import { projectFilterParamsMapper } from "@/core/mappers/filter-param-mappers/project-filter-params.mapper";
 import { projectMapper } from "@/core/mappers/project.mapper";
+import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { Project, ProjectCreation } from "@/core/models/project";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProjectService {
   const projectUrlService = new ComposeUrlService("feed");
-  export async function getProjects(): Promise<readonly Project[]> {
+  export async function getProjects(params: ProjectFilterParams): Promise<readonly Project[]> {
     const projectUrl = projectUrlService.getBaseUrl();
-    const method = http.get<readonly ProjectDto[]>(projectUrl);
+    const paramsDto = projectFilterParamsMapper.toDto(params);
+    const method = http.get<readonly ProjectDto[]>(projectUrl, { params: paramsDto });
     const result = await composeHttpMethodResult(method);
     if (result.result_dto == null) {
       return [];

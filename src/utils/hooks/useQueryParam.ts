@@ -26,7 +26,7 @@ interface QueryMethodsWithKey {
 
 interface UseQueryParamReturnedProps<T> {
   /** Object of current search params on URl. */
-  readonly currentQueryParams: Record<keyof T, string>;
+  readonly currentQueryParams: Record<keyof T, string | null>;
 
   /** Query method related to search params. */
   readonly queryMethods: QueryMethods<T>;
@@ -49,7 +49,7 @@ export const useQueryParam = <T extends RecordObject>(): UseQueryParamReturnedPr
     return params as T;
   };
   const queryMethods = {
-    get(key: keyof T) {
+    get<U extends keyof T = keyof T>(key: U) {
       return searchParams.get(key as string);
     },
     set(key: keyof T, value: string) {

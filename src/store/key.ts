@@ -1,1 +1,3 @@
-export const PROJECT_QUERY_KEY = "project";
+export const QUERY_KEY = {
+  PROJECT: "project",
+};

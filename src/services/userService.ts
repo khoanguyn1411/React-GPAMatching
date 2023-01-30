@@ -45,12 +45,8 @@ export namespace UserService {
     await firebaseAuth.signOut();
   }
 
-  /**
-   * Check if token is required for request or not.
-   * @param request Request need to be checked.
-   */
   export function shouldInterceptToken(request: AxiosRequestConfig): boolean {
-    if (request.url && request.url.includes("auth") && request.method === "post") {
+    if (request.url && request.url.includes("login") && request.method === "post") {
       return false;
     }
     return true;
