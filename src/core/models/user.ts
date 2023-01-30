@@ -19,22 +19,21 @@ export type UserCreation = Pick<UserProfile, "fullName" | "avatarUrl"> & {
   readonly isReadyToJoin: boolean;
 };
 
-export interface UserProfile {
+export interface UserFilledInformation {
+  readonly isFilledInformation: boolean;
+}
+
+export interface UserProfile extends UserFilledInformation {
   readonly id: string;
   readonly avatarUrl: string;
   readonly createdAt: Date;
   readonly fullName: string;
   readonly email: string;
   readonly isAdmin: boolean;
-  readonly isFilledInformation: boolean;
   readonly isOrganizer: boolean;
   readonly isParticipant: boolean;
   readonly lastLogin: Date | null;
   readonly updatedAt: Date | null;
 }
 
-export type UserInformation = UserCreation &
-  UserSkillSet & {
-    project: ProjectCreation | null;
-    userWithNoIdea: UserWithNoIdea | null;
-  };
+export type UserInformation = UserCreation & UserFilledInformation & UserSkillSet & UserWithNoIdea;

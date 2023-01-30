@@ -26,7 +26,7 @@ class SkillMapper implements IMapper<SkillDto, Skill> {
     return FROM_SKILL_DTO[data];
   }
   public toDto(data: Skill): SkillDto {
-    return TO_SKILL_DTO[data];
+    return Number(TO_SKILL_DTO[data]);
   }
 }
 

@@ -1,20 +1,39 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { ProfileService } from "@/services/profileService";
+import { ProjectService } from "@/services/projectService";
 import { useNotify } from "@/utils/hooks/useNotify";
-import { AppReact } from "@/utils/types/react";
 
-export const useIdeaQuery = (setIsFilledInfo: AppReact.State.Dispatch<boolean>) => {
+export const useIdeaQuery = () => {
   const { notify } = useNotify();
-  const query = useMutation(ProfileService.updateProfile, {
+
+  const notifyError = () => notify({ message: "Khởi tạo thông tin thất bại", variant: "error" });
+  const notifySuccess = () =>
+    notify({ message: "Khởi tạo thông tin thành công", variant: "success" });
+
+  const profileQuery = useMutation(ProfileService.updateProfile, {
     onError: () => {
-      notify({ message: "Cập nhật thông tin thất bại", variant: "error" });
+      notifyError();
       return;
     },
     onSuccess: () => {
-      notify({ message: "Cập nhật thông tin thành công", variant: "success" });
-      setIsFilledInfo(true);
+      notifySuccess();
+      return;
     },
   });
-  return query;
+
+  const projectQuery = useMutation(ProjectService.createProject, {
+    onError: () => {
+      notifyError();
+      return;
+    },
+    onSuccess: () => {
+      notifySuccess();
+      return;
+    },
+  });
+  return {
+    profileQuery,
+    projectQuery,
+  };
 };

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
 import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
+import { useAuth } from "@/features/auth/useAuth";
 import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
@@ -36,12 +37,16 @@ export const IdeaPage: FC = () => {
   const [userSkillSet] = useAtom(skillSetAtom);
   const [userCreation] = useAtom(informationUserAtom);
 
-  const { isLoading, mutate } = useIdeaQuery(setIsFilledInfo);
+  const { currentUser } = useAuth();
+  const { profileQuery, projectQuery } = useIdeaQuery();
 
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
   });
+
+  const isRequiredInfoAvailable =
+    currentUser == null || userSkillSet == null || userCreation == null;
 
   const gotIdeaFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("full")),
@@ -49,19 +54,46 @@ export const IdeaPage: FC = () => {
   });
 
   const submitGotIdeaForm = (data: ProjectCreation) => {
-    setIsFilledInfo(true);
-  };
-  const submitNoIdeaForm = (data: UserWithNoIdea) => {
-    if (userSkillSet == null || userCreation == null) {
+    if (isRequiredInfoAvailable) {
       return;
     }
-    mutate({
+    const userData = {
+      ...userSkillSet,
+      ...userCreation,
+      experience: null,
+      readyToJoin: data.readyToJoin,
+      isFilledInformation: true,
+    };
+    profileQuery.mutateAsync(
+      {
+        id: currentUser.id,
+        data: userData,
+      },
+      {
+        onSuccess: async () => {
+          await projectQuery.mutateAsync(data);
+          setIsFilledInfo(true);
+        },
+      },
+    );
+  };
+  const submitNoIdeaForm = (data: UserWithNoIdea) => {
+    if (isRequiredInfoAvailable) {
+      return;
+    }
+    const userData = {
       ...userSkillSet,
       ...userCreation,
       ...data,
-      userWithNoIdea: data,
-      project: null,
-    });
+      isFilledInformation: true,
+    };
+    profileQuery.mutateAsync(
+      {
+        id: currentUser.id,
+        data: userData,
+      },
+      { onSuccess: () => setIsFilledInfo(true) },
+    );
   };
 
   const initializeSubmitFn = () => {
@@ -70,6 +102,7 @@ export const IdeaPage: FC = () => {
     }
     return noIdeaFormProps.handleSubmit(submitNoIdeaForm);
   };
+  const shouldShowLoading = profileQuery.isLoading || projectQuery.isLoading;
   return (
     <form onSubmit={initializeSubmitFn()}>
       <InformationContentWrapper>
@@ -85,13 +118,13 @@ export const IdeaPage: FC = () => {
         {activeTab === TabValue.NoIdea && <NoIdeaTab formProps={noIdeaFormProps} />}
       </InformationContentWrapper>
       <InformationActionWrapper>
-        <Button disabled={isLoading} onClick={decreasePage} variant="outlined">
+        <Button disabled={shouldShowLoading} onClick={decreasePage} variant="outlined">
           Quay lại
         </Button>
 
         <Button
-          startIcon={isLoading && <CircularProgress size={17} color="inherit" />}
-          disabled={isLoading}
+          startIcon={shouldShowLoading && <CircularProgress size={17} color="inherit" />}
+          disabled={shouldShowLoading}
           type="submit"
           variant="contained"
         >

@@ -2,7 +2,10 @@ import { GenderDto } from "./gender.dto";
 import { SkillDto } from "./skill.dto";
 import { UserStudyYearDto } from "./user-study-year.dto";
 
-export type UserCreationDto = Pick<UserProfileDto, "fullName" | "avatar" | "bio" | "skillsSet"> & {
+export type UserCreationDto = Pick<
+  UserProfileDto,
+  "fullName" | "isFilledInformation" | "avatar" | "bio" | "skillsSet"
+> & {
   readonly phoneNumber: string;
   readonly socialLink: string;
   readonly email: string | undefined;

@@ -83,10 +83,13 @@ export const InitializeInfoPage: FC = () => {
           yearOfStudent: userInformation.yearOfStudent,
           isReadyToJoin: userInformation.isReadyToJoin,
           homeAddress: userInformation.homeAddress,
+          avatarUrl: currentUser?.avatarUrl,
+          avatar: userInformation.avatar,
         }
       : {
           email: currentUser?.email ?? "",
           fullName: currentUser?.fullName ?? "",
+          avatarUrl: currentUser?.avatarUrl,
         },
   });
 

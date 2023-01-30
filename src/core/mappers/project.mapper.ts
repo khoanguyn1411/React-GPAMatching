@@ -1,14 +1,28 @@
-import { ProjectDto } from "../dtos/project.dto";
-import { Project } from "../models/project";
-import { ProjectField } from "../models/project-field";
-import { ProjectStatus } from "../models/project-status";
-import { Skill } from "../models/skills";
+import { ProjectCreationDto, ProjectDto } from "../dtos/project.dto";
+import { Project, ProjectCreation } from "../models/project";
 import { dateMapper } from "./base-mappers/date.mapper";
-import { IMapperFromDto } from "./base-mappers/mapper";
+import { IMapperFromDto, IMapperToCreationDto } from "./base-mappers/mapper";
 import { projectFieldMapper } from "./project-field.mapper";
 import { projectStatusMapper } from "./project-status.mapper";
+import { skillMapper } from "./skill.mapper";
 
-class ProjectMapper implements IMapperFromDto<ProjectDto, Project> {
+class ProjectMapper
+  implements
+    IMapperFromDto<ProjectDto, Project>,
+    IMapperToCreationDto<ProjectCreationDto, ProjectCreation>
+{
+  public toCreationDto(data: ProjectCreation): ProjectCreationDto {
+    return {
+      aggreeWithPolicy: true,
+      title: data.name,
+      content: data.description,
+      category: projectFieldMapper.toDto(data.field),
+      currentStage: projectStatusMapper.toDto(data.status),
+      currentMemberCount: Number(data.currentMemberQuantity),
+      seekingMemberCount: Number(data.findingMemberQuantity),
+      seekingSkills: data.requiredSkills.map((skill) => skillMapper.toDto(skill)),
+    };
+  }
   public fromDto(data: ProjectDto): Project {
     return {
       id: data._id,
@@ -19,13 +33,12 @@ class ProjectMapper implements IMapperFromDto<ProjectDto, Project> {
       description: data.content,
       field: projectFieldMapper.fromDto(data.category),
       status: projectStatusMapper.fromDto(data.currentStage),
-      // field: ProjectField.AgroforestryAndFishery,
-      // status: ProjectStatus.FinishedButNoProduct,
+
       followers: data.interesters,
       lastModifiedBy: data.lastModifiedBy,
       currentMemberQuantity: data.currentMemberCount.toString(),
       findingMemberQuantity: data.seekingMemberCount.toString(),
-      requiredSkills: data.seekingSkills as readonly Skill[],
+      requiredSkills: data.seekingSkills.map((skill) => skillMapper.fromDto(skill)),
       updateAt: data.updatedAt ? dateMapper.fromDto(data.updatedAt) : null,
     };
   }

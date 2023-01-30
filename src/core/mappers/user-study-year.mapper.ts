@@ -18,7 +18,7 @@ class UserStudyYearMapper implements IMapper<UserStudyYearDto, UserStudyYear> {
     return FROM_USER_STUDY_YEAR_DTO[data];
   }
   public toDto(data: UserStudyYear): UserStudyYearDto {
-    return TO_USER_STUDY_YEAR_DTO[data];
+    return Number(TO_USER_STUDY_YEAR_DTO[data]);
   }
 }
 

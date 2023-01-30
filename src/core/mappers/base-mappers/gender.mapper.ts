@@ -17,7 +17,7 @@ export class GenderMapper implements IMapperToDto<GenderDto, Gender> {
   }
 
   public toDto(gender: Gender): GenderDto {
-    return GENDER_MAP_TO_DTO[gender];
+    return Number(GENDER_MAP_TO_DTO[gender]);
   }
 }
 

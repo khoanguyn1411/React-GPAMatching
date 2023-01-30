@@ -2,7 +2,7 @@ import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
 import { ProjectDto } from "@/core/dtos/project.dto";
 import { projectMapper } from "@/core/mappers/project.mapper";
-import { Project } from "@/core/models/project";
+import { Project, ProjectCreation } from "@/core/models/project";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProjectService {
@@ -25,5 +25,12 @@ export namespace ProjectService {
       return null;
     }
     return projectMapper.fromDto(result.result_dto);
+  }
+
+  export async function createProject(data: ProjectCreation) {
+    const url = projectUrlService.getBaseUrl();
+    const dataDto = projectMapper.toCreationDto(data);
+    const method = http.post<ProjectDto>(url, dataDto);
+    return await composeHttpMethodResult(method);
   }
 }

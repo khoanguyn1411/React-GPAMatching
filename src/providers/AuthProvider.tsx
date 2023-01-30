@@ -13,7 +13,7 @@ export const currentUserAtom = atom<null | UserProfile>(null);
 export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(true);
 
-const TIMEOUT = 10000;
+const TIMEOUT = 6000;
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const isAlreadyGetMe = useRef(false);

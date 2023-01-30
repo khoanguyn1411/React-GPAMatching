@@ -22,8 +22,14 @@ export namespace ProfileService {
     }
   }
 
-  export async function updateProfile(data: UserInformation) {
-    const url = profileUrlService.getBaseUrl();
+  export async function updateProfile({
+    id,
+    data,
+  }: {
+    id: UserProfile["id"];
+    data: UserInformation;
+  }) {
+    const url = profileUrlService.constructUrlWithParam(id);
     const dataDto = userMapper.toCreationDto(data);
     const method = http.put(url, dataDto);
     return composeHttpMethodResult(method);

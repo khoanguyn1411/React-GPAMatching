@@ -14,9 +14,10 @@ class UserMapper implements IMapperToCreationDto<UserCreationDto, UserInformatio
       fullName: data.fullName,
       avatar: data.avatarUrl,
       dob: dateMapper.toDto(data.dob),
-      bio: data.userWithNoIdea?.experience ?? "Không",
+      bio: data.experience ?? "Không",
       phoneNumber: data.phoneNumber,
       gender: genderMapper.toDto(data.gender),
+      isFilledInformation: data.isFilledInformation,
       socialLink: data.socialLink,
       email: undefined,
       yearOfStudent: userStudyYearMapper.toDto(data.yearOfStudent),
@@ -24,8 +25,8 @@ class UserMapper implements IMapperToCreationDto<UserCreationDto, UserInformatio
       homeAddress: data.homeAddress,
       wayToKnow: KnownVia.toReadable(data.knownVia),
       willingToAttendOffline: IsReadyToJoin.toReadable(data.isReadyToJoin),
-      willingToJoinCompetition: data.userWithNoIdea
-        ? IsReadyToJoin.ThreeChoices.toReadable(data.userWithNoIdea.readyToJoin)
+      willingToJoinCompetition: data.readyToJoin
+        ? IsReadyToJoin.ThreeChoices.toReadable(data.readyToJoin)
         : "Không",
       skillsSet: data.skillSet.map((skill) => skillMapper.toDto(skill)),
     };
