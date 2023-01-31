@@ -8,10 +8,9 @@ import { useQueryParam } from "@/utils/hooks/useQueryParam";
 
 export const useProjectDetailQuery = () => {
   const { currentQueryParams } = useQueryParam<{ id: string }>();
-
   const { navigate } = useNavigateWithTransition();
 
-  const queryValues = useQuery({
+  const projectDetailQueryValues = useQuery({
     queryKey: [QUERY_KEY.PROJECT, currentQueryParams.id],
     queryFn: () => {
       if (!currentQueryParams.id) {
@@ -21,5 +20,5 @@ export const useProjectDetailQuery = () => {
       return ProjectService.getProjectById(currentQueryParams.id);
     },
   });
-  return queryValues;
+  return projectDetailQueryValues;
 };

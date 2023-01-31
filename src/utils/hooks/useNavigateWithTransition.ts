@@ -15,6 +15,7 @@ export const useNavigateWithTransition = () => {
   const rootNavigate = useNavigate();
 
   const navigate = (path: To, options?: NavigateOptions) => {
+    setIsRouteLoading(true);
     startTransition(() => rootNavigate(path, options));
   };
 

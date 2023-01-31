@@ -14,12 +14,14 @@ import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/Section
 import { useCommon } from "@/utils/hooks/useCommon";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
+import { ProjectsSuggestion } from "./ProjectsSuggestion";
 import { useProjectDetailQuery } from "./useProjectDetailQuery";
 
 export const ProjectDetailContainer: FC = () => {
   useCommon();
-  const { data, isLoading, isError } = useProjectDetailQuery();
+
   const { navigate } = useNavigateWithTransition();
+  const { data, isLoading, isError } = useProjectDetailQuery();
 
   const handleNavigateHomePage = () => {
     const key: keyof ProjectFilterParams = "field";
@@ -112,16 +114,7 @@ export const ProjectDetailContainer: FC = () => {
           Xem tất cả
         </Button>
       </Stack>
-
-      {/* <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <ProjectItem />
-        </Grid>
-
-        <Grid item xs={6}>
-          <ProjectItem />
-        </Grid>
-      </Grid> */}
+      <ProjectsSuggestion field={data.field} />
     </Stack>
   );
 };
