@@ -1,24 +1,28 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Project } from "@/core/models/project";
-import { UserWithNoIdea } from "@/core/models/user-with-no-idea";
+import { ProjectCreation } from "@/core/models/project";
+import { UserWithNoIdea } from "@/core/models/user";
+import { useAuth } from "@/features/auth/useAuth";
 import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
 import {
   informationActivePageAtomFn,
+  informationUserAtom,
   isAlreadyFilledInformationFormAtom,
+  skillSetAtom,
 } from "../../../information-atoms";
 import { InformationActionWrapper } from "../../InformationActionWrapper";
 import { InformationContentWrapper } from "../../InformationContentWrapper";
 import { GotIdeaTab } from "./idea-tabs/GotIdeaTab";
 import { NoIdeaTab } from "./idea-tabs/NoIdeaTab";
 import { userWithNoIdeaSchema } from "./idea-tabs/schema";
+import { useIdeaQuery } from "./useIdeaQuery";
 
 enum TabValue {
   GotIdea = "gotIdea",
@@ -27,22 +31,63 @@ enum TabValue {
 
 export const IdeaPage: FC = () => {
   const [, decreasePage] = useAtom(informationActivePageAtomFn.decreasePage);
-  const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
   const [, setIsFilledInfo] = useAtom(isAlreadyFilledInformationFormAtom);
+  const [activeTab, setActiveTab] = useState<string>(TabValue.GotIdea);
+
+  const [userSkillSet] = useAtom(skillSetAtom);
+  const [userCreation] = useAtom(informationUserAtom);
+
+  const { currentUser } = useAuth();
+  const { profileQuery, projectQuery } = useIdeaQuery();
+
   const noIdeaFormProps = useForm<UserWithNoIdea>({
     resolver: yupResolver(userWithNoIdeaSchema),
     shouldUnregister: true,
   });
-  const gotIdeaFormProps = useForm<Project>({
+
+  const isRequiredInfoAvailable =
+    currentUser == null || userSkillSet == null || userCreation == null;
+
+  const gotIdeaFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("full")),
     shouldUnregister: true,
   });
 
-  const submitGotIdeaForm = (data: Project) => {
-    setIsFilledInfo(true);
+  const submitGotIdeaForm = (data: ProjectCreation) => {
+    if (isRequiredInfoAvailable) {
+      return;
+    }
+    const userData = {
+      ...userSkillSet,
+      ...userCreation,
+      experience: null,
+      readyToJoin: data.readyToJoin,
+      isFilledInformation: true,
+    };
+    profileQuery.mutateAsync(
+      { id: currentUser.id, ...userData },
+      {
+        onSuccess: async () => {
+          await projectQuery.mutateAsync(data);
+          setIsFilledInfo(true);
+        },
+      },
+    );
   };
   const submitNoIdeaForm = (data: UserWithNoIdea) => {
-    setIsFilledInfo(true);
+    if (isRequiredInfoAvailable) {
+      return;
+    }
+    const userData = {
+      ...userSkillSet,
+      ...userCreation,
+      ...data,
+      isFilledInformation: true,
+    };
+    profileQuery.mutateAsync(
+      { id: currentUser.id, ...userData },
+      { onSuccess: () => setIsFilledInfo(true) },
+    );
   };
 
   const initializeSubmitFn = () => {
@@ -51,6 +96,7 @@ export const IdeaPage: FC = () => {
     }
     return noIdeaFormProps.handleSubmit(submitNoIdeaForm);
   };
+  const shouldShowLoading = profileQuery.isLoading || projectQuery.isLoading;
   return (
     <form onSubmit={initializeSubmitFn()}>
       <InformationContentWrapper>
@@ -66,11 +112,16 @@ export const IdeaPage: FC = () => {
         {activeTab === TabValue.NoIdea && <NoIdeaTab formProps={noIdeaFormProps} />}
       </InformationContentWrapper>
       <InformationActionWrapper>
-        <Button onClick={decreasePage} variant="outlined">
+        <Button disabled={shouldShowLoading} onClick={decreasePage} variant="outlined">
           Quay lại
         </Button>
 
-        <Button type="submit" variant="contained">
+        <Button
+          startIcon={shouldShowLoading && <CircularProgress size={17} color="inherit" />}
+          disabled={shouldShowLoading}
+          type="submit"
+          variant="contained"
+        >
           Hoàn thành
         </Button>
       </InformationActionWrapper>

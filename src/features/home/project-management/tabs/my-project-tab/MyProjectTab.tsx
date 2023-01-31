@@ -15,7 +15,7 @@ import {
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Project } from "@/core/models/project";
+import { ProjectCreation } from "@/core/models/project";
 import { ProjectDetail } from "@/shared/others/project-detail/ProjectDetail";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
 import { appColors } from "@/theme/mui-theme";
@@ -28,7 +28,7 @@ export const MyProjectTab: FC = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
 
-  const projectFormProps = useForm<Project>({
+  const projectFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("project")),
     shouldUnregister: true,
   });

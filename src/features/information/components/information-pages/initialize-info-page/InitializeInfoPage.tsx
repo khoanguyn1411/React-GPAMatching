@@ -7,9 +7,9 @@ import { Controller, useForm } from "react-hook-form";
 import { Gender } from "@/core/models/gender";
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
 import { KnownVia } from "@/core/models/known-via";
-import { User } from "@/core/models/user";
+import { UserCreation } from "@/core/models/user";
 import { UserStudyYear } from "@/core/models/user-study-year";
-import { useAuthInfo } from "@/features/auth/useAuthInfo";
+import { useAuth } from "@/features/auth/useAuth";
 import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
@@ -61,35 +61,39 @@ export const provinceList: Option[] = provinces.map((province) => ({
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
-  const { currentUser } = useAuthInfo();
+  const { currentUser } = useAuth();
 
   const [userInformation, setUserInformation] = useAtom(informationUserAtom);
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<User>({
+  } = useForm<UserCreation>({
     resolver: yupResolver(schema),
     defaultValues: userInformation
       ? {
-          email: currentUser?.email ?? "",
+          email: userInformation.email,
           fullName: userInformation.fullName,
           gender: userInformation.gender,
-          dateOfBirth: userInformation.dateOfBirth,
+          dob: userInformation.dob,
           phoneNumber: userInformation.phoneNumber,
-          facebookUrl: userInformation.facebookUrl,
-          studyUnit: userInformation.studyUnit,
+          socialLink: userInformation.socialLink,
+          school: userInformation.school,
           knownVia: userInformation.knownVia,
-          year: userInformation.year,
+          yearOfStudent: userInformation.yearOfStudent,
           isReadyToJoin: userInformation.isReadyToJoin,
+          homeAddress: userInformation.homeAddress,
+          avatarUrl: currentUser?.avatarUrl,
+          avatar: userInformation.avatar,
         }
       : {
           email: currentUser?.email ?? "",
-          fullName: currentUser?.displayName ?? "",
+          fullName: currentUser?.fullName ?? "",
+          avatarUrl: currentUser?.avatarUrl,
         },
   });
 
-  const handleSubmitPage1 = (data: User): void => {
+  const handleSubmitPage1 = (data: UserCreation): void => {
     increasePage();
     setUserInformation(data);
   };
@@ -109,7 +113,7 @@ export const InitializeInfoPage: FC = () => {
             name="avatar"
             render={({ field: { value, onChange } }) => (
               <AvatarPicker
-                defaultImageLink={currentUser?.photoURL ?? ""}
+                defaultImageLink={currentUser?.avatarUrl ?? ""}
                 value={value}
                 onChange={onChange}
               />
@@ -165,10 +169,10 @@ export const InitializeInfoPage: FC = () => {
           </Grid>
 
           <Grid item xs={6}>
-            <FormItem label="Ngày sinh" isRequired error={errors.dateOfBirth?.message}>
+            <FormItem label="Ngày sinh" isRequired error={errors.dob?.message}>
               <Controller
                 control={control}
-                name="dateOfBirth"
+                name="dob"
                 render={({ field: { value, onChange } }) => (
                   <AppDatePicker disableFuture value={value} onChange={onChange} />
                 )}
@@ -195,10 +199,10 @@ export const InitializeInfoPage: FC = () => {
           </Grid>
 
           <Grid item xs={6}>
-            <FormItem label="Link facebook" isRequired error={errors.facebookUrl?.message}>
+            <FormItem label="Link facebook" isRequired error={errors.socialLink?.message}>
               <Controller
                 control={control}
-                name="facebookUrl"
+                name="socialLink"
                 render={({ field: { value, onChange } }) => (
                   <AppTextField value={value} onChange={onChange} placeholder="http://..." />
                 )}
@@ -207,10 +211,10 @@ export const InitializeInfoPage: FC = () => {
           </Grid>
 
           <Grid item xs={6}>
-            <FormItem label="Đơn vị học tập" isRequired error={errors.studyUnit?.message}>
+            <FormItem label="Đơn vị học tập" isRequired error={errors.school?.message}>
               <Controller
                 control={control}
-                name="studyUnit"
+                name="school"
                 render={({ field: { value, onChange } }) => (
                   <AppAutocomplete
                     placeholder="Tìm và chọn trường"
@@ -224,10 +228,14 @@ export const InitializeInfoPage: FC = () => {
           </Grid>
 
           <Grid item xs={6}>
-            <FormItem label="Bạn đang là sinh viên năm" isRequired error={errors.year?.message}>
+            <FormItem
+              label="Bạn đang là sinh viên năm"
+              isRequired
+              error={errors.yearOfStudent?.message}
+            >
               <Controller
                 control={control}
-                name="year"
+                name="yearOfStudent"
                 render={({ field: { value, onChange } }) => (
                   <AppSelect
                     placeholder="Chọn năm"
@@ -241,10 +249,10 @@ export const InitializeInfoPage: FC = () => {
           </Grid>
         </Grid>
 
-        <FormItem label="Chọn tỉnh thành" isRequired error={errors.city?.message}>
+        <FormItem label="Chọn tỉnh thành" isRequired error={errors.homeAddress?.message}>
           <Controller
             control={control}
-            name="city"
+            name="homeAddress"
             render={({ field: { value, onChange } }) => (
               <AppAutocomplete
                 placeholder="Tìm và chọn tỉnh thành"

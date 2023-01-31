@@ -11,11 +11,6 @@ const { ProjectDetailContainer } = lazyImport(
 export const projectDetailRoutes: RouteObject[] = [
   {
     path: routePaths.home.children.projectDetail.path,
-    children: [
-      {
-        path: routePaths.home.children.projectDetail.children.id.path,
-        element: <ProjectDetailContainer />,
-      },
-    ],
+    element: <ProjectDetailContainer />,
   },
 ];

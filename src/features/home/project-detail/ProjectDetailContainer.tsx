@@ -1,71 +1,70 @@
 import { ArrowRight, Description, PersonAdd, Star, WatchLater } from "@mui/icons-material";
-import { Button, Grid, Stack, Typography } from "@mui/material";
-import { useAtom } from "jotai";
-import { FC, useEffect } from "react";
+import { Button, Chip, Grid, Stack, Typography } from "@mui/material";
+import { FC } from "react";
 
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { ProjectField } from "@/core/models/project-field";
-import { isRouteLoadingAtom } from "@/provider/RouterProvider";
+import { ProjectStatus } from "@/core/models/project-status";
+import { Skill } from "@/core/models/skills";
 import { routePaths } from "@/routes";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
 import { MemberList } from "@/shared/others/member-list/MemberList";
-import { ProjectItem } from "@/shared/others/project-item/ProjectItem";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
+import { useCommon } from "@/utils/hooks/useCommon";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
+
+import { useProjectDetailQuery } from "./useProjectDetailQuery";
 
 export const ProjectDetailContainer: FC = () => {
-  useScrollToTop();
-  const [, setIsRouteLoading] = useAtom(isRouteLoadingAtom);
-  useEffect(() => {
-    setIsRouteLoading(false);
-  }, [setIsRouteLoading]);
-
+  useCommon();
+  const { data, isLoading, isError } = useProjectDetailQuery();
   const { navigate } = useNavigateWithTransition();
 
   const handleNavigateHomePage = () => {
     const key: keyof ProjectFilterParams = "field";
     navigate({
       pathname: routePaths.home.children.feed.url,
-      search: `${key}=${ProjectField.EducationAndMedican}`,
+      search: `${key}=${data?.field}`,
     });
   };
 
+  if (isLoading) {
+    return <CircleLoading mode="normal" />;
+  }
+
+  if (isError || data == null) {
+    return <Typography>Dữ liệu dự án không tồn tại</Typography>;
+  }
+
+  const listMember = data.team.members.concat([data.team.leader]);
+
   return (
     <Stack gap={2}>
-      <Typography variant="h1">Dự án tích hợp blockchain vào quản lý nhà máy</Typography>
+      <Typography variant="h1">{data.name}</Typography>
       <Grid container spacing={2} component="section">
         <Grid item xs={4}>
           <SectionCardWrapper isFullHeight>
             <Stack spacing={2.3}>
               <Typography variant="h3">Thành viên hiện tại:</Typography>
-              <MemberList
-                list={[
-                  { id: 1, avatarUrl: "", isLeader: true, fullName: "Khoa Nguyen" },
-                  { id: 2, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-                  { id: 3, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-                  { id: 4, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-                ]}
-              />
+              <MemberList list={listMember} leaderId={data.team.leader.id} />
               <Stack spacing={2}>
                 <Typography variant="h3">Nhóm trưởng:</Typography>
-                <AvatarWithInfo
-                  avatarUrl={""}
-                  name={"Nguyen Thi B"}
-                  university={"Dai hoc Bo doi"}
-                />
+                <AvatarWithInfo data={data.team.leader} />
               </Stack>
               <Stack spacing={1} direction="row">
                 <PersonAdd />
                 <Typography fontWeight={700} component="span">
-                  Thành viên cần tuyển: <Typography component="span">3</Typography>
+                  Thành viên cần tuyển:{" "}
+                  <Typography component="span">{data.findingMemberQuantity}</Typography>
                 </Typography>
               </Stack>
 
               <Stack spacing={1} direction="row">
                 <Description />
                 <Typography fontWeight={700} component="span">
-                  Lĩnh vực: <Typography component="span">Khoa học - Công nghệ</Typography>
+                  Lĩnh vực:{" "}
+                  <Typography component="span">{ProjectField.toReadable(data.field)}</Typography>
                 </Typography>
               </Stack>
 
@@ -73,9 +72,7 @@ export const ProjectDetailContainer: FC = () => {
                 <WatchLater />
                 <Typography fontWeight={700} component="span">
                   Giai đoạn phát triển:{" "}
-                  <Typography component="span">
-                    Đã hoàn thiện và đưa sản phẩm ra thị trường
-                  </Typography>
+                  <Typography component="span">{ProjectStatus.toReadable(data.status)}</Typography>
                 </Typography>
               </Stack>
             </Stack>
@@ -84,29 +81,22 @@ export const ProjectDetailContainer: FC = () => {
 
         <Grid item xs={8}>
           <SectionCardWrapper isFullHeight>
-            <Stack spacing={1}>
-              <Typography variant="h3">Mô tả dự án:</Typography>
-              <Typography textAlign="justify">
-                Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain vào quản lý
-                nhà máy Dự án tích hợp bloc Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích
-                hợp blockchain vào quản lý nhà máy Dự án tích hợp bloc Dự án tích hợp blockchain vào
-                quản lý nhà máy Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp bloc Dự
-                án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain vào quản lý nhà
-                máy Dự án tích hợp bloc Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp
-                blockchain vào quản lý nhà máy Dự án tích hợp bloc
-              </Typography>
-            </Stack>
-
-            <Stack spacing={1}>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Star />
-                <Typography variant="h3">Kỹ năng yêu cầu: </Typography>
+            <Stack spacing={2}>
+              <Stack spacing={1}>
+                <Typography variant="h3">Mô tả dự án:</Typography>
+                <Typography textAlign="justify">{data.description}</Typography>
               </Stack>
-              <Stack marginY={1} component="ul" spacing={1}>
-                <Typography component="li">Lập trình</Typography>
-                <Typography component="li">Lập trình</Typography>
-                <Typography component="li">Lập trình</Typography>
-                <Typography component="li">Lập trình</Typography>
+
+              <Stack spacing={1}>
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Star />
+                  <Typography variant="h3">Kỹ năng yêu cầu: </Typography>
+                </Stack>
+                <Stack direction="row" marginY={1} paddingX={3} component="ul" spacing={1}>
+                  {data.requiredSkills.map((skill) => (
+                    <Chip label={Skill.toReadable(skill)} key={`${skill}-index`} component="li" />
+                  ))}
+                </Stack>
               </Stack>
             </Stack>
             <Button variant="contained" sx={{ alignSelf: "end" }}>
@@ -123,7 +113,7 @@ export const ProjectDetailContainer: FC = () => {
         </Button>
       </Stack>
 
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         <Grid item xs={6}>
           <ProjectItem />
         </Grid>
@@ -131,7 +121,7 @@ export const ProjectDetailContainer: FC = () => {
         <Grid item xs={6}>
           <ProjectItem />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Stack>
   );
 };

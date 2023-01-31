@@ -19,7 +19,7 @@ export const RequestItem: FC<Props> = ({ onRejected, onApproved }) => {
   return (
     <Stack spacing={1.5}>
       <Divider />
-      <AvatarWithInfo avatarUrl={""} name={"123"} university={"1231231312"} />
+      {/* <AvatarWithInfo avatarUrl={""} name={"123"} university={"1231231312"} /> */}
       <Stack direction="row" spacing={2}>
         <Button onClick={handleApproved} sx={{ flex: 1 }} variant="contained">
           Duyệt tham gia

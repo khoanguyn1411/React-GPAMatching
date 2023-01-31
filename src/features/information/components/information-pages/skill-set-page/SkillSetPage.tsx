@@ -54,8 +54,8 @@ export const SkillSetPage: FC = () => {
             render={({ field: { value, onChange } }) => (
               <CheckboxGroup value={value as string[]} onChange={onChange}>
                 <Grid container>
-                  {enumToArray(Skill).map((skill) => (
-                    <Grid xs={4} key={skill}>
+                  {enumToArray(Skill).map((skill, index) => (
+                    <Grid item xs={4} key={`${skill}-${index}`}>
                       <AppCheckbox value={skill} label={Skill.toReadable(skill)} />
                     </Grid>
                   ))}

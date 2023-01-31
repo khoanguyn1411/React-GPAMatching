@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 
-import { muiSnackBarAtom, SnackbarCustom } from "@/provider/SnackbarProvider";
+import { muiSnackBarAtom, SnackbarCustom } from "@/providers/SnackbarProvider";
 
 export const useNotify = () => {
   const [, setSnackbarStatus] = useAtom(muiSnackBarAtom);

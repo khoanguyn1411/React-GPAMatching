@@ -1,11 +1,15 @@
 import { CircularProgress, Container } from "@mui/material";
 import { FC } from "react";
 
-export const CircleLoading: FC = () => {
+type Props = {
+  mode?: "full" | "normal";
+};
+
+export const CircleLoading: FC<Props> = ({ mode = "full" }) => {
   return (
     <Container
       sx={{
-        height: "100vh",
+        height: mode === "full" ? "100vh" : "fit-content",
         width: "100%",
         display: "flex",
         justifyContent: "center",

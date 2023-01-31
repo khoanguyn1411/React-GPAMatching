@@ -9,7 +9,6 @@ import {
 import { FC, ReactNode } from "react";
 
 import { appColors } from "@/theme/mui-theme";
-import { AppReact } from "@/utils/types/react";
 
 export interface Option extends MenuItemProps {
   label: ReactNode;
@@ -18,7 +17,7 @@ export interface Option extends MenuItemProps {
 
 type Props = {
   list: Option[];
-  value: string;
+  value: string | null;
   onChange: (param: string) => void;
   placeholder?: string;
   otherProps?: SelectProps<string>;
@@ -37,11 +36,11 @@ export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, 
           paddingRight: "30px !important",
         },
       }}
-      value={value}
+      value={value ?? ""}
       renderValue={(selected) => {
         if (!selected) {
           return (
-            <Typography component="span" color={appColors.textPrimaryLight}>
+            <Typography component="span" color={appColors.placeholder}>
               {placeholder ?? "Chọn"}
             </Typography>
           );

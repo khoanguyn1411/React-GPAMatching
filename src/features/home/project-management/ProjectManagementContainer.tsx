@@ -5,13 +5,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { routePaths } from "@/routes";
 import { AppTab } from "@/shared/components/tab/Tab";
 import { appColors, appShadows } from "@/theme/mui-theme";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
+import { useCommon } from "@/utils/hooks/useCommon";
 
 import { JoinedProjectTab } from "./tabs/joined-project-tab/JoinedProjectTab";
 import { MyProjectTab } from "./tabs/my-project-tab/MyProjectTab";
 
 export const ProjectManagementContainer: FC = () => {
-  useScrollToTop();
+  useCommon();
   const { myProject, joinedProjects } = routePaths.home.children.project.children;
   const { pathname } = useLocation();
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
-import { Project } from "@/core/models/project";
+import { ProjectCreation } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
 import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
@@ -9,7 +9,7 @@ import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { YupValidation } from "@/utils/types/yup";
 
 export const projectSchema = (mode: "project" | "full") => {
-  return yup.object().shape<YupValidation<Project>>({
+  return yup.object().shape<YupValidation<ProjectCreation>>({
     name: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
     description: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
     field: yup

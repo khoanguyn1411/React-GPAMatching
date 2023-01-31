@@ -1,15 +1,15 @@
 import { Avatar, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 
+import { UserShort } from "@/core/models/user";
+
 import { UserInfoDialog } from "../user-info-dialog/UserInfoDialog";
 
 export type Props = {
-  avatarUrl: string;
-  name: string;
-  university: string;
+  data: UserShort;
 };
 
-export const AvatarWithInfo: FC<Props> = ({ name, university, avatarUrl }) => {
+export const AvatarWithInfo: FC<Props> = ({ data }) => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = () => {
@@ -24,17 +24,17 @@ export const AvatarWithInfo: FC<Props> = ({ name, university, avatarUrl }) => {
         direction="row"
         spacing={1.5}
       >
-        <Avatar src={avatarUrl} />
+        <Avatar src={data.avatarUrl} />
         <Stack>
           <Typography component="h2" fontWeight={600}>
-            {name}
+            {data.fullName}
           </Typography>
           <Typography component="em" fontSize={"13px"} maxWidth="220px">
-            {university}
+            {data.school}
           </Typography>
         </Stack>
       </Stack>
-      <UserInfoDialog isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+      <UserInfoDialog data={data} isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
     </>
   );
 };

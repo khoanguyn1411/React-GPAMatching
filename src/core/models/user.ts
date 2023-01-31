@@ -1,33 +1,40 @@
 import { Gender } from "./gender";
+import { IsReadyToJoin } from "./is-ready-to-join";
+import { KnownVia } from "./known-via";
 import { UserSkillSet } from "./user-skill-set";
+import { UserStudyYear } from "./user-study-year";
 
-export interface User {
-  readonly fullName: string;
-  readonly email: string;
-  readonly gender: Gender;
-  readonly dateOfBirth: Date;
-  readonly phoneNumber: string;
-  readonly facebookUrl: string;
-  readonly studyUnit: string;
-  readonly year: string;
-  readonly knownVia: string;
-  readonly isReadyToJoin: boolean;
+export type UserCreation = {
+  readonly avatar?: File;
   readonly avatarUrl: string;
-  readonly city: string;
-  readonly avatar: File;
+  readonly fullName: string;
+  readonly phoneNumber: string;
+  readonly socialLink: string;
+  readonly email: string;
+  readonly dob: Date;
+  readonly gender: Gender;
+  readonly yearOfStudent: UserStudyYear;
+  readonly school: string;
+  readonly homeAddress: string;
+  readonly knownVia: KnownVia | null;
+  readonly isReadyToJoin: boolean | null;
+};
+
+export interface UserWithNoIdea {
+  readonly experience: string | null;
+  readonly readyToJoin: IsReadyToJoin.ThreeChoices | null;
 }
 
-export type UserProfile = Pick<
+export interface UserFilledInformation {
+  readonly isFilledInformation: boolean;
+}
+
+export type User = UserCreation &
+  UserFilledInformation &
+  UserSkillSet &
+  UserWithNoIdea & { id: string };
+
+export type UserShort = Pick<
   User,
-  | "fullName"
-  | "email"
-  | "gender"
-  | "dateOfBirth"
-  | "phoneNumber"
-  | "studyUnit"
-  | "year"
-  | "avatar"
-  | "avatarUrl"
-  | "city"
-> &
-  UserSkillSet;
+  "avatarUrl" | "dob" | "fullName" | "gender" | "school" | "skillSet" | "yearOfStudent" | "id"
+>;

@@ -1,26 +1,31 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import { Button, CircularProgress, Grid, Stack, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Skill } from "@/core/models/skills";
-import { UserProfile } from "@/core/models/user";
-import { useAuthInfo } from "@/features/auth/useAuthInfo";
+import { UserCreation } from "@/core/models/user";
+import { UserSkillSet } from "@/core/models/user-skill-set";
+import { useAuth } from "@/features/auth/useAuth";
 import {
   genderList,
   provinceList,
   studyYearList,
   universityList,
 } from "@/features/information/components/information-pages/initialize-info-page/InitializeInfoPage";
+import { ProfileService } from "@/services/profileService";
 import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
+import { QUERY_KEY } from "@/store/key";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
+import { useCommon } from "@/utils/hooks/useCommon";
 import { AppReact } from "@/utils/types/react";
 
 import { schema } from "./schema";
@@ -39,20 +44,54 @@ const skillList: Option[] = enumToArray(Skill).map((skill) => ({
 }));
 
 export const AccountManagementContainer: FC = () => {
-  useScrollToTop();
-  const { currentUser } = useAuthInfo();
-  const {
-    control,
-    formState: { errors, isDirty },
-    handleSubmit,
-  } = useForm<UserProfile>({
-    resolver: yupResolver(schema),
-    defaultValues: { email: currentUser?.email ?? "" },
+  useCommon();
+  const { currentUser } = useAuth();
+
+  const { isLoading, data, isError } = useQuery({
+    queryKey: [QUERY_KEY.PROFILE, currentUser?.id],
+    queryFn: () => {
+      if (currentUser == null) {
+        return;
+      }
+      return ProfileService.getProfileById(currentUser.id);
+    },
   });
 
-  const handleUpdateUserProfile = (user: UserProfile) => {
+  const {
+    control,
+    reset,
+    formState: { errors, isDirty },
+    handleSubmit,
+  } = useForm<UserCreation & UserSkillSet>({
+    resolver: yupResolver(schema),
+  });
+
+  const handleUpdateUserProfile = (user: UserCreation & UserSkillSet) => {
     console.log(user);
   };
+
+  useEffect(() => {
+    reset({
+      email: currentUser?.email,
+      fullName: data?.fullName,
+      dob: data?.dob,
+      yearOfStudent: data?.yearOfStudent,
+      gender: data?.gender,
+      school: data?.school,
+      phoneNumber: data?.phoneNumber,
+      homeAddress: data?.homeAddress,
+      skillSet: data?.skillSet,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, data]);
+
+  if (isLoading) {
+    return <CircleLoading mode="normal" />;
+  }
+
+  if (isError || data == null) {
+    return <Typography>Không lấy được hồ sơ người dùng. Vui lòng thử lại.</Typography>;
+  }
 
   return (
     <Stack
@@ -70,7 +109,7 @@ export const AccountManagementContainer: FC = () => {
           name="avatar"
           render={({ field: { value, onChange } }) => (
             <AvatarPicker
-              defaultImageLink={currentUser?.photoURL ?? ""}
+              defaultImageLink={currentUser?.avatarUrl ?? ""}
               value={value}
               onChange={onChange}
             />
@@ -79,9 +118,9 @@ export const AccountManagementContainer: FC = () => {
 
         <Stack>
           <Typography component="span" variant="h2">
-            Đặng Khánh Linh
+            {data.fullName}
           </Typography>
-          <Typography component="span">linhdk20411c@st.uel.edu.vn</Typography>
+          <Typography component="span">{currentUser?.email}</Typography>
         </Stack>
       </Stack>
       <Stack>
@@ -117,10 +156,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Ngày sinh" isRequired error={errors.dateOfBirth?.message}>
+            <FormItem label="Ngày sinh" isRequired error={errors.dob?.message}>
               <Controller
                 control={control}
-                name="dateOfBirth"
+                name="dob"
                 render={({ field: { value, onChange } }) => (
                   <AppDatePicker disableFuture value={value} onChange={onChange} />
                 )}
@@ -129,10 +168,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Năm" isRequired error={errors.year?.message}>
+            <FormItem label="Năm" isRequired error={errors.yearOfStudent?.message}>
               <Controller
                 control={control}
-                name="year"
+                name="yearOfStudent"
                 render={({ field: { value, onChange } }) => (
                   <AppSelect
                     placeholder="Chọn năm"
@@ -163,10 +202,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Đơn vị học tập" isRequired error={errors.studyUnit?.message}>
+            <FormItem label="Đơn vị học tập" isRequired error={errors.school?.message}>
               <Controller
                 control={control}
-                name="studyUnit"
+                name="school"
                 render={({ field: { value, onChange } }) => (
                   <AppAutocomplete
                     placeholder="Tìm và chọn trường"
@@ -198,10 +237,10 @@ export const AccountManagementContainer: FC = () => {
           </GridItem>
 
           <GridItem>
-            <FormItem label="Chọn tỉnh thành" isRequired error={errors.city?.message}>
+            <FormItem label="Chọn tỉnh thành" isRequired error={errors.homeAddress?.message}>
               <Controller
                 control={control}
-                name="city"
+                name="homeAddress"
                 render={({ field: { value, onChange } }) => (
                   <AppAutocomplete
                     placeholder="Tìm và chọn tỉnh thành"
@@ -229,7 +268,13 @@ export const AccountManagementContainer: FC = () => {
           />
         </FormItem>
       </Stack>
-      <Button type="submit" disabled={!isDirty} sx={{ alignSelf: "end" }} variant="contained">
+      <Button
+        startIcon={isLoading && <CircularProgress size={17} color="inherit" />}
+        type="submit"
+        disabled={!isDirty}
+        sx={{ alignSelf: "end" }}
+        variant="contained"
+      >
         Cập nhật
       </Button>
     </Stack>

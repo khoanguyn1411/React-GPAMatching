@@ -4,7 +4,7 @@ export namespace CommonFilterParams {
     readonly limit: number;
   }
   export interface Search {
-    readonly search: string;
+    readonly search: string | null;
   }
   export type Combined = Pagination & Search;
 }

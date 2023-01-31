@@ -3,7 +3,7 @@ import { FC } from "react";
 import { Controller, UseFormReturn } from "react-hook-form";
 
 import { IsReadyToJoin } from "@/core/models/is-ready-to-join";
-import { Project } from "@/core/models/project";
+import { ProjectCreation } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
 import { Skill } from "@/core/models/skills";
@@ -14,7 +14,7 @@ import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 
 type Props = {
-  formProps: UseFormReturn<Project>;
+  formProps: UseFormReturn<ProjectCreation>;
   mode: "edit" | "create";
   shouldHideIsReadyToJoinField?: boolean;
 };

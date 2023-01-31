@@ -11,7 +11,7 @@ export const InformationGuard: FC = () => {
   const [isAlreadyFilledInformation] = useAtom(isAlreadyFilledInformationFormAtom);
   if (isAlreadyFilledInformation) {
     if (CompareURL.isMatched(routePaths.home.url, location.pathname)) {
-      return <Navigate to={routePaths.home.children.feed.url} replace />;
+      return <Navigate to={routePaths.home.children.feed.url} state />;
     }
     return <Outlet />;
   }

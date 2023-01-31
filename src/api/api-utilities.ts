@@ -7,18 +7,14 @@ import { apiError } from "./api-errors";
 export async function composeHttpMethodResult<TResultDto, TErrorDto>(
   method: Promise<AxiosResponse<TResultDto>>,
 ): Promise<AppResponseDto<TResultDto, TErrorDto>> {
-  try {
-    const response = await method;
-    if (response instanceof AxiosError) {
-      return apiError.composeErrors<TResultDto, TErrorDto>(response);
-    }
-    return {
-      status_code: response.status,
-      result_dto: response.data,
-      unknown_error_dto: null,
-      http_error_dto: null,
-    };
-  } catch (error: unknown) {
-    return apiError.composeErrors(error);
+  const response = await method;
+  if (response instanceof AxiosError) {
+    return apiError.composeErrors<TResultDto, TErrorDto>(response);
   }
+  return {
+    status_code: response.status,
+    result_dto: response.data,
+    unknown_error_dto: null,
+    http_error_dto: null,
+  };
 }

@@ -10,9 +10,9 @@ import { CheckboxGroup } from "@/shared/components/checkbox-group/CheckboxGroup"
 import { AppSelect } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
+import { useCommon } from "@/utils/hooks/useCommon";
 import { useDebounce } from "@/utils/hooks/useDebounce";
 import { useQueryParam } from "@/utils/hooks/useQueryParam";
-import { useScrollToTop } from "@/utils/hooks/useScrollToTop";
 
 import { projectFieldList } from "../project-management/tabs/my-project-tab/form/EditProjectForm";
 import { ProjectWrapper } from "./components/ProjectWrapper";
@@ -25,11 +25,10 @@ export const Theme = styled.div`
 `;
 
 export const FeedContainer: FC = () => {
-  useScrollToTop();
-
+  useCommon();
   const { queryMethods, currentQueryParams } = useQueryParam<ProjectFilterParams>();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
-  const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search);
+  const { inputValue, setInputValue, debounceValue } = useDebounce(currentQueryParams.search ?? "");
   const [selectedField, setSelectedField] = useState<string>("");
 
   const handleChangeSelectedField = (value: string) => {
@@ -48,9 +47,9 @@ export const FeedContainer: FC = () => {
   }, [debounceValue]);
 
   useEffect(() => {
-    setInputValue(currentQueryParams.search);
-    setSelectedSkills(currentQueryParams.skill?.split(","));
-    setSelectedField(currentQueryParams.field);
+    setInputValue(currentQueryParams.search ?? "");
+    setSelectedSkills(currentQueryParams.skill ? currentQueryParams.skill.split(",") : []);
+    setSelectedField(currentQueryParams.field ?? "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQueryParams.search, currentQueryParams.skill, currentQueryParams.field]);
 
@@ -87,8 +86,8 @@ export const FeedContainer: FC = () => {
           </Stack>
           <CheckboxGroup value={selectedSkills} onChange={handleChangeSelectedSkills}>
             <Grid container columnSpacing={0.5}>
-              {enumToArray(Skill).map((skill) => (
-                <Grid md={2} sm={4} xs={6} item key={skill}>
+              {enumToArray(Skill).map((skill, index) => (
+                <Grid md={2} sm={4} xs={6} item key={`${skill}-${index}`}>
                   <AppCheckbox
                     checkboxProps={{ size: "small" }}
                     formControlLabelProps={{

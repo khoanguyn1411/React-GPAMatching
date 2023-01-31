@@ -4,7 +4,7 @@ export namespace LocalStorage {
    * @param key The key by which the value is stored.
    * @returns Return null if there is no value or key, otherwise return corresponding value.
    */
-  export function getValue<T>(key: string): T | null {
+  export async function getValue<T>(key: string): Promise<T | null> {
     const value = localStorage.getItem(key);
     if (value != null) {
       try {
@@ -22,7 +22,7 @@ export namespace LocalStorage {
    * @param key The key by which the value is stored.
    * @param value Value that needs to be stored.
    */
-  export function setValue<T>(key: string, value: T): void {
+  export async function setValue<T>(key: string, value: T): Promise<void> {
     if (value != null) {
       localStorage.setItem(key, JSON.stringify(value));
     }
@@ -32,7 +32,7 @@ export namespace LocalStorage {
    * Remove key from local storage.
    * @param key The key that need to be removed.
    */
-  export function remove(key: string): void {
+  export async function remove(key: string): Promise<void> {
     localStorage.removeItem(key);
   }
 }
