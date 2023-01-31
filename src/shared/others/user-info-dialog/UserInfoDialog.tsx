@@ -13,11 +13,17 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
+import { Gender } from "@/core/models/gender";
+import { Skill } from "@/core/models/skills";
+import { UserShort } from "@/core/models/user";
+import { UserStudyYear } from "@/core/models/user-study-year";
+import { DateUtils } from "@/utils/funcs/date-utils";
 import { AppReact } from "@/utils/types/react";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: AppReact.State.Dispatch<boolean>;
+  data: UserShort | null;
 };
 
 const GridItem: AppReact.FC.Children = ({ children }) => {
@@ -28,10 +34,14 @@ const GridItem: AppReact.FC.Children = ({ children }) => {
   );
 };
 
-export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen }) => {
+export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen, data }) => {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+
+  if (data == null) {
+    return <></>;
+  }
   return (
     <Dialog
       open={isOpen}
@@ -41,10 +51,9 @@ export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen }) => {
     >
       <DialogTitle display="flex" gap={5} justifyContent="space-between">
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar sx={{ width: 65, height: 65 }} />
+          <Avatar sx={{ width: 65, height: 65 }} src={data.avatarUrl} />
           <Stack spacing={0.5}>
-            <Typography variant="h2">Nguyễn Văn A</Typography>
-            <Typography component="span">linhdk20411c@st.uel.edu.vn</Typography>
+            <Typography variant="h2">{data.fullName}</Typography>
           </Stack>
         </Stack>
         <IconButton onClick={handleCloseModal} sx={{ height: "fit-content" }}>
@@ -56,21 +65,23 @@ export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen }) => {
         <Grid container spacing={2}>
           <GridItem>
             <Person />
-            <Typography component="span">Nữ</Typography>
+            <Typography component="span">{Gender.toReadable(data.gender)}</Typography>
           </GridItem>
           <GridItem>
             <Event />
-            <Typography component="span">19/11/2001</Typography>
+            <Typography component="span">{DateUtils.toFormat(data.dob, "VN")}</Typography>
           </GridItem>
 
           <GridItem>
             <AssignmentInd />
-            <Typography component="span">Sinh viên năm 1</Typography>
+            <Typography component="span">
+              Sinh viên {UserStudyYear.toReadable(data.yearOfStudent)}
+            </Typography>
           </GridItem>
 
           <GridItem>
             <School />
-            <Typography component="span">Dai hoc Kinh te - Luat</Typography>
+            <Typography component="span">{data.school}</Typography>
           </GridItem>
 
           <Grid item xs={12}>
@@ -79,9 +90,9 @@ export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen }) => {
               <Typography>Kỹ năng</Typography>
             </Stack>
             <Stack component="ul" direction="row" paddingX={3.5} gap={1.5} flexWrap="wrap">
-              <Chip component="li" label="Lap trinh" />
-              <Chip component="li" label="Lap trinh" />
-              <Chip component="li" label="Lap trinh" />
+              {data.skillSet.map((skill, index) => (
+                <Chip key={`skill-${index}`} component="li" label={Skill.toReadable(skill)} />
+              ))}
             </Stack>
           </Grid>
         </Grid>

@@ -1,5 +1,3 @@
-import { StrictOmit } from "@/utils/types/common";
-
 import { Gender } from "./gender";
 import { IsReadyToJoin } from "./is-ready-to-join";
 import { KnownVia } from "./known-via";
@@ -35,3 +33,8 @@ export type User = UserCreation &
   UserFilledInformation &
   UserSkillSet &
   UserWithNoIdea & { id: string };
+
+export type UserShort = Pick<
+  User,
+  "avatarUrl" | "dob" | "fullName" | "gender" | "school" | "skillSet" | "yearOfStudent" | "id"
+>;

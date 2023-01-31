@@ -23,6 +23,7 @@ export const ProjectItem: FC<Props> = ({
   field,
   findingMemberQuantity,
   createdAt,
+  team,
 }) => {
   const { navigate } = useNavigateWithTransition();
 
@@ -57,7 +58,7 @@ export const ProjectItem: FC<Props> = ({
         spacing={1}
         alignItems="center"
       >
-        <AvatarWithInfo avatarUrl={""} name={"Nguyen Van A"} university={"Dai hoc kinh te"} />
+        <AvatarWithInfo data={team.leader} />
 
         <Typography
           borderRadius="8px"

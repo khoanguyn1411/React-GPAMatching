@@ -60,7 +60,7 @@ export const ProjectDetail: FC = () => {
           <Typography component="span" fontWeight={700}>
             Thành viên hiện tại:
           </Typography>
-          <MemberList
+          {/* <MemberList
             list={[
               { id: 1, avatarUrl: "", isLeader: true, fullName: "Khoa Nguyen" },
               { id: 2, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
@@ -68,17 +68,17 @@ export const ProjectDetail: FC = () => {
               { id: 4, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
               { id: 5, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
             ]}
-          />
+          /> */}
         </Stack>
         <Stack spacing={1.5}>
           <Typography component="span" fontWeight={700}>
             Nhóm trưởng:
           </Typography>
-          <AvatarWithInfo
+          {/* <AvatarWithInfo
             avatarUrl={""}
             name={"Khoa"}
             university={"truong dai hoc kinh te luat - DHQG TPHCM"}
-          />
+          /> */}
         </Stack>
       </Stack>
     </Stack>

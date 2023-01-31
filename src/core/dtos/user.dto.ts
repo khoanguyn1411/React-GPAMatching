@@ -47,3 +47,8 @@ export type UserCreationDto = Pick<
   readonly wayToKnow: string | undefined;
   readonly willingToJoinCompetition: string | undefined;
 };
+
+export type UserShortDto = Pick<
+  UserDto,
+  "avatar" | "dob" | "fullName" | "gender" | "school" | "skillsSet" | "yearOfStudent" | "_id"
+>;

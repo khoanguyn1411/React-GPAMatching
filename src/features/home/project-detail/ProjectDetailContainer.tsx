@@ -1,10 +1,11 @@
 import { ArrowRight, Description, PersonAdd, Star, WatchLater } from "@mui/icons-material";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import { Button, Chip, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
+import { Skill } from "@/core/models/skills";
 import { routePaths } from "@/routes";
 import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
@@ -36,6 +37,8 @@ export const ProjectDetailContainer: FC = () => {
     return <Typography>Dữ liệu dự án không tồn tại</Typography>;
   }
 
+  const listMember = data.team.members.concat([data.team.leader]);
+
   return (
     <Stack gap={2}>
       <Typography variant="h1">{data.name}</Typography>
@@ -44,21 +47,10 @@ export const ProjectDetailContainer: FC = () => {
           <SectionCardWrapper isFullHeight>
             <Stack spacing={2.3}>
               <Typography variant="h3">Thành viên hiện tại:</Typography>
-              <MemberList
-                list={[
-                  { id: 1, avatarUrl: "", isLeader: true, fullName: "Khoa Nguyen" },
-                  { id: 2, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-                  { id: 3, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-                  { id: 4, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-                ]}
-              />
+              <MemberList list={listMember} leaderId={data.team.leader.id} />
               <Stack spacing={2}>
                 <Typography variant="h3">Nhóm trưởng:</Typography>
-                <AvatarWithInfo
-                  avatarUrl={""}
-                  name={"Nguyen Thi B"}
-                  university={"Dai hoc Bo doi"}
-                />
+                <AvatarWithInfo data={data.team.leader} />
               </Stack>
               <Stack spacing={1} direction="row">
                 <PersonAdd />
@@ -100,11 +92,10 @@ export const ProjectDetailContainer: FC = () => {
                   <Star />
                   <Typography variant="h3">Kỹ năng yêu cầu: </Typography>
                 </Stack>
-                <Stack marginY={1} component="ul" spacing={1}>
-                  <Typography component="li">Lập trình</Typography>
-                  <Typography component="li">Lập trình</Typography>
-                  <Typography component="li">Lập trình</Typography>
-                  <Typography component="li">Lập trình</Typography>
+                <Stack direction="row" marginY={1} paddingX={3} component="ul" spacing={1}>
+                  {data.requiredSkills.map((skill) => (
+                    <Chip label={Skill.toReadable(skill)} key={`${skill}-index`} component="li" />
+                  ))}
                 </Stack>
               </Stack>
             </Stack>

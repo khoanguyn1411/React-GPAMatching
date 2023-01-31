@@ -1,8 +1,10 @@
+import { StrictOmit } from "@/utils/types/common";
+
 import { IsReadyToJoin } from "./is-ready-to-join";
 import { ProjectField } from "./project-field";
 import { ProjectStatus } from "./project-status";
 import { Skill } from "./skills";
-import { User } from "./user";
+import { User, UserShort } from "./user";
 
 export interface Project {
   readonly id: string;
@@ -19,6 +21,10 @@ export interface Project {
   readonly findingMemberQuantity: string;
   readonly requiredSkills: readonly Skill[];
   readonly updateAt: Date | null;
+  readonly team: {
+    members: readonly User["id"][];
+    leader: UserShort;
+  };
 }
 
 /** Using for initializing information. */
@@ -33,4 +39,11 @@ export type ProjectCreation = Pick<
   | "requiredSkills"
 > & {
   readonly readyToJoin: IsReadyToJoin.ThreeChoices;
+};
+
+export type ProjectDetail = StrictOmit<Project, "team"> & {
+  readonly team: {
+    members: readonly UserShort[];
+    leader: UserShort;
+  };
 };

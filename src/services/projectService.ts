@@ -1,10 +1,11 @@
 import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
-import { ProjectDto } from "@/core/dtos/project.dto";
+import { ProjectDetailDto, ProjectDto } from "@/core/dtos/project.dto";
 import { projectFilterParamsMapper } from "@/core/mappers/filter-param-mappers/project-filter-params.mapper";
 import { projectMapper } from "@/core/mappers/project.mapper";
+import { projectDetailMapper } from "@/core/mappers/project-detail.mapper";
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
-import { Project, ProjectCreation } from "@/core/models/project";
+import { Project, ProjectCreation, ProjectDetail } from "@/core/models/project";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProjectService {
@@ -20,14 +21,14 @@ export namespace ProjectService {
     return result.result_dto.map((project) => projectMapper.fromDto(project));
   }
 
-  export async function getProjectById(id: Project["id"]): Promise<Project | null> {
+  export async function getProjectById(id: Project["id"]): Promise<ProjectDetail | null> {
     const url = projectUrlService.constructUrlWithParam(id);
-    const method = http.get<ProjectDto>(url);
+    const method = http.get<ProjectDetailDto>(url);
     const result = await composeHttpMethodResult(method);
     if (result.result_dto == null) {
       return null;
     }
-    return projectMapper.fromDto(result.result_dto);
+    return projectDetailMapper.fromDto(result.result_dto);
   }
 
   export async function createProject(data: ProjectCreation) {
