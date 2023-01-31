@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { GoogleAuthProvider, OAuthCredential, signInWithPopup, UserProfile } from "firebase/auth";
+import { GoogleAuthProvider, OAuthCredential, signInWithPopup } from "firebase/auth";
 
 import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";

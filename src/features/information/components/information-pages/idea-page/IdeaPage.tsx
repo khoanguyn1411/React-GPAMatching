@@ -65,10 +65,7 @@ export const IdeaPage: FC = () => {
       isFilledInformation: true,
     };
     profileQuery.mutateAsync(
-      {
-        id: currentUser.id,
-        data: userData,
-      },
+      { id: currentUser.id, ...userData },
       {
         onSuccess: async () => {
           await projectQuery.mutateAsync(data);
@@ -88,10 +85,7 @@ export const IdeaPage: FC = () => {
       isFilledInformation: true,
     };
     profileQuery.mutateAsync(
-      {
-        id: currentUser.id,
-        data: userData,
-      },
+      { id: currentUser.id, ...userData },
       { onSuccess: () => setIsFilledInfo(true) },
     );
   };

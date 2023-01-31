@@ -2,19 +2,19 @@ import { IsReadyToJoin } from "./is-ready-to-join";
 import { ProjectField } from "./project-field";
 import { ProjectStatus } from "./project-status";
 import { Skill } from "./skills";
-import { UserProfile } from "./user";
+import { User } from "./user";
 
 export interface Project {
   readonly id: string;
   readonly agreeWithPolicy: boolean;
   readonly name: string;
   readonly createdAt: Date;
-  readonly createdBy: UserProfile["id"];
+  readonly createdBy: User["id"];
   readonly description: string;
   readonly field: ProjectField;
   readonly status: ProjectStatus;
-  readonly followers: readonly UserProfile["id"][];
-  readonly lastModifiedBy: UserProfile["id"];
+  readonly followers: readonly User["id"][];
+  readonly lastModifiedBy: User["id"];
   readonly currentMemberQuantity: string;
   readonly findingMemberQuantity: string;
   readonly requiredSkills: readonly Skill[];

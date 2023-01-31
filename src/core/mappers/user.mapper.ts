@@ -1,7 +1,7 @@
 import { UserCreationDto, UserDto } from "../dtos/user.dto";
 import { IsReadyToJoin } from "../models/is-ready-to-join";
 import { KnownVia } from "../models/known-via";
-import { User, UserInformation } from "../models/user";
+import { User } from "../models/user";
 import { dateMapper } from "./base-mappers/date.mapper";
 import { genderMapper } from "./base-mappers/gender.mapper";
 import { IMapperFromDto, IMapperToCreationDto } from "./base-mappers/mapper";
@@ -9,15 +9,17 @@ import { skillMapper } from "./skill.mapper";
 import { userStudyYearMapper } from "./user-study-year.mapper";
 
 class UserMapper
-  implements IMapperToCreationDto<UserCreationDto, UserInformation>, IMapperFromDto<UserDto, User>
+  implements IMapperToCreationDto<UserCreationDto, User>, IMapperFromDto<UserDto, User>
 {
   public fromDto(data: UserDto): User {
     return {
+      id: data._id,
       fullName: data.fullName,
       avatarUrl: data.avatar,
       dob: dateMapper.fromDto(data.dob),
       experience: data.bio,
       phoneNumber: data.phoneNumber,
+      email: "",
       gender: genderMapper.fromDto(data.gender),
       isFilledInformation: data.isFilledInformation,
       socialLink: data.socialLink,
@@ -30,7 +32,7 @@ class UserMapper
       skillSet: data.skillsSet.map((skill) => skillMapper.fromDto(skill)),
     };
   }
-  public toCreationDto(data: UserInformation): UserCreationDto {
+  public toCreationDto(data: User): UserCreationDto {
     return {
       fullName: data.fullName,
       avatar: data.avatarUrl,
@@ -40,7 +42,6 @@ class UserMapper
       gender: genderMapper.toDto(data.gender),
       isFilledInformation: data.isFilledInformation,
       socialLink: data.socialLink,
-      email: undefined,
       yearOfStudent: userStudyYearMapper.toDto(data.yearOfStudent),
       school: data.school,
       homeAddress: data.homeAddress,

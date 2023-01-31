@@ -24,7 +24,11 @@ export const useIdeaQuery = () => {
 
   const projectQuery = useMutation(ProjectService.createProject, {
     onError: () => {
-      notifyError();
+      notify({
+        message:
+          "Bạn đã khởi tạo thông tin thành công, tuy nhiên có trục trặc trong quá trình đăng tải dự án. Bạn hãy vào trang chủ và đăng lại ý tưởng của mình nhé.",
+        variant: "error",
+      });
       return;
     },
     onSuccess: () => {

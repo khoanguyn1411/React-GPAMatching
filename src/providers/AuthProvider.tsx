@@ -2,7 +2,7 @@ import { GoogleAuthProvider, User } from "firebase/auth";
 import { atom, useAtom } from "jotai";
 import { useEffect, useRef } from "react";
 
-import { UserProfile } from "@/core/models/user";
+import { User as UserProfile } from "@/core/models/user";
 import { firebaseAuth } from "@/firebase/firebase-config";
 import { ProfileService } from "@/services/profileService";
 import { UserService } from "@/services/userService";

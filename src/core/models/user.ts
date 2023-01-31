@@ -6,8 +6,10 @@ import { KnownVia } from "./known-via";
 import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
 
-export type UserCreation = Pick<UserProfile, "fullName" | "avatarUrl"> & {
+export type UserCreation = {
   readonly avatar?: File;
+  readonly avatarUrl: string;
+  readonly fullName: string;
   readonly phoneNumber: string;
   readonly socialLink: string;
   readonly email: string;
@@ -29,18 +31,7 @@ export interface UserFilledInformation {
   readonly isFilledInformation: boolean;
 }
 
-export interface UserProfile extends UserFilledInformation {
-  readonly id: string;
-  readonly avatarUrl: string;
-  readonly createdAt: Date;
-  readonly fullName: string;
-  readonly email: string;
-  readonly isAdmin: boolean;
-  readonly isOrganizer: boolean;
-  readonly isParticipant: boolean;
-  readonly lastLogin: Date | null;
-  readonly updatedAt: Date | null;
-}
-
-export type UserInformation = UserCreation & UserFilledInformation & UserSkillSet & UserWithNoIdea;
-export type User = StrictOmit<UserInformation, "email">;
+export type User = UserCreation &
+  UserFilledInformation &
+  UserSkillSet &
+  UserWithNoIdea & { id: string };
