@@ -83,7 +83,6 @@ export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen, data }) => {
             <School />
             <Typography component="span">{data.school}</Typography>
           </GridItem>
-
           <Grid item xs={12}>
             <Stack direction="row" spacing={1.5}>
               <Star />
