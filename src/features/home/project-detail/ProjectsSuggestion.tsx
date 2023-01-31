@@ -20,7 +20,7 @@ type Props = {
 
 export const ProjectsSuggestion: FC<Props> = ({ field }) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: [QUERY_KEY.PROJECT],
+    queryKey: [QUERY_KEY.PROJECT, { field }],
     queryFn: () =>
       ProjectService.getProjects({
         skill: null,
