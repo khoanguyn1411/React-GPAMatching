@@ -9,7 +9,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: 1, retryDelay: 4000 } },
+  defaultOptions: {
+    queries: { retry: 1, retryDelay: 4000, staleTime: 60 * 2 * 1000 },
+  },
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

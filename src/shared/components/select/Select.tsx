@@ -17,13 +17,21 @@ export interface Option extends MenuItemProps {
 
 type Props = {
   list: Option[];
+  isShowOptionAll?: boolean;
   value: string | null;
   onChange: (param: string) => void;
   placeholder?: string;
   otherProps?: SelectProps<string>;
 };
 
-export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, otherProps }) => {
+export const AppSelect: FC<Props> = ({
+  value = "",
+  isShowOptionAll = false,
+  placeholder,
+  list,
+  onChange,
+  otherProps,
+}) => {
   const handleChange = (event: SelectChangeEvent) => {
     onChange(event.target.value);
   };
@@ -50,6 +58,13 @@ export const AppSelect: FC<Props> = ({ value = "", placeholder, list, onChange, 
       }}
       {...otherProps}
     >
+      {isShowOptionAll && (
+        <MenuItem value="">
+          <Typography component="span" sx={{ maxWidth: "500px", whiteSpace: "initial" }}>
+            Tất cả
+          </Typography>
+        </MenuItem>
+      )}
       {list.map(({ label, value, ...optionProps }, index) => (
         <MenuItem {...optionProps} key={`${value}-${index}`} value={value}>
           <Typography component="span" sx={{ maxWidth: "500px", whiteSpace: "initial" }}>

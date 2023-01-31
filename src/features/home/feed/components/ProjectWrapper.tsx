@@ -14,14 +14,7 @@ import { ProjectItem } from "../../../../shared/others/project-item/ProjectItem"
 export const ProjectWrapper: FC = () => {
   const { currentQueryParams } = useQueryParam<ProjectFilterParams>();
   const { data, isLoading } = useQuery({
-    queryKey: [
-      QUERY_KEY.PROJECT,
-      currentQueryParams.field,
-      currentQueryParams.limit,
-      currentQueryParams.page,
-      currentQueryParams.search,
-      currentQueryParams.skill,
-    ],
+    queryKey: [QUERY_KEY.PROJECT, currentQueryParams],
     queryFn: () =>
       ProjectService.getProjects({
         skill: currentQueryParams.skill,

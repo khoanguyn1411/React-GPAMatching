@@ -44,10 +44,10 @@ export const ProjectItem: FC<Props> = ({
   };
   return (
     <Stack
-      spacing={2}
       divider={<Divider />}
       bgcolor="white"
       paddingY={3}
+      spacing={2}
       border={`1.5px solid ${appColors.borderPrimary}`}
       borderRadius="8px"
     >
@@ -76,10 +76,14 @@ export const ProjectItem: FC<Props> = ({
         </Typography>
       </Stack>
       <Stack
-        sx={{ all: "unset", cursor: "pointer", paddingX: 2.5 }}
+        sx={{
+          all: "unset",
+          cursor: "pointer",
+          ":hover a": { color: appColors.primary, transition: "0.3s ease" },
+          paddingX: 2.5,
+        }}
         spacing={1.5}
         onClick={handleNavigateToDetailProjectPage}
-        component="button"
       >
         <Typography component="a" fontSize={"18px"} fontWeight={700}>
           {name}

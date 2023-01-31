@@ -34,7 +34,7 @@ export namespace ProjectService {
   export async function createProject(data: ProjectCreation) {
     const url = projectUrlService.getBaseUrl();
     const dataDto = projectMapper.toCreationDto(data);
-    const method = http.post<ProjectDto>(url, dataDto);
-    return await composeHttpMethodResult(method);
+    const result = await http.post<ProjectDto>(url, dataDto);
+    return projectMapper.fromDto(result.data);
   }
 }

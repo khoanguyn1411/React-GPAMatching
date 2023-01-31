@@ -13,13 +13,13 @@ class ProjectFilterParamsMapper
   public toDto(data: ProjectFilterParams): ProjectFilterParamsDto {
     return {
       ...commonFilterParamsMapper.toDto(data),
-      skill: data.skill
+      seekSkills: data.skill
         ? data.skill
             .split(",")
             .map((skill) => skillMapper.toDto(skill as Skill))
             .join(",")
         : undefined,
-      field: data.field ? projectFieldMapper.toDto(data.field) : undefined,
+      category: data.field ? projectFieldMapper.toDto(data.field) : undefined,
     };
   }
 }
