@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, User } from "firebase/auth";
+import { OAuthCredential, User } from "firebase/auth";
 import { atom, useAtom } from "jotai";
 import { useEffect, useRef } from "react";
 
@@ -12,13 +12,15 @@ import { AppReact } from "@/utils/types/react";
 export const currentUserAtom = atom<null | UserProfile>(null);
 export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(true);
+export const googleTokenAtom = atom<OAuthCredential | null>(null);
 
 const TIMEOUT = 6000;
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const isAlreadyGetMe = useRef(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
+  const [googleCredential] = useAtom(googleTokenAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
   const [, setIsPending] = useAtom(isAuthPendingAtom);
   const controller = new AbortController();
@@ -64,15 +66,11 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   };
 
   const signIn = async (user: User | null) => {
-    const firebaseToken = await user?.getIdToken();
-    if (firebaseToken == null) {
+    console.log(googleCredential?.idToken);
+
+    if (user == null) {
       handleLoginFailed();
-      return;
-    }
-    const googleCredential = GoogleAuthProvider.credential(firebaseToken);
-    if (googleCredential == null || googleCredential.idToken == null) {
-      handleLoginFailed();
-      notifyLoginFailed();
+      isAlreadyGetMe.current = false;
       return;
     }
 
@@ -81,7 +79,12 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
 
-    const userSecret = await UserService.getUserSecret({ idToken: googleCredential.idToken });
+    if (googleCredential == null || googleCredential.idToken == null) {
+      return;
+    }
+    const userSecret = await UserService.getUserSecret({
+      idToken: googleCredential.idToken,
+    });
     if (userSecret instanceof Error) {
       handleLoginFailed();
       notifyLoginFailed();
@@ -109,6 +112,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  }, [googleCredential]);
   return <>{children}</>;
 };
