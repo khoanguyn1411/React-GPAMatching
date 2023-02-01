@@ -35,6 +35,7 @@ const getUserAvatarUrl = (userProfile: UserProfile, user: User | null) => {
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const isAlreadyGetMe = useRef(false);
+  const timeOutId = useRef<NodeJS.Timeout>();
 
   const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [oauthCredential] = useAtom(oauthCredentialAtom);
@@ -94,7 +95,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       user,
       callback: () => {
         clearTimeout(timeoutId);
-        notifyLoginSuccess();
       },
     });
   };
@@ -113,6 +113,10 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
         avatarUrl: getUserAvatarUrl(data, queryConfig.user),
         email: queryConfig.user?.email ?? "",
       });
+      if (!isAlreadyGetMe.current) {
+        notifyLoginSuccess();
+        isAlreadyGetMe.current = true;
+      }
       handleLoginSuccess();
       queryConfig.callback?.();
     },
@@ -122,7 +126,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
     },
   });
 
-  const timeOutId = useRef<NodeJS.Timeout>();
   useEffect(() => {
     timeOutId.current = setTimeout(() => {
       setIsPending(false);

@@ -17,13 +17,13 @@ export type UserCreation = {
   readonly yearOfStudent: UserStudyYear;
   readonly school: string;
   readonly homeAddress: string;
-  readonly knownVia: KnownVia | null;
-  readonly isReadyToJoin: boolean | null;
+  readonly knownVia: KnownVia;
+  readonly isReadyToJoin: boolean;
 };
 
 export interface UserWithNoIdea {
-  readonly experience: string | null;
-  readonly readyToJoin: IsReadyToJoin.ThreeChoices | null;
+  readonly experience: string;
+  readonly readyToJoin: IsReadyToJoin.ThreeChoices;
 }
 
 export interface UserFilledInformation {
@@ -39,3 +39,20 @@ export type UserShort = Pick<
   User,
   "avatarUrl" | "dob" | "fullName" | "gender" | "school" | "skillSet" | "yearOfStudent" | "id"
 >;
+
+export type UserProfileCreation = Pick<
+  User,
+  | "id"
+  | "email"
+  | "avatar"
+  | "avatarUrl"
+  | "fullName"
+  | "gender"
+  | "dob"
+  | "homeAddress"
+  | "phoneNumber"
+  | "school"
+  | "yearOfStudent"
+> &
+  UserSkillSet &
+  UserFilledInformation;

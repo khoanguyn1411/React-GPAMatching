@@ -1,7 +1,7 @@
 import { http } from "@/api/api-core";
 import { UserDto } from "@/core/dtos/user.dto";
 import { userMapper } from "@/core/mappers/user.mapper";
-import { User } from "@/core/models/user";
+import { User, UserProfileCreation } from "@/core/models/user";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProfileService {
@@ -13,9 +13,9 @@ export namespace ProfileService {
     return userMapper.fromDto(result.data);
   }
 
-  export async function updateProfile(data: User) {
+  export async function updateProfile(data: UserProfileCreation) {
     const url = profileUrlService.constructUrlWithParam(data.id);
-    const dataDto = userMapper.toCreationDto(data);
+    const dataDto = userMapper.toProfileCreationDto(data);
     return http.put(url, dataDto);
   }
 
