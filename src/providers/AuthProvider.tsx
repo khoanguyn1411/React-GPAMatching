@@ -122,12 +122,16 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
     },
   });
 
+  const timeOutId = useRef<NodeJS.Timeout>();
   useEffect(() => {
-    const timeOut = setTimeout(() => {
+    timeOutId.current = setTimeout(() => {
       setIsPending(false);
       handleLoginFailed();
     }, TIMEOUT);
-    return () => clearTimeout(timeOut);
+    if (!isPending) {
+      clearTimeout(timeOutId.current);
+    }
+    return () => clearTimeout(timeOutId.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 

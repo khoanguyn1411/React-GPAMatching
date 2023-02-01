@@ -30,6 +30,7 @@ class UserMapper
       isReadyToJoin: data.wayToKnow === IsReadyToJoin.toReadable(true) ? true : false,
       readyToJoin: data.wayToKnow as IsReadyToJoin.ThreeChoices,
       skillSet: data.skillsSet.map((skill) => skillMapper.fromDto(skill)),
+      teamIds: data.teamIds,
     };
   }
   public toCreationDto(data: User): UserCreationDto {

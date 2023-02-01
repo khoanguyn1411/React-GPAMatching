@@ -21,7 +21,7 @@ export interface ProjectDto {
   readonly updatedAt: string | undefined;
   readonly team: {
     members: readonly UserDto["_id"][];
-    leader: UserShortDto;
+    leader: UserShortDto | undefined;
   };
   readonly _id: string;
   readonly __v: number;
@@ -42,6 +42,6 @@ export type ProjectCreationDto = Pick<
 export type ProjectDetailDto = StrictOmit<ProjectDto, "team"> & {
   readonly team: {
     members: readonly UserShortDto[];
-    leader: UserShortDto;
+    leader: UserShortDto | undefined;
   };
 };

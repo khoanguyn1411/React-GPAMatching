@@ -40,14 +40,14 @@ export const EditProjectDialog: FC<Props> = ({
     formState: { isDirty },
   } = formProps;
 
-  const { invalidateQueries, setQueryData } = useQueryClient();
+  const queryClient = useQueryClient();
 
   const createProject = useMutation({
     mutationFn: ProjectService.createProject,
     onSuccess: (newProject) => {
       notify({ message: "Đăng tải dự án thành công.", variant: "success" });
-      invalidateQueries([QUERY_KEY.PROJECT]);
-      setQueryData([QUERY_KEY.PROJECT, newProject.id], newProject);
+      queryClient.invalidateQueries([QUERY_KEY.PROJECT]);
+      queryClient.setQueryData([QUERY_KEY.PROJECT, newProject.id], newProject);
     },
     onError: () => notify({ message: "Đăng tải dự án thất bại.", variant: "error" }),
   });

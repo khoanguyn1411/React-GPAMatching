@@ -39,7 +39,10 @@ export const ProjectDetailContainer: FC = () => {
     return <Typography>Dữ liệu dự án không tồn tại</Typography>;
   }
 
-  const listMember = data.team.members.concat([data.team.leader]);
+  if (data.team.leader == null) {
+    return <Typography>Dữ liệu dự án không tồn tại</Typography>;
+  }
+  const listMember = data.team.members.concat([]);
 
   return (
     <Stack gap={2}>

@@ -1,4 +1,5 @@
 import { GenderDto } from "./gender.dto";
+import { ProjectDto } from "./project.dto";
 import { SkillDto } from "./skill.dto";
 import { UserStudyYearDto } from "./user-study-year.dto";
 
@@ -14,7 +15,7 @@ export type UserDto = {
   readonly lastLogin: string | null;
   readonly skillsSet: readonly SkillDto[];
   readonly updatedAt: string | null;
-  readonly teamIds: readonly string[];
+  readonly teamIds: readonly ProjectDto["_id"][];
   readonly phoneNumber: string;
   readonly socialLink: string;
   readonly email: string | undefined;

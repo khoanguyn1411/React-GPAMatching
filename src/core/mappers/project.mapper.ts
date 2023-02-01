@@ -42,7 +42,7 @@ class ProjectMapper
       updateAt: data.updatedAt ? dateMapper.fromDto(data.updatedAt) : null,
       team: {
         members: data.team.members,
-        leader: userShortMapper.fromDto(data.team.leader),
+        leader: data.team.leader ? userShortMapper.fromDto(data.team.leader) : null,
       },
     };
   }

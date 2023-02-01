@@ -26,7 +26,6 @@ export const ProjectItem: FC<Props> = ({
   team,
 }) => {
   const { navigate } = useNavigateWithTransition();
-
   const getStatusStyle = () => {
     if (status === ProjectStatus.NotFinished || status === ProjectStatus.Other) {
       return {
@@ -58,8 +57,7 @@ export const ProjectItem: FC<Props> = ({
         spacing={1}
         alignItems="center"
       >
-        <AvatarWithInfo data={team.leader} />
-
+        {team.leader && <AvatarWithInfo data={team.leader} />}
         <Typography
           borderRadius="8px"
           padding="2px 7px"
@@ -134,7 +132,7 @@ export const ProjectItem: FC<Props> = ({
         <Typography component="em" color={appColors.textPrimaryLight}>
           {DateUtils.toFormat(createdAt, "VN")}
         </Typography>
-        <ProjectButton type="cancel" />
+        <ProjectButton projectId={id} />
       </Stack>
     </Stack>
   );

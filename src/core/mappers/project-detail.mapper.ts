@@ -26,7 +26,7 @@ class ProjectDetailMapper implements IMapperFromDto<ProjectDetailDto, ProjectDet
       updateAt: data.updatedAt ? dateMapper.fromDto(data.updatedAt) : null,
       team: {
         members: data.team.members.map((member) => userShortMapper.fromDto(member)),
-        leader: userShortMapper.fromDto(data.team.leader),
+        leader: data.team.leader ? userShortMapper.fromDto(data.team.leader) : null,
       },
     };
   }

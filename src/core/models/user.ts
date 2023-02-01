@@ -1,6 +1,7 @@
 import { Gender } from "./gender";
 import { IsReadyToJoin } from "./is-ready-to-join";
 import { KnownVia } from "./known-via";
+import { Project } from "./project";
 import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
 
@@ -32,7 +33,7 @@ export interface UserFilledInformation {
 export type User = UserCreation &
   UserFilledInformation &
   UserSkillSet &
-  UserWithNoIdea & { id: string };
+  UserWithNoIdea & { readonly id: string; readonly teamIds: readonly Project["id"][] };
 
 export type UserShort = Pick<
   User,
