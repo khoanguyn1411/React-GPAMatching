@@ -12,15 +12,28 @@ import { AppReact } from "@/utils/types/react";
 export const currentUserAtom = atom<null | UserProfile>(null);
 export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(true);
-export const googleTokenAtom = atom<OAuthCredential | null>(null);
+export const oauthCredentialAtom = atom<OAuthCredential | null>(null);
 
 const TIMEOUT = 6000;
+export const getUserFullName = (userProfile: UserProfile, user: User | null) => {
+  if (!userProfile.fullName) {
+    return user?.displayName ?? "";
+  }
+  return userProfile.fullName;
+};
+
+export const getUserAvatarUrl = (userProfile: UserProfile, user: User | null) => {
+  if (!userProfile.avatarUrl) {
+    return user?.photoURL ?? "";
+  }
+  return userProfile.avatarUrl;
+};
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const isAlreadyGetMe = useRef(false);
 
   const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  const [googleCredential] = useAtom(googleTokenAtom);
+  const [oauthCredential] = useAtom(oauthCredentialAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
   const [, setIsPending] = useAtom(isAuthPendingAtom);
   const controller = new AbortController();
@@ -42,23 +55,17 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       handleLoginFailed();
       notifyLoginFailed();
     }, TIMEOUT);
-    const userProfile = await ProfileService.getPersonal(controller);
+    const userProfile = await ProfileService.getPersonalWithController(controller);
     if (userProfile instanceof Error) {
       handleLoginFailed();
       clearTimeout(timeoutId);
       return;
     }
     clearTimeout(timeoutId);
-    const getUserFullName = () => {
-      if (!userProfile.fullName) {
-        return user?.displayName ?? "";
-      }
-      return userProfile.fullName;
-    };
     setCurrentUser({
       ...userProfile,
-      fullName: getUserFullName(),
-      avatarUrl: user?.photoURL ?? "",
+      fullName: getUserFullName(userProfile, user),
+      avatarUrl: getUserAvatarUrl(userProfile, user),
       email: user?.email ?? "",
     });
     setIsPending(false);
@@ -66,8 +73,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   };
 
   const signIn = async (user: User | null) => {
-    console.log(googleCredential?.idToken);
-
     if (user == null) {
       handleLoginFailed();
       isAlreadyGetMe.current = false;
@@ -79,11 +84,11 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
 
-    if (googleCredential == null || googleCredential.idToken == null) {
+    if (oauthCredential == null || oauthCredential.idToken == null) {
       return;
     }
     const userSecret = await UserService.getUserSecret({
-      idToken: googleCredential.idToken,
+      idToken: oauthCredential.idToken,
     });
     if (userSecret instanceof Error) {
       handleLoginFailed();
@@ -112,6 +117,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [googleCredential]);
+  }, [oauthCredential]);
   return <>{children}</>;
 };

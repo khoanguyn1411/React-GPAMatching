@@ -14,14 +14,7 @@ import { ProjectItem } from "../../../../shared/others/project-item/ProjectItem"
 export const ProjectWrapper: FC = () => {
   const { currentQueryParams } = useQueryParam<ProjectFilterParams>();
   const { data, isLoading } = useQuery({
-    queryKey: [
-      QUERY_KEY.PROJECT,
-      currentQueryParams.field,
-      currentQueryParams.limit,
-      currentQueryParams.page,
-      currentQueryParams.search,
-      currentQueryParams.skill,
-    ],
+    queryKey: [QUERY_KEY.PROJECT, currentQueryParams],
     queryFn: () =>
       ProjectService.getProjects({
         skill: currentQueryParams.skill,
@@ -43,7 +36,7 @@ export const ProjectWrapper: FC = () => {
   return (
     <Grid container spacing={3}>
       {data.map((project) => (
-        <Grid key={project.id} item xs={6}>
+        <Grid height={"100%"} key={project.id} item xs={6}>
           <ProjectItem {...project} />
         </Grid>
       ))}

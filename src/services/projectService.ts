@@ -2,9 +2,11 @@ import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
 import { ProjectDetailDto, ProjectDto } from "@/core/dtos/project.dto";
 import { projectFilterParamsMapper } from "@/core/mappers/filter-param-mappers/project-filter-params.mapper";
+import { interestMapper } from "@/core/mappers/interest.mapper";
 import { projectMapper } from "@/core/mappers/project.mapper";
 import { projectDetailMapper } from "@/core/mappers/project-detail.mapper";
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
+import { Interest } from "@/core/models/interest";
 import { Project, ProjectCreation, ProjectDetail } from "@/core/models/project";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
@@ -34,7 +36,13 @@ export namespace ProjectService {
   export async function createProject(data: ProjectCreation) {
     const url = projectUrlService.getBaseUrl();
     const dataDto = projectMapper.toCreationDto(data);
-    const method = http.post<ProjectDto>(url, dataDto);
-    return await composeHttpMethodResult(method);
+    const result = await http.post<ProjectDto>(url, dataDto);
+    return projectMapper.fromDto(result.data);
+  }
+
+  export async function performUserAction(data: Interest) {
+    const url = projectUrlService.concatWith(["interest"]);
+    const dataDto = interestMapper.toDto(data);
+    return http.put(url, dataDto);
   }
 }

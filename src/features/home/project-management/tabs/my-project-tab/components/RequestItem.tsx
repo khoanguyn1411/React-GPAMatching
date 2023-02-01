@@ -2,24 +2,26 @@ import { Button, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import { FC } from "react";
 
+import { UserShort } from "@/core/models/user";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
 
 type Props = {
-  onRejected?: (id: number) => void;
-  onApproved?: (id: number) => void;
+  onRejected?: (user: UserShort) => void;
+  onApproved?: (user: UserShort) => void;
+  user: UserShort;
 };
 
-export const RequestItem: FC<Props> = ({ onRejected, onApproved }) => {
+export const RequestItem: FC<Props> = ({ user, onRejected, onApproved }) => {
   const handleApproved = () => {
-    onApproved?.(123);
+    onApproved?.(user);
   };
   const handleRejected = () => {
-    onRejected?.(123);
+    onRejected?.(user);
   };
   return (
     <Stack spacing={1.5}>
       <Divider />
-      {/* <AvatarWithInfo avatarUrl={""} name={"123"} university={"1231231312"} /> */}
+      <AvatarWithInfo data={user} />
       <Stack direction="row" spacing={2}>
         <Button onClick={handleApproved} sx={{ flex: 1 }} variant="contained">
           Duyệt tham gia

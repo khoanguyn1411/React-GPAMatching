@@ -59,6 +59,7 @@ export const FeedContainer: FC = () => {
         <Grid container component="section" spacing={2}>
           <Grid xs={4} item>
             <AppSelect
+              isShowOptionAll
               placeholder="Chọn lĩnh vực"
               list={projectFieldList}
               value={selectedField}

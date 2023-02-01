@@ -26,7 +26,6 @@ export const ProjectItem: FC<Props> = ({
   team,
 }) => {
   const { navigate } = useNavigateWithTransition();
-
   const getStatusStyle = () => {
     if (status === ProjectStatus.NotFinished || status === ProjectStatus.Other) {
       return {
@@ -44,10 +43,10 @@ export const ProjectItem: FC<Props> = ({
   };
   return (
     <Stack
-      spacing={2}
       divider={<Divider />}
       bgcolor="white"
       paddingY={3}
+      spacing={2}
       border={`1.5px solid ${appColors.borderPrimary}`}
       borderRadius="8px"
     >
@@ -58,8 +57,7 @@ export const ProjectItem: FC<Props> = ({
         spacing={1}
         alignItems="center"
       >
-        <AvatarWithInfo data={team.leader} />
-
+        {team.leader && <AvatarWithInfo data={team.leader} />}
         <Typography
           borderRadius="8px"
           padding="2px 7px"
@@ -76,10 +74,14 @@ export const ProjectItem: FC<Props> = ({
         </Typography>
       </Stack>
       <Stack
-        sx={{ all: "unset", cursor: "pointer", paddingX: 2.5 }}
+        sx={{
+          all: "unset",
+          cursor: "pointer",
+          ":hover a": { color: appColors.primary, transition: "0.3s ease" },
+          paddingX: 2.5,
+        }}
         spacing={1.5}
         onClick={handleNavigateToDetailProjectPage}
-        component="button"
       >
         <Typography component="a" fontSize={"18px"} fontWeight={700}>
           {name}
@@ -130,7 +132,7 @@ export const ProjectItem: FC<Props> = ({
         <Typography component="em" color={appColors.textPrimaryLight}>
           {DateUtils.toFormat(createdAt, "VN")}
         </Typography>
-        <ProjectButton type="cancel" />
+        <ProjectButton projectId={id} />
       </Stack>
     </Stack>
   );

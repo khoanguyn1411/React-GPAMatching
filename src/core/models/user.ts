@@ -1,6 +1,7 @@
 import { Gender } from "./gender";
 import { IsReadyToJoin } from "./is-ready-to-join";
 import { KnownVia } from "./known-via";
+import { Project } from "./project";
 import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
 
@@ -16,13 +17,13 @@ export type UserCreation = {
   readonly yearOfStudent: UserStudyYear;
   readonly school: string;
   readonly homeAddress: string;
-  readonly knownVia: KnownVia | null;
-  readonly isReadyToJoin: boolean | null;
+  readonly knownVia: KnownVia;
+  readonly isReadyToJoin: boolean;
 };
 
 export interface UserWithNoIdea {
-  readonly experience: string | null;
-  readonly readyToJoin: IsReadyToJoin.ThreeChoices | null;
+  readonly experience: string;
+  readonly readyToJoin: IsReadyToJoin.ThreeChoices;
 }
 
 export interface UserFilledInformation {
@@ -32,9 +33,26 @@ export interface UserFilledInformation {
 export type User = UserCreation &
   UserFilledInformation &
   UserSkillSet &
-  UserWithNoIdea & { id: string };
+  UserWithNoIdea & { readonly id: string; readonly teamIds: readonly Project["id"][] };
 
 export type UserShort = Pick<
   User,
   "avatarUrl" | "dob" | "fullName" | "gender" | "school" | "skillSet" | "yearOfStudent" | "id"
 >;
+
+export type UserProfileCreation = Pick<
+  User,
+  | "id"
+  | "email"
+  | "avatar"
+  | "avatarUrl"
+  | "fullName"
+  | "gender"
+  | "dob"
+  | "homeAddress"
+  | "phoneNumber"
+  | "school"
+  | "yearOfStudent"
+> &
+  UserSkillSet &
+  UserFilledInformation;

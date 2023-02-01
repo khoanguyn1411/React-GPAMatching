@@ -23,7 +23,7 @@ export interface Project {
   readonly updateAt: Date | null;
   readonly team: {
     members: readonly User["id"][];
-    leader: UserShort;
+    leader: UserShort | null;
   };
 }
 
@@ -44,6 +44,6 @@ export type ProjectCreation = Pick<
 export type ProjectDetail = StrictOmit<Project, "team"> & {
   readonly team: {
     members: readonly UserShort[];
-    leader: UserShort;
+    leader: UserShort | null;
   };
 };

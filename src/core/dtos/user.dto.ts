@@ -1,4 +1,5 @@
 import { GenderDto } from "./gender.dto";
+import { ProjectDto } from "./project.dto";
 import { SkillDto } from "./skill.dto";
 import { UserStudyYearDto } from "./user-study-year.dto";
 
@@ -14,18 +15,17 @@ export type UserDto = {
   readonly lastLogin: string | null;
   readonly skillsSet: readonly SkillDto[];
   readonly updatedAt: string | null;
-  readonly teamIds: readonly string[];
+  readonly teamIds: readonly ProjectDto["_id"][];
   readonly phoneNumber: string;
   readonly socialLink: string;
-  readonly email: string | undefined;
   readonly dob: string;
   readonly gender: GenderDto;
   readonly yearOfStudent: UserStudyYearDto;
   readonly school: string;
   readonly homeAddress: string;
-  readonly willingToAttendOffline: string | undefined;
-  readonly wayToKnow: string | undefined;
-  readonly willingToJoinCompetition: string | undefined;
+  readonly willingToAttendOffline: string;
+  readonly wayToKnow: string;
+  readonly willingToJoinCompetition: string;
 };
 
 export type UserCreationDto = Pick<
@@ -33,16 +33,16 @@ export type UserCreationDto = Pick<
   | "fullName"
   | "isFilledInformation"
   | "avatar"
-  | "bio"
   | "skillsSet"
   | "phoneNumber"
-  | "socialLink"
   | "dob"
   | "gender"
   | "yearOfStudent"
   | "school"
   | "homeAddress"
 > & {
+  readonly socialLink: string | undefined;
+  readonly bio: string | undefined;
   readonly willingToAttendOffline: string | undefined;
   readonly wayToKnow: string | undefined;
   readonly willingToJoinCompetition: string | undefined;

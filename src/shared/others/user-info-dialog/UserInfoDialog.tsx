@@ -28,7 +28,7 @@ type Props = {
 
 const GridItem: AppReact.FC.Children = ({ children }) => {
   return (
-    <Grid item xs={6} gap={1.5} width="80px" display="flex" alignItems="center">
+    <Grid item xs={6} gap={1.5} width="80px" display="flex">
       {children}
     </Grid>
   );
@@ -62,7 +62,7 @@ export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen, data }) => {
       </DialogTitle>
       <Divider />
       <DialogContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <GridItem>
             <Person />
             <Typography component="span">{Gender.toReadable(data.gender)}</Typography>

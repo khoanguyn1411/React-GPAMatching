@@ -26,6 +26,7 @@ export function refreshToken() {
     const { config } = error;
     const token = await UserService.getSecret();
     if (config == null || token == null || error.response == null) {
+      UserService.signOut();
       return Promise.reject(error);
     }
 

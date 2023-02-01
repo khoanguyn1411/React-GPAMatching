@@ -8,11 +8,15 @@ import {
   Divider,
   IconButton,
 } from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useRef } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
-import { FormService } from "@/utils/funcs/form-service";
+import { ProjectService } from "@/services/projectService";
+import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
+import { QUERY_KEY } from "@/store/key";
+import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
 import { EditProjectForm } from "../form/EditProjectForm";
@@ -30,10 +34,23 @@ export const EditProjectDialog: FC<Props> = ({
   isOpenEditDialog,
   setIsOpenEditDialog,
 }) => {
+  const { notify } = useNotify();
   const {
     handleSubmit,
-    formState: { dirtyFields },
+    formState: { isDirty },
   } = formProps;
+
+  const queryClient = useQueryClient();
+
+  const createProject = useMutation({
+    mutationFn: ProjectService.createProject,
+    onSuccess: (newProject) => {
+      notify({ message: "Đăng tải dự án thành công.", variant: "success" });
+      queryClient.invalidateQueries([QUERY_KEY.PROJECT]);
+      queryClient.setQueryData([QUERY_KEY.PROJECT, newProject.id], newProject);
+    },
+    onError: () => notify({ message: "Đăng tải dự án thất bại.", variant: "error" }),
+  });
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const handleCloseModal = () => {
@@ -47,8 +64,11 @@ export const EditProjectDialog: FC<Props> = ({
     buttonRef.current.click();
   };
 
-  const handleEditProject = (edit: ProjectCreation) => {
-    console.log(edit);
+  const handleEditProject = (editData: ProjectCreation) => {
+    if (mode === "create") {
+      createProject.mutate(editData);
+      return;
+    }
   };
 
   return (
@@ -84,13 +104,14 @@ export const EditProjectDialog: FC<Props> = ({
         <Button variant="outlined" onClick={handleCloseModal}>
           Hủy
         </Button>
-        <Button
-          disabled={!FormService.isDirtyFields(dirtyFields)}
+        <LoadingButton
+          isLoading={createProject.isLoading}
           variant="contained"
+          disabled={!isDirty}
           onClick={handleDispatchClickEvent}
         >
           {mode === "create" ? "Đăng ý tưởng" : "Cập nhật"}
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

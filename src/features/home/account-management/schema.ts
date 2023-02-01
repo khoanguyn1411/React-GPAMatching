@@ -1,14 +1,16 @@
 import * as yup from "yup";
 
 import { Gender } from "@/core/models/gender";
-import { UserCreation } from "@/core/models/user";
-import { UserSkillSet } from "@/core/models/user-skill-set";
+import { UserProfileCreation } from "@/core/models/user";
 import { UserStudyYear } from "@/core/models/user-study-year";
 import { APP_ERROR_MESSAGE } from "@/shared/constants/error-messages";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
+import { StrictOmit } from "@/utils/types/common";
 import { YupValidation } from "@/utils/types/yup";
 
-export const schema = yup.object().shape<YupValidation<UserCreation & UserSkillSet>>({
+export type UserProfileForm = StrictOmit<UserProfileCreation, "id" | "isFilledInformation">;
+
+export const schema = yup.object().shape<YupValidation<UserProfileForm>>({
   fullName: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   email: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   gender: yup.mixed<Gender>().oneOf(enumToArray(Gender)).required(APP_ERROR_MESSAGE.REQUIRED),
@@ -31,7 +33,4 @@ export const schema = yup.object().shape<YupValidation<UserCreation & UserSkillS
     .test("is-empty-role-manager", APP_ERROR_MESSAGE.REQUIRED, (value) => {
       return value ? value.length > 0 : false;
     }),
-  socialLink: yup.string(),
-  knownVia: yup.string(),
-  isReadyToJoin: yup.string(),
 });

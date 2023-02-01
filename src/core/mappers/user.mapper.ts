@@ -17,7 +17,7 @@ class UserMapper
       fullName: data.fullName,
       avatarUrl: data.avatar,
       dob: dateMapper.fromDto(data.dob),
-      experience: data.bio,
+      experience: data.bio ?? "",
       phoneNumber: data.phoneNumber,
       email: "",
       gender: genderMapper.fromDto(data.gender),
@@ -26,10 +26,11 @@ class UserMapper
       yearOfStudent: userStudyYearMapper.fromDto(data.yearOfStudent),
       school: data.school,
       homeAddress: data.homeAddress,
-      knownVia: data.wayToKnow as KnownVia,
+      knownVia: KnownVia.fromReadable(data.wayToKnow),
       isReadyToJoin: data.wayToKnow === IsReadyToJoin.toReadable(true) ? true : false,
-      readyToJoin: data.wayToKnow as IsReadyToJoin.ThreeChoices,
+      readyToJoin: IsReadyToJoin.ThreeChoices.fromReadable(data.willingToJoinCompetition),
       skillSet: data.skillsSet.map((skill) => skillMapper.fromDto(skill)),
+      teamIds: data.teamIds,
     };
   }
   public toCreationDto(data: User): UserCreationDto {
@@ -37,7 +38,7 @@ class UserMapper
       fullName: data.fullName,
       avatar: data.avatarUrl,
       dob: dateMapper.toDto(data.dob),
-      bio: data.experience ?? "Không",
+      bio: data.experience,
       phoneNumber: data.phoneNumber,
       gender: genderMapper.toDto(data.gender),
       isFilledInformation: data.isFilledInformation,
@@ -45,12 +46,9 @@ class UserMapper
       yearOfStudent: userStudyYearMapper.toDto(data.yearOfStudent),
       school: data.school,
       homeAddress: data.homeAddress,
-      wayToKnow: data.knownVia != null ? KnownVia.toReadable(data.knownVia) : undefined,
-      willingToAttendOffline:
-        data.isReadyToJoin != null ? IsReadyToJoin.toReadable(data.isReadyToJoin) : undefined,
-      willingToJoinCompetition: data.readyToJoin
-        ? IsReadyToJoin.ThreeChoices.toReadable(data.readyToJoin)
-        : "Không",
+      wayToKnow: KnownVia.toReadable(data.knownVia),
+      willingToAttendOffline: IsReadyToJoin.toReadable(data.isReadyToJoin),
+      willingToJoinCompetition: IsReadyToJoin.ThreeChoices.toReadable(data.readyToJoin),
       skillsSet: data.skillSet.map((skill) => skillMapper.toDto(skill)),
     };
   }

@@ -73,7 +73,8 @@ export const MyProjectTab: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <SectionCardWrapper>
-            <MyRequestsSection />
+            {/* TODO: Add information for this component. */}
+            <MyRequestsSection projectId="123" requesterList={[]} />
           </SectionCardWrapper>
         </Grid>
       </Grid>
