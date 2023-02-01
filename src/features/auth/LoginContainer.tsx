@@ -1,19 +1,27 @@
 import { Google } from "@mui/icons-material";
 import { Button, Card, Stack, Typography } from "@mui/material";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useAtom } from "jotai";
 import { FC } from "react";
 
 import { images } from "@/assets/images";
-import { UserService } from "@/services/userService";
+import { firebaseAuth } from "@/firebase/firebase-config";
+import { googleTokenAtom } from "@/providers/AuthProvider";
 import { appColors } from "@/theme/mui-theme";
 import { useCommon } from "@/utils/hooks/useCommon";
 
 import style from "./LoginContainer.module.css";
+const provider = new GoogleAuthProvider();
 
 export const LoginContainer: FC = () => {
   useCommon();
 
+  const [, setGoogleCredential] = useAtom(googleTokenAtom);
   const handleLoginFirebase = () => {
-    UserService.signInWithGoogle();
+    signInWithPopup(firebaseAuth, provider).then((result) => {
+      const googleCredential = GoogleAuthProvider.credentialFromResult(result);
+      setGoogleCredential(googleCredential);
+    });
   };
   return (
     <Stack
