@@ -1,7 +1,7 @@
 import { AppReact } from "@/utils/types/react";
 
 import { AuthProvider } from "./AuthProvider";
-import { CheckProvider } from "./CheckProvider";
+import { GlobalProvider } from "./GlobalProvider";
 import { AppLocalizationProvider } from "./LocalizationProvider";
 import { MediaContextProvider } from "./MediaContextProvider";
 import { RouterProvider } from "./RouterProvider";
@@ -16,7 +16,7 @@ export const AppProvider: AppReact.FC.Children = ({ children }) => {
           <SnackbarProvider>
             <AuthProvider>
               <RouterProvider>
-                <CheckProvider>{children}</CheckProvider>
+                <GlobalProvider>{children}</GlobalProvider>
               </RouterProvider>
             </AuthProvider>
           </SnackbarProvider>

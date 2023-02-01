@@ -54,8 +54,6 @@ export const AccountManagementContainer: FC = () => {
   });
 
   const { mutate } = useMutation({ mutationFn: ProfileService.updateProfile });
-  console.log(errors);
-
   const handleUpdateUserProfile = (user: UserProfileForm) => {
     if (currentUser == null) {
       return;
