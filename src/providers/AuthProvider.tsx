@@ -113,9 +113,9 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
         avatarUrl: getUserAvatarUrl(data, queryConfig.user),
         email: queryConfig.user?.email ?? "",
       });
-      if (!isAlreadyGetMe.current) {
+      isAlreadyGetMe.current = true;
+      if (queryConfig.callback) {
         notifyLoginSuccess();
-        isAlreadyGetMe.current = true;
       }
       handleLoginSuccess();
       queryConfig.callback?.();
