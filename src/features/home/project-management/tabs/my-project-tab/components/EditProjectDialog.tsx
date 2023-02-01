@@ -14,8 +14,8 @@ import { UseFormReturn } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
 import { ProjectService } from "@/services/projectService";
+import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
 import { QUERY_KEY } from "@/store/key";
-import { FormService } from "@/utils/funcs/form-service";
 import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
@@ -37,7 +37,7 @@ export const EditProjectDialog: FC<Props> = ({
   const { notify } = useNotify();
   const {
     handleSubmit,
-    formState: { dirtyFields },
+    formState: { isDirty },
   } = formProps;
 
   const { invalidateQueries, setQueryData } = useQueryClient();
@@ -104,13 +104,14 @@ export const EditProjectDialog: FC<Props> = ({
         <Button variant="outlined" onClick={handleCloseModal}>
           Hủy
         </Button>
-        <Button
-          disabled={!FormService.isDirtyFields(dirtyFields)}
+        <LoadingButton
+          isLoading={createProject.isLoading}
           variant="contained"
+          disabled={!isDirty}
           onClick={handleDispatchClickEvent}
         >
           {mode === "create" ? "Đăng ý tưởng" : "Cập nhật"}
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

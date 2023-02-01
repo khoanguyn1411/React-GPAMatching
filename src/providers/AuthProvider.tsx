@@ -1,73 +1,68 @@
+import { useQuery } from "@tanstack/react-query";
 import { OAuthCredential, User } from "firebase/auth";
 import { atom, useAtom } from "jotai";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { User as UserProfile } from "@/core/models/user";
 import { firebaseAuth } from "@/firebase/firebase-config";
 import { ProfileService } from "@/services/profileService";
 import { UserService } from "@/services/userService";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
+import { QUERY_KEY } from "@/store/key";
 import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
 export const currentUserAtom = atom<null | UserProfile>(null);
 export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(true);
-export const googleTokenAtom = atom<OAuthCredential | null>(null);
+export const oauthCredentialAtom = atom<OAuthCredential | null>(null);
 
-const TIMEOUT = 6000;
+const TIMEOUT = 8000;
+
+const getUserFullName = (userProfile: UserProfile, user: User | null) => {
+  if (!userProfile.fullName) {
+    return user?.displayName ?? "";
+  }
+  return userProfile.fullName;
+};
+
+const getUserAvatarUrl = (userProfile: UserProfile, user: User | null) => {
+  if (!userProfile.avatarUrl) {
+    return user?.photoURL ?? "";
+  }
+  return userProfile.avatarUrl;
+};
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const isAlreadyGetMe = useRef(false);
 
   const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
-  const [googleCredential] = useAtom(googleTokenAtom);
+  const [oauthCredential] = useAtom(oauthCredentialAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
-  const [, setIsPending] = useAtom(isAuthPendingAtom);
-  const controller = new AbortController();
-
+  const [isPending, setIsPending] = useAtom(isAuthPendingAtom);
   const { notify } = useNotify();
+  const [queryConfig, setQueryConfig] = useState<{
+    user: User | null;
+    callback?: () => void;
+  } | null>(null);
+
   const notifyLoginFailed = () => notify({ message: "Đăng nhập thất bại!", variant: "error" });
   const notifyLoginSuccess = () => notify({ message: "Đăng nhập thành công!", variant: "success" });
 
   const handleLoginFailed = async () => {
-    UserService.signOut();
+    await UserService.signOut();
     setIsPending(false);
     setIsLoggedIn(false);
     setCurrentUser(null);
+    setQueryConfig(null);
   };
 
-  const handleAfterFirebaseValidation = async (user: User | null) => {
-    const timeoutId = setTimeout(() => {
-      controller.abort();
-      handleLoginFailed();
-      notifyLoginFailed();
-    }, TIMEOUT);
-    const userProfile = await ProfileService.getPersonal(controller);
-    if (userProfile instanceof Error) {
-      handleLoginFailed();
-      clearTimeout(timeoutId);
-      return;
-    }
-    clearTimeout(timeoutId);
-    const getUserFullName = () => {
-      if (!userProfile.fullName) {
-        return user?.displayName ?? "";
-      }
-      return userProfile.fullName;
-    };
-    setCurrentUser({
-      ...userProfile,
-      fullName: getUserFullName(),
-      avatarUrl: user?.photoURL ?? "",
-      email: user?.email ?? "",
-    });
+  const handleLoginSuccess = () => {
     setIsPending(false);
     setIsLoggedIn(true);
   };
 
   const signIn = async (user: User | null) => {
-    console.log(googleCredential?.idToken);
-
     if (user == null) {
       handleLoginFailed();
       isAlreadyGetMe.current = false;
@@ -79,11 +74,11 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
 
-    if (googleCredential == null || googleCredential.idToken == null) {
+    if (oauthCredential == null || oauthCredential.idToken == null) {
       return;
     }
     const userSecret = await UserService.getUserSecret({
-      idToken: googleCredential.idToken,
+      idToken: oauthCredential.idToken,
     });
     if (userSecret instanceof Error) {
       handleLoginFailed();
@@ -95,16 +90,52 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       handleLoginFailed();
     }, TIMEOUT);
     isAlreadyGetMe.current = true;
-    handleAfterFirebaseValidation(user).then(() => {
-      clearTimeout(timeoutId);
-      notifyLoginSuccess();
+    setQueryConfig({
+      user,
+      callback: () => {
+        clearTimeout(timeoutId);
+        notifyLoginSuccess();
+      },
     });
   };
+
+  useQuery({
+    enabled: queryConfig != null,
+    queryKey: [QUERY_KEY.PROFILE],
+    queryFn: () => ProfileService.getPersonal(),
+    onSuccess: (data) => {
+      if (queryConfig == null) {
+        return;
+      }
+      setCurrentUser({
+        ...data,
+        fullName: getUserFullName(data, queryConfig.user),
+        avatarUrl: getUserAvatarUrl(data, queryConfig.user),
+        email: queryConfig.user?.email ?? "",
+      });
+      handleLoginSuccess();
+      queryConfig.callback?.();
+    },
+    onError: () => {
+      handleLoginFailed();
+      return;
+    },
+  });
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setIsPending(false);
+      handleLoginFailed();
+    }, TIMEOUT);
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPending]);
+
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged(async (user) => {
       const existedSecret = await UserService.getSecret();
       if (existedSecret != null && user != null && !isAlreadyGetMe.current) {
-        await handleAfterFirebaseValidation(user);
+        setQueryConfig({ user });
         return;
       }
       signIn(user);
@@ -112,6 +143,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [googleCredential]);
-  return <>{children}</>;
+  }, [oauthCredential]);
+  return <>{isPending ? <CircleLoading /> : <>{children}</>}</>;
 };

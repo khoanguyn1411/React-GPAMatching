@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, CircularProgress, Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -20,6 +20,7 @@ import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { CircleLoading } from "@/shared/components/loading/CircleLoading";
+import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
@@ -268,15 +269,15 @@ export const AccountManagementContainer: FC = () => {
           />
         </FormItem>
       </Stack>
-      <Button
-        startIcon={isLoading && <CircularProgress size={17} color="inherit" />}
-        type="submit"
-        disabled={!isDirty}
+      <LoadingButton
         sx={{ alignSelf: "end" }}
+        isLoading={isLoading}
         variant="contained"
+        disabled={!isDirty}
+        type="submit"
       >
         Cập nhật
-      </Button>
+      </LoadingButton>
     </Stack>
   );
 };

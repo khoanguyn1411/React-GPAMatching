@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, CircularProgress, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { useAtom } from "jotai";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { ProjectCreation } from "@/core/models/project";
 import { UserWithNoIdea } from "@/core/models/user";
 import { useAuth } from "@/features/auth/useAuth";
 import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
+import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
 import { AppRadio } from "@/shared/components/radio/Radio";
 import { AppRadioGroup } from "@/shared/components/radio/RadioGroup";
 
@@ -116,14 +117,14 @@ export const IdeaPage: FC = () => {
           Quay lại
         </Button>
 
-        <Button
-          startIcon={shouldShowLoading && <CircularProgress size={17} color="inherit" />}
+        <LoadingButton
+          isLoading={shouldShowLoading}
           disabled={shouldShowLoading}
           type="submit"
           variant="contained"
         >
           Hoàn thành
-        </Button>
+        </LoadingButton>
       </InformationActionWrapper>
     </form>
   );

@@ -1,5 +1,4 @@
 import { AxiosRequestConfig } from "axios";
-import { GoogleAuthProvider, OAuthCredential, signInWithPopup } from "firebase/auth";
 
 import { http } from "@/api/api-core";
 import { composeHttpMethodResult } from "@/api/api-utilities";
@@ -12,21 +11,7 @@ import { LocalStorage } from "@/utils/funcs/local-storage";
 
 export namespace UserService {
   const authUrlService = new ComposeUrlService("auth");
-
   const SECRET_KEY = "secret";
-  const provider = new GoogleAuthProvider();
-
-  export function signInWithGoogle(
-    onSuccess?: (result: OAuthCredential | null) => void,
-    onError?: (error: unknown) => void,
-  ): void {
-    signInWithPopup(firebaseAuth, provider)
-      .then((result) => {
-        const googleCredential = GoogleAuthProvider.credentialFromResult(result);
-        onSuccess?.(googleCredential);
-      })
-      .catch((error) => onError?.(error));
-  }
 
   export async function saveSecret(secret: UserSecret): Promise<void> {
     return await LocalStorage.setValue<UserSecret>(SECRET_KEY, secret);

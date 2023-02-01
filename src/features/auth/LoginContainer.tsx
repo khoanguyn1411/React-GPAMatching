@@ -6,7 +6,7 @@ import { FC } from "react";
 
 import { images } from "@/assets/images";
 import { firebaseAuth } from "@/firebase/firebase-config";
-import { googleTokenAtom } from "@/providers/AuthProvider";
+import { oauthCredentialAtom } from "@/providers/AuthProvider";
 import { appColors } from "@/theme/mui-theme";
 import { useCommon } from "@/utils/hooks/useCommon";
 
@@ -16,11 +16,11 @@ const provider = new GoogleAuthProvider();
 export const LoginContainer: FC = () => {
   useCommon();
 
-  const [, setGoogleCredential] = useAtom(googleTokenAtom);
+  const [, setOauthCredential] = useAtom(oauthCredentialAtom);
   const handleLoginFirebase = () => {
     signInWithPopup(firebaseAuth, provider).then((result) => {
       const googleCredential = GoogleAuthProvider.credentialFromResult(result);
-      setGoogleCredential(googleCredential);
+      setOauthCredential(googleCredential);
     });
   };
   return (
