@@ -5,7 +5,7 @@ import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
-import { User, UserWithNoIdea } from "@/core/models/user";
+import { UserWithNoIdea } from "@/core/models/user";
 import { useAuth } from "@/features/auth/useAuth";
 import { projectSchema } from "@/features/home/project-management/tabs/my-project-tab/form/shema";
 import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
@@ -64,10 +64,9 @@ export const IdeaPage: FC = () => {
       experience: null,
       readyToJoin: data.readyToJoin,
       isFilledInformation: true,
-      teamIds: [],
     };
     profileQuery.mutateAsync(
-      { id: currentUser.id, ...userData },
+      { data: { id: currentUser.id, ...userData }, currentUser },
       {
         onSuccess: async () => {
           await projectQuery.mutateAsync(data);
@@ -85,10 +84,9 @@ export const IdeaPage: FC = () => {
       ...userCreation,
       ...data,
       isFilledInformation: true,
-      teamIds: [],
     };
     profileQuery.mutateAsync(
-      { id: currentUser.id, ...userData },
+      { data: { id: currentUser.id, ...userData }, currentUser },
       { onSuccess: () => setIsFilledInfo(true) },
     );
   };

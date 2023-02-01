@@ -1,7 +1,7 @@
 import { UserCreationDto, UserDto } from "../dtos/user.dto";
 import { IsReadyToJoin } from "../models/is-ready-to-join";
 import { KnownVia } from "../models/known-via";
-import { User, UserProfileCreation } from "../models/user";
+import { User } from "../models/user";
 import { dateMapper } from "./base-mappers/date.mapper";
 import { genderMapper } from "./base-mappers/gender.mapper";
 import { IMapperFromDto, IMapperToCreationDto } from "./base-mappers/mapper";
@@ -26,9 +26,9 @@ class UserMapper
       yearOfStudent: userStudyYearMapper.fromDto(data.yearOfStudent),
       school: data.school,
       homeAddress: data.homeAddress,
-      knownVia: data.wayToKnow as KnownVia,
+      knownVia: KnownVia.fromReadable(data.wayToKnow),
       isReadyToJoin: data.wayToKnow === IsReadyToJoin.toReadable(true) ? true : false,
-      readyToJoin: data.wayToKnow as IsReadyToJoin.ThreeChoices,
+      readyToJoin: IsReadyToJoin.ThreeChoices.fromReadable(data.willingToJoinCompetition),
       skillSet: data.skillsSet.map((skill) => skillMapper.fromDto(skill)),
       teamIds: data.teamIds,
     };
@@ -50,26 +50,6 @@ class UserMapper
       willingToAttendOffline: IsReadyToJoin.toReadable(data.isReadyToJoin),
       willingToJoinCompetition: IsReadyToJoin.ThreeChoices.toReadable(data.readyToJoin),
       skillsSet: data.skillSet.map((skill) => skillMapper.toDto(skill)),
-    };
-  }
-
-  public toProfileCreationDto(data: UserProfileCreation): UserCreationDto {
-    return {
-      fullName: data.fullName,
-      avatar: data.avatarUrl,
-      dob: dateMapper.toDto(data.dob),
-      phoneNumber: data.phoneNumber,
-      gender: genderMapper.toDto(data.gender),
-      isFilledInformation: data.isFilledInformation,
-      yearOfStudent: userStudyYearMapper.toDto(data.yearOfStudent),
-      school: data.school,
-      homeAddress: data.homeAddress,
-      skillsSet: data.skillSet.map((skill) => skillMapper.toDto(skill)),
-      socialLink: undefined,
-      wayToKnow: undefined,
-      bio: undefined,
-      willingToAttendOffline: undefined,
-      willingToJoinCompetition: undefined,
     };
   }
 }

@@ -57,10 +57,12 @@ export const AccountManagementContainer: FC = () => {
   console.log(errors);
 
   const handleUpdateUserProfile = (user: UserProfileForm) => {
+    if (currentUser == null) {
+      return;
+    }
     mutate({
-      ...user,
-      id: currentUser?.id ?? "",
-      isFilledInformation: true,
+      data: { ...user, id: currentUser.id, isFilledInformation: true },
+      currentUser,
     });
   };
 

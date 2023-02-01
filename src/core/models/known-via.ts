@@ -1,3 +1,5 @@
+import { reverseRecord } from "@/utils/funcs/reverse-record";
+
 export enum KnownVia {
   FanPageGPA = "fanPageGPA",
   FanPageCompetition = "fanPageCompetition",
@@ -16,8 +18,14 @@ const TO_KNOWN_VIA_READABLE_STRING: Readonly<Record<KnownVia, string>> = {
   [KnownVia.Other]: "Khác",
 };
 
+const FROM_READABLE_STRING = reverseRecord(TO_KNOWN_VIA_READABLE_STRING);
+
 export namespace KnownVia {
   export function toReadable(knownVia: KnownVia) {
     return TO_KNOWN_VIA_READABLE_STRING[knownVia];
+  }
+
+  export function fromReadable(knownVia: string) {
+    return FROM_READABLE_STRING[knownVia];
   }
 }

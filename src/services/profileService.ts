@@ -13,9 +13,16 @@ export namespace ProfileService {
     return userMapper.fromDto(result.data);
   }
 
-  export async function updateProfile(data: UserProfileCreation) {
+  export async function updateProfile({
+    data,
+    currentUser,
+  }: {
+    data: UserProfileCreation;
+    currentUser: User;
+  }) {
     const url = profileUrlService.constructUrlWithParam(data.id);
-    const dataDto = userMapper.toProfileCreationDto(data);
+    const dataDto = userMapper.toCreationDto({ ...currentUser, ...data });
+    console.log({ ...currentUser, ...data });
     return http.put(url, dataDto);
   }
 
