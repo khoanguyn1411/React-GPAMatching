@@ -14,7 +14,6 @@ export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(true);
 export const oauthCredentialAtom = atom<OAuthCredential | null>(null);
 
-const TIMEOUT = 6000;
 export const getUserFullName = (userProfile: UserProfile, user: User | null) => {
   if (!userProfile.fullName) {
     return user?.displayName ?? "";
@@ -36,7 +35,6 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const [oauthCredential] = useAtom(oauthCredentialAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
   const [, setIsPending] = useAtom(isAuthPendingAtom);
-  const controller = new AbortController();
 
   const { notify } = useNotify();
   const notifyLoginFailed = () => notify({ message: "Đăng nhập thất bại!", variant: "error" });
@@ -50,18 +48,11 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   };
 
   const handleAfterFirebaseValidation = async (user: User | null) => {
-    const timeoutId = setTimeout(() => {
-      controller.abort();
-      handleLoginFailed();
-      notifyLoginFailed();
-    }, TIMEOUT);
-    const userProfile = await ProfileService.getPersonalWithController(controller);
+    const userProfile = await ProfileService.getPersonalWithController();
     if (userProfile instanceof Error) {
       handleLoginFailed();
-      clearTimeout(timeoutId);
       return;
     }
-    clearTimeout(timeoutId);
     setCurrentUser({
       ...userProfile,
       fullName: getUserFullName(userProfile, user),
@@ -96,14 +87,9 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
     await UserService.saveSecret(userSecret);
-    const timeoutId = setTimeout(() => {
-      handleLoginFailed();
-    }, TIMEOUT);
+    await handleAfterFirebaseValidation(user);
     isAlreadyGetMe.current = true;
-    handleAfterFirebaseValidation(user).then(() => {
-      clearTimeout(timeoutId);
-      notifyLoginSuccess();
-    });
+    notifyLoginSuccess();
   };
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged(async (user) => {
