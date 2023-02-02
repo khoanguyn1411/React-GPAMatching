@@ -31,6 +31,7 @@ export const getUserAvatarUrl = (userProfile: UserProfile, user: User | null) =>
 
 export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const isAlreadyGetMe = useRef(false);
+  const timeOutId = useRef<NodeJS.Timeout>();
 
   const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [oauthCredential] = useAtom(oauthCredentialAtom);
@@ -92,6 +93,19 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
     await handleAfterFirebaseValidation(user);
     notifyLoginSuccess();
   };
+
+  useEffect(() => {
+    timeOutId.current = setTimeout(() => {
+      setIsPending(false);
+      handleLoginFailed();
+    }, 10000);
+    if (!isPending) {
+      clearTimeout(timeOutId.current);
+    }
+    return () => clearTimeout(timeOutId.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPending]);
+
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged(async (user) => {
       const existedSecret = await UserService.getSecret();
