@@ -21,10 +21,17 @@ export async function interceptToken(config: AxiosRequestConfig): Promise<AxiosR
   };
 }
 
+let isAlreadyRefreshToken = false;
+
 export function refreshToken() {
   return async (error: AxiosError): Promise<AxiosResponse> => {
     const { config } = error;
     const token = await UserService.getSecret();
+    if (isAlreadyRefreshToken) {
+      isAlreadyRefreshToken = false;
+      return Promise.reject(error);
+    }
+    isAlreadyRefreshToken = true;
     if (config == null || token == null || error.response == null) {
       UserService.signOut();
       return Promise.reject(error);
@@ -32,6 +39,7 @@ export function refreshToken() {
 
     if (config.url?.includes("refresh")) {
       UserService.signOut();
+      isAlreadyRefreshToken = true;
       return Promise.reject(error);
     }
 
