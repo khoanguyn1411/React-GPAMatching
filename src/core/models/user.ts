@@ -33,7 +33,11 @@ export interface UserFilledInformation {
 export type User = UserCreation &
   UserFilledInformation &
   UserSkillSet &
-  UserWithNoIdea & { readonly id: string; readonly teamIds: readonly Project["id"][] };
+  UserWithNoIdea & {
+    readonly id: string;
+    readonly teamIds: readonly Project["id"][];
+    readonly hasCreatedProject: boolean;
+  };
 
 export type UserShort = Pick<
   User,

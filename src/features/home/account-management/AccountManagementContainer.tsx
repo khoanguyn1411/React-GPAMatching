@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Grid, Stack, Typography } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -21,8 +21,10 @@ import { LoadingButton } from "@/shared/components/loading-button/LoadingButton"
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
+import { QUERY_KEY } from "@/store/key";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { useCommon } from "@/utils/hooks/useCommon";
+import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
 import { schema, UserProfileForm } from "./schema";
@@ -43,7 +45,8 @@ const skillList: Option[] = enumToArray(Skill).map((skill) => ({
 export const AccountManagementContainer: FC = () => {
   useCommon();
   const { currentUser } = useAuth();
-
+  const queryClient = useQueryClient();
+  const { notify } = useNotify();
   const {
     control,
     reset,
@@ -53,7 +56,16 @@ export const AccountManagementContainer: FC = () => {
     resolver: yupResolver(schema),
   });
 
-  const { mutate } = useMutation({ mutationFn: ProfileService.updateProfile });
+  const { isLoading, mutate } = useMutation({
+    mutationFn: ProfileService.updateProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEY.PROFILE]);
+      notify({ message: "Cập nhật thông tin thành công", variant: "success" });
+    },
+    onError: () => {
+      notify({ message: "Cập nhật thông tin thất bại", variant: "error" });
+    },
+  });
   const handleUpdateUserProfile = (user: UserProfileForm) => {
     if (currentUser == null) {
       return;
@@ -77,7 +89,7 @@ export const AccountManagementContainer: FC = () => {
       skillSet: currentUser?.skillSet,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser, currentUser]);
+  }, [currentUser]);
 
   return (
     <Stack
@@ -256,7 +268,7 @@ export const AccountManagementContainer: FC = () => {
       </Stack>
       <LoadingButton
         sx={{ alignSelf: "end" }}
-        isLoading={false}
+        isLoading={isLoading}
         variant="contained"
         disabled={!isDirty}
         type="submit"

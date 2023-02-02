@@ -39,8 +39,8 @@ export namespace ProfileService {
   }) {
     const url = profileUrlService.constructUrlWithParam(data.id);
     const dataDto = userMapper.toCreationDto({ ...currentUser, ...data });
-    console.log({ ...currentUser, ...data });
-    return http.put(url, dataDto);
+    const result = await http.put<UserDto>(url, dataDto);
+    return userMapper.fromDto(result.data);
   }
 
   export async function getProfileById(id: User["id"]) {

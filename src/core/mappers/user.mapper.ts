@@ -26,6 +26,7 @@ class UserMapper
       yearOfStudent: userStudyYearMapper.fromDto(data.yearOfStudent),
       school: data.school,
       homeAddress: data.homeAddress,
+      hasCreatedProject: data.hasCreatePost,
       knownVia: KnownVia.fromReadable(data.wayToKnow),
       isReadyToJoin: data.wayToKnow === IsReadyToJoin.toReadable(true) ? true : false,
       readyToJoin: IsReadyToJoin.ThreeChoices.fromReadable(data.willingToJoinCompetition),

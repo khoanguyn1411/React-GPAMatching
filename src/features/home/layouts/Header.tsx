@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 
 import { ProjectCreation } from "@/core/models/project";
+import { useAuth } from "@/features/auth/useAuth";
 import { InformationGPALogo } from "@/features/information/components/information-gpa-logo/InformationGPALogo";
 import { routePaths } from "@/routes";
 import { appColors, appPadding, appShadows } from "@/theme/mui-theme";
@@ -26,6 +27,7 @@ type Props = {
 export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBottom = false }) => {
   const { navigate } = useNavigateWithTransition();
   const { pathname } = useLocation();
+  const { currentUser } = useAuth();
   const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
   const handleSwitchPage = (url: string) => () => {
     navigate(url);
@@ -98,14 +100,16 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
             })}
           </Stack>
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <Button
-              onClick={handleOpenEditDialog}
-              sx={{ height: "fit-content" }}
-              variant="contained"
-              startIcon={<PublishTwoTone />}
-            >
-              Đăng ý tưởng
-            </Button>
+            {!currentUser?.hasCreatedProject && (
+              <Button
+                onClick={handleOpenEditDialog}
+                sx={{ height: "fit-content" }}
+                variant="contained"
+                startIcon={<PublishTwoTone />}
+              >
+                Đăng ý tưởng
+              </Button>
+            )}
             <UserDropdownMenu />
           </Stack>
         </Stack>

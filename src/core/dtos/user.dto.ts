@@ -26,6 +26,7 @@ export type UserDto = {
   readonly willingToAttendOffline: string;
   readonly wayToKnow: string;
   readonly willingToJoinCompetition: string;
+  readonly hasCreatePost: boolean;
 };
 
 export type UserCreationDto = Pick<
