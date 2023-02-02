@@ -31,6 +31,7 @@ export const DeleteProjectDialog: FC<Props> = ({ isOpen, setIsOpen }) => {
     mutationFn: ProjectService.deleteProject,
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.PROFILE]);
+      queryClient.invalidateQueries([QUERY_KEY.PROJECT_BY_USER]);
       setIsOpen(false);
       notify({ message: "Xóa dự án thành công", variant: "success" });
     },

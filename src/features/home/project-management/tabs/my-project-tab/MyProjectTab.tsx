@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Delete, Edit } from "@mui/icons-material";
 import { Button, Container, Divider, Grid, Stack, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
@@ -28,6 +28,11 @@ export const MyProjectTab: FC = () => {
     shouldUnregister: true,
     defaultValues: projectInfo?.data?.ownedProject ?? undefined,
   });
+
+  useEffect(() => {
+    projectFormProps.reset(projectInfo?.data?.ownedProject ?? undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectInfo?.data]);
 
   const handleOpenEditDialog = () => {
     setIsOpenEditDialog(true);
