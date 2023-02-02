@@ -13,7 +13,7 @@ class ProjectFilterParamsMapper
   public toDto(data: ProjectFilterParams): ProjectFilterParamsDto {
     return {
       ...commonFilterParamsMapper.toDto(data),
-      seekSkills: data.skill
+      seekingSkills: data.skill
         ? data.skill
             .split(",")
             .map((skill) => skillMapper.toDto(skill as Skill))

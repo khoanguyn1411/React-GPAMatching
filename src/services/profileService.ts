@@ -14,7 +14,7 @@ export namespace ProfileService {
     return userMapper.fromDto(result.data);
   }
 
-  export async function getPersonalWithController(): Promise<User | Error> {
+  export async function getPersonalWithError(): Promise<User | Error> {
     const personalUrl = profileUrlService.concatWith(["personal"]);
     const method = http.get<UserDto>(personalUrl);
     try {

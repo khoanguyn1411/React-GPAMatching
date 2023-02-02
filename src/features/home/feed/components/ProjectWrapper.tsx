@@ -36,7 +36,7 @@ export const ProjectWrapper: FC = () => {
   return (
     <Grid container spacing={3}>
       {data.map((project) => (
-        <Grid height={"100%"} key={project.id} item xs={6}>
+        <Grid key={project.id} item xs={6}>
           <ProjectItem {...project} />
         </Grid>
       ))}

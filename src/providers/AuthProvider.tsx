@@ -6,6 +6,7 @@ import { User as UserProfile } from "@/core/models/user";
 import { firebaseAuth } from "@/firebase/firebase-config";
 import { ProfileService } from "@/services/profileService";
 import { UserService } from "@/services/userService";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
@@ -34,7 +35,7 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [oauthCredential] = useAtom(oauthCredentialAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
-  const [, setIsPending] = useAtom(isAuthPendingAtom);
+  const [isPending, setIsPending] = useAtom(isAuthPendingAtom);
 
   const { notify } = useNotify();
   const notifyLoginFailed = () => notify({ message: "Đăng nhập thất bại!", variant: "error" });
@@ -48,7 +49,7 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   };
 
   const handleAfterFirebaseValidation = async (user: User | null) => {
-    const userProfile = await ProfileService.getPersonalWithController();
+    const userProfile = await ProfileService.getPersonalWithError();
     if (userProfile instanceof Error) {
       handleLoginFailed();
       return;
@@ -87,8 +88,8 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
     await UserService.saveSecret(userSecret);
-    await handleAfterFirebaseValidation(user);
     isAlreadyGetMe.current = true;
+    await handleAfterFirebaseValidation(user);
     notifyLoginSuccess();
   };
   useEffect(() => {
@@ -98,11 +99,15 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
         await handleAfterFirebaseValidation(user);
         return;
       }
+      if (isAlreadyGetMe.current && user == null) {
+        handleLoginFailed();
+        return;
+      }
       signIn(user);
       return;
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [oauthCredential]);
-  return <>{children}</>;
+  return <>{isPending ? <CircleLoading /> : <>{children}</>}</>;
 };

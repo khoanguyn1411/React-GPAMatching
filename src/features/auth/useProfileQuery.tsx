@@ -10,6 +10,9 @@ export const useProfileQuery = () => {
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
 
   useQuery({
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
     enabled: currentUser != null,
     queryKey: [QUERY_KEY.PROFILE],
     queryFn: () => ProfileService.getPersonal(),
