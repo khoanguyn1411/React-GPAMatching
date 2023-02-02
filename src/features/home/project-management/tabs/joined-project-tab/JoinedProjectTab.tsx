@@ -1,22 +1,9 @@
-import { Container, Grid } from "@mui/material";
 import { FC } from "react";
 
-import { ProjectItem } from "@/shared/others/project-item/ProjectItem";
+import { ProjectTabBase } from "../my-project-tab/components/ProjectTabBase";
 
 export const JoinedProjectTab: FC = () => {
   return (
-    <Container>
-      <Grid container spacing={3}>
-        {/* <Grid item xs={6}>
-          <ProjectItem />
-        </Grid>
-        <Grid item xs={6}>
-          <ProjectItem />
-        </Grid>
-        <Grid item xs={6}>
-          <ProjectItem />
-        </Grid> */}
-      </Grid>
-    </Container>
+    <ProjectTabBase tabDataKey="joinedProjects" errorMessage={"Bạn chưa tham gia dự án nào."} />
   );
 };

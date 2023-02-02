@@ -1,7 +1,11 @@
 import { Article, People, Star, WatchLater } from "@mui/icons-material";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 import { FC, ReactNode } from "react";
 
+import { ProjectDetail as ProjectDetailType } from "@/core/models/project";
+import { ProjectField } from "@/core/models/project-field";
+import { ProjectStatus } from "@/core/models/project-status";
+import { Skill } from "@/core/models/skills";
 import { AppReact } from "@/utils/types/react";
 
 import { AvatarWithInfo } from "../avatar-with-info/AvatarWithInfo";
@@ -26,32 +30,33 @@ const FieldStack: AppReact.FC.PropsWithChildren<Props> = ({ title, prefix, child
   );
 };
 
-export const ProjectDetail: FC = () => {
+type ProjectDetailProps = {
+  project: ProjectDetailType;
+};
+
+export const ProjectDetail: FC<ProjectDetailProps> = ({ project }) => {
+  if (project.team.leader == null) {
+    return <Typography>Dữ liệu dự án không tồn tại</Typography>;
+  }
   return (
     <Stack spacing={2}>
-      <Typography variant="h2">Dự án tích hợp blockchain vào quản lý nhà máy</Typography>
-      <Typography>
-        Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain vào quản lý nhà máy
-        Dự án tích hợp bloc Dự án tích hợp blockchain vào quản lý nhà máy Dự án tích hợp blockchain
-        vào quản lý nhà máy Dự án tích hợp bloc Dự án tích hợp blockchain vào quản lý nhà máy Dự án
-        tích hợp blockchain vào.
-      </Typography>
+      <Typography variant="h2">{project.name}</Typography>
+      <Typography>{project.description}</Typography>
       <FieldStack title="Lĩnh vực" prefix={<Article />}>
-        Khoa học - Công nghệ
+        {ProjectField.toReadable(project.field)}
       </FieldStack>
       <FieldStack title="Trạng thái" prefix={<WatchLater />}>
-        Đã hoàn thiện nhưng chưa có sản phẩm đưa ra thị trường
+        {ProjectStatus.toReadable(project.status)}
       </FieldStack>
       <FieldStack title="Thành viên cần tuyển" prefix={<People />}>
-        3
+        {project.findingMemberQuantity}
       </FieldStack>
       <Box>
         <FieldStack title="Kỹ năng yêu cầu" prefix={<Star />} />
-        <Stack marginY={1} component="ul" spacing={1}>
-          <Typography component="li">Lập trình</Typography>
-          <Typography component="li">Lập trình</Typography>
-          <Typography component="li">Lập trình</Typography>
-          <Typography component="li">Lập trình</Typography>
+        <Stack direction="row" marginY={1} paddingX={3} component="ul" spacing={1}>
+          {project.requiredSkills.map((skill) => (
+            <Chip label={Skill.toReadable(skill)} key={`${skill}-index`} component="li" />
+          ))}
         </Stack>
       </Box>
 
@@ -60,25 +65,13 @@ export const ProjectDetail: FC = () => {
           <Typography component="span" fontWeight={700}>
             Thành viên hiện tại:
           </Typography>
-          {/* <MemberList
-            list={[
-              { id: 1, avatarUrl: "", isLeader: true, fullName: "Khoa Nguyen" },
-              { id: 2, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-              { id: 3, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-              { id: 4, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-              { id: 5, avatarUrl: "", isLeader: false, fullName: "Khoa Nguyen" },
-            ]}
-          /> */}
+          <MemberList list={project.team.members} leaderId={project.team.leader.id} />
         </Stack>
         <Stack spacing={1.5}>
           <Typography component="span" fontWeight={700}>
             Nhóm trưởng:
           </Typography>
-          {/* <AvatarWithInfo
-            avatarUrl={""}
-            name={"Khoa"}
-            university={"truong dai hoc kinh te luat - DHQG TPHCM"}
-          /> */}
+          <AvatarWithInfo data={project.team.leader} />
         </Stack>
       </Stack>
     </Stack>

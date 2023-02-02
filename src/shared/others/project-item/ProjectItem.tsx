@@ -13,21 +13,24 @@ import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransiti
 
 import { ProjectButton } from "../project-button/ProjectButton";
 
-type Props = Project;
+type Props = {
+  data: Project;
+  invalidateQueryKeys: string[];
+};
 
 export const ProjectItem: FC<Props> = ({
-  id,
-  status,
-  name,
-  description,
-  field,
-  findingMemberQuantity,
-  createdAt,
-  team,
+  data: { id, status, name, description, field, findingMemberQuantity, createdAt, team },
+  invalidateQueryKeys,
 }) => {
   const { navigate } = useNavigateWithTransition();
   const getStatusStyle = () => {
-    if (status === ProjectStatus.NotFinished || status === ProjectStatus.Other) {
+    if (status === ProjectStatus.FinishedButNoProduct) {
+      return {
+        main: appColors.info,
+        bg: appColors.infoLight,
+      };
+    }
+    if (status === ProjectStatus.NotFinished) {
       return {
         main: appColors.warning,
         bg: appColors.warningLight,
@@ -41,6 +44,8 @@ export const ProjectItem: FC<Props> = ({
   const handleNavigateToDetailProjectPage = () => {
     navigate({ pathname: routePaths.home.children.projectDetail.url, search: `id=${id}` });
   };
+
+  const shouldShowStatus = status !== ProjectStatus.Other;
   return (
     <Stack
       divider={<Divider />}
@@ -59,20 +64,22 @@ export const ProjectItem: FC<Props> = ({
         alignItems="center"
       >
         {team.leader && <AvatarWithInfo data={team.leader} />}
-        <Typography
-          borderRadius="8px"
-          padding="2px 7px"
-          component="span"
-          noWrap
-          sx={{ maxWidth: 180 }}
-          title={ProjectStatus.toReadable(status)}
-          color={getStatusStyle().main}
-          fontWeight={500}
-          bgcolor={getStatusStyle().bg}
-          border={`1.5px solid ${getStatusStyle().main}`}
-        >
-          {ProjectStatus.toReadable(status)}
-        </Typography>
+        {shouldShowStatus && (
+          <Typography
+            borderRadius="8px"
+            padding="2px 7px"
+            component="span"
+            noWrap
+            sx={{ maxWidth: 180 }}
+            title={ProjectStatus.toReadable(status)}
+            color={getStatusStyle().main}
+            fontWeight={500}
+            bgcolor={getStatusStyle().bg}
+            border={`1.5px solid ${getStatusStyle().main}`}
+          >
+            {ProjectStatus.toReadable(status)}
+          </Typography>
+        )}
       </Stack>
 
       <Stack
@@ -147,7 +154,7 @@ export const ProjectItem: FC<Props> = ({
         <Typography component="em" color={appColors.textPrimaryLight}>
           {DateUtils.toFormat(createdAt, "VN")}
         </Typography>
-        <ProjectButton projectId={id} />
+        <ProjectButton invalidateQueryKeys={invalidateQueryKeys} projectId={id} />
       </Stack>
     </Stack>
   );

@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack, Tooltip } from "@mui/material";
+import { Avatar, Box, Stack, Tooltip, Typography } from "@mui/material";
 import { FC, useState } from "react";
 
 import { LeaderAvatarIcon } from "@/assets/images/leader-avatar-icon";
@@ -7,7 +7,7 @@ import { UserShort } from "@/core/models/user";
 import { UserInfoDialog } from "../user-info-dialog/UserInfoDialog";
 
 type Props = {
-  list: UserShort[];
+  list: readonly UserShort[];
   leaderId: UserShort["id"];
 };
 
@@ -21,6 +21,10 @@ export const MemberList: FC<Props> = ({ list, leaderId }) => {
   const isLeader = (member: UserShort) => {
     return leaderId === member.id;
   };
+
+  if (list.length === 0) {
+    return <Typography>Chưa có thành viên nào.</Typography>;
+  }
   return (
     <>
       <Stack direction="row" rowGap={1} columnGap={1.5} flexWrap="wrap">

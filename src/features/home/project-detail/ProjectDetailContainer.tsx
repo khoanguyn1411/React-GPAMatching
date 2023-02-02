@@ -42,7 +42,6 @@ export const ProjectDetailContainer: FC = () => {
   if (data.team.leader == null) {
     return <Typography>Dữ liệu dự án không tồn tại</Typography>;
   }
-  const listMember = data.team.members.concat([]);
 
   return (
     <Stack gap={2}>
@@ -52,7 +51,7 @@ export const ProjectDetailContainer: FC = () => {
           <SectionCardWrapper isFullHeight>
             <Stack spacing={2.3}>
               <Typography variant="h3">Thành viên hiện tại:</Typography>
-              <MemberList list={listMember} leaderId={data.team.leader.id} />
+              <MemberList list={data.team.members} leaderId={data.team.leader.id} />
               <Stack spacing={2}>
                 <Typography variant="h3">Nhóm trưởng:</Typography>
                 <AvatarWithInfo data={data.team.leader} />

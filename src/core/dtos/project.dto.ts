@@ -20,8 +20,8 @@ export interface ProjectDto {
   readonly title: string;
   readonly updatedAt: string | undefined;
   readonly team: {
-    members: readonly UserDto["_id"][];
-    leader: UserShortDto | undefined;
+    readonly members: readonly UserDto["_id"][];
+    readonly leader: UserShortDto | undefined;
   };
   readonly _id: string;
   readonly __v: number;
@@ -39,9 +39,10 @@ export type ProjectCreationDto = Pick<
   | "currentMemberCount"
 >;
 
-export type ProjectDetailDto = StrictOmit<ProjectDto, "team"> & {
+export type ProjectDetailDto = StrictOmit<ProjectDto, "team" | "interesters"> & {
+  readonly interesters: readonly UserShortDto[];
   readonly team: {
-    members: readonly UserShortDto[];
-    leader: UserShortDto | undefined;
+    readonly members: readonly UserShortDto[];
+    readonly leader: UserShortDto | undefined;
   };
 };

@@ -1,64 +1,72 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Delete, Edit, QuestionMark } from "@mui/icons-material";
-import {
-  Button,
-  Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Delete, Edit } from "@mui/icons-material";
+import { Button, Container, Divider, Grid, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { ProjectCreation } from "@/core/models/project";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { ProjectDetail } from "@/shared/others/project-detail/ProjectDetail";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
 import { appColors } from "@/theme/mui-theme";
+import { DateUtils } from "@/utils/funcs/date-utils";
 
+import { useProjectManagement } from "../../useProjectManagementQuery";
+import { DeleteProjectDialog } from "./components/DeleteProjectDialog";
 import { EditProjectDialog } from "./components/EditProjectDialog";
 import { MyRequestsSection } from "./components/MyRequestsSection";
 import { projectSchema } from "./form/shema";
 
 export const MyProjectTab: FC = () => {
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
   const [isOpenEditDialog, setIsOpenEditDialog] = useState<boolean>(false);
+
+  const projectInfo = useProjectManagement();
 
   const projectFormProps = useForm<ProjectCreation>({
     resolver: yupResolver(projectSchema("project")),
     shouldUnregister: true,
+    defaultValues: projectInfo?.data?.ownedProject ?? undefined,
   });
-
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
-  };
-
-  const handleOpenModal = () => {
-    setIsOpenModal(true);
-  };
-
-  const handleDeleteProject = () => {
-    console.log("Delete here");
-  };
 
   const handleOpenEditDialog = () => {
     setIsOpenEditDialog(true);
   };
+
+  const handleOpenModal = () => {
+    setIsOpenDeleteModal(true);
+  };
+
+  if (projectInfo?.isLoading) {
+    return <CircleLoading />;
+  }
+
+  if (projectInfo == null || projectInfo.data == null || projectInfo.isError) {
+    return (
+      <Container>
+        <Typography>Không lấy được thông tin dự án</Typography>
+      </Container>
+    );
+  }
+
+  if (projectInfo.data.ownedProject == null) {
+    return (
+      <Container>
+        <Typography>Bạn chưa tạo dự án</Typography>
+      </Container>
+    );
+  }
 
   return (
     <Container component="section">
       <Grid container spacing={3}>
         <Grid item xs={8}>
           <SectionCardWrapper>
-            <ProjectDetail />
+            <ProjectDetail project={projectInfo.data.ownedProject} />
             <Divider />
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <Typography component="em" color={appColors.textPrimaryLight}>
-                Đăng tải: 15:00 27/01/2023
+                Đăng tải: {DateUtils.toFormat(projectInfo.data.ownedProject.createdAt, "VN")}
               </Typography>
               <Stack direction="row" spacing={1.5}>
                 <Button onClick={handleOpenModal} startIcon={<Delete />} color="inherit">
@@ -73,8 +81,10 @@ export const MyProjectTab: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <SectionCardWrapper>
-            {/* TODO: Add information for this component. */}
-            <MyRequestsSection projectId="123" requesterList={[]} />
+            <MyRequestsSection
+              projectId={projectInfo.data.ownedProject.id}
+              requesterList={projectInfo.data.ownedProject.followers}
+            />
           </SectionCardWrapper>
         </Grid>
       </Grid>
@@ -85,34 +95,7 @@ export const MyProjectTab: FC = () => {
         isOpenEditDialog={isOpenEditDialog}
         setIsOpenEditDialog={setIsOpenEditDialog}
       />
-
-      <Dialog
-        open={isOpenModal}
-        onClose={handleCloseModal}
-        aria-labelledby="avatar-picker-modal-title"
-        aria-describedby="avatar-picker-modal-description"
-      >
-        <DialogTitle display="flex" alignItems="center" gap={1}>
-          <QuestionMark color="error" />
-          Xác nhận xóa
-        </DialogTitle>
-        <DialogContent>
-          <Typography component="span">
-            Bạn có chắc muốn xóa dự án này? Bạn sẽ không thể hoàn tác khi đã nhấn{" "}
-            <Typography color="error" component="span" fontWeight={600}>
-              Xác nhận
-            </Typography>
-          </Typography>
-        </DialogContent>
-        <DialogActions sx={{ padding: 2 }}>
-          <Button color="error" onClick={handleCloseModal}>
-            Hủy
-          </Button>
-          <Button color="error" variant="contained" onClick={handleDeleteProject}>
-            Xác nhận
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteProjectDialog isOpen={isOpenDeleteModal} setIsOpen={setIsOpenDeleteModal} />
     </Container>
   );
 };

@@ -37,9 +37,9 @@ export const AvatarWithInfo: FC<Props> = ({ data }) => {
               WebkitLineClamp: "2",
               WebkitBoxOrient: "vertical",
             }}
-            component="em"
             fontSize={"13px"}
             title={data.school}
+            fontWeight={500}
             maxWidth="220px"
           >
             {data.school}

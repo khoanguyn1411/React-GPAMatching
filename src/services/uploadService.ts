@@ -14,6 +14,6 @@ export namespace UploadService {
     const avatarDto = uploadAvatarMapper.toCreationDto(avatar);
     const result = await http.post<UploadAvatarDto>(url, avatarDto);
     const avatarUrl = uploadAvatarMapper.fromDto(result.data).avatar;
-    return apiUrlService.concatWith([avatarUrl]);
+    return `${apiUrlService.getBaseUrl()}${avatarUrl}`;
   }
 }

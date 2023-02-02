@@ -9,6 +9,7 @@ import { firebaseAuth } from "@/firebase/firebase-config";
 import { oauthCredentialAtom } from "@/providers/AuthProvider";
 import { appColors } from "@/theme/mui-theme";
 import { useCommon } from "@/utils/hooks/useCommon";
+import { useNotify } from "@/utils/hooks/useNotify";
 
 import style from "./LoginContainer.module.css";
 const provider = new GoogleAuthProvider();
@@ -17,11 +18,14 @@ export const LoginContainer: FC = () => {
   useCommon();
 
   const [, setOauthCredential] = useAtom(oauthCredentialAtom);
+  const { notify } = useNotify();
   const handleLoginFirebase = () => {
-    signInWithPopup(firebaseAuth, provider).then((result) => {
-      const googleCredential = GoogleAuthProvider.credentialFromResult(result);
-      setOauthCredential(googleCredential);
-    });
+    signInWithPopup(firebaseAuth, provider)
+      .then((result) => {
+        const googleCredential = GoogleAuthProvider.credentialFromResult(result);
+        setOauthCredential(googleCredential);
+      })
+      .catch(() => notify({ message: "Đăng nhập thất bại", variant: "error" }));
   };
   return (
     <Stack

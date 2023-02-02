@@ -10,11 +10,12 @@ import { QUERY_KEY } from "@/store/key";
 
 type Props = {
   projectId: Project["id"];
+  invalidateQueryKeys: string[];
 };
 
 type ButtonType = "cancel" | "join" | "out" | "disable";
 
-export const ProjectButton: FC<Props> = ({ projectId }) => {
+export const ProjectButton: FC<Props> = ({ projectId, invalidateQueryKeys }) => {
   const queryClient = useQueryClient();
   const { currentUser } = useAuth();
   const getButtonType = (): ButtonType => {
@@ -34,7 +35,7 @@ export const ProjectButton: FC<Props> = ({ projectId }) => {
   const { mutate } = useMutation({
     mutationFn: ProjectService.performUserAction,
     onSuccess: (_, variable) => {
-      queryClient.invalidateQueries([QUERY_KEY.PROJECT]);
+      queryClient.invalidateQueries(invalidateQueryKeys);
       queryClient.invalidateQueries([QUERY_KEY.PROFILE]);
       if (variable.action === InterestAction.Interest) {
         setButtonType("cancel");

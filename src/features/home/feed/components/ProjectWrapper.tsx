@@ -37,7 +37,7 @@ export const ProjectWrapper: FC = () => {
     <Grid container spacing={3}>
       {data.map((project) => (
         <Grid key={project.id} item xs={6}>
-          <ProjectItem {...project} />
+          <ProjectItem invalidateQueryKeys={[QUERY_KEY.PROJECT]} data={project} />
         </Grid>
       ))}
     </Grid>

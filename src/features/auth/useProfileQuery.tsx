@@ -17,11 +17,17 @@ export const useProfileQuery = () => {
     queryKey: [QUERY_KEY.PROFILE],
     queryFn: () => ProfileService.getPersonal(),
     onSuccess: (data) => {
+      const getAvatarUrl = () => {
+        if (!data.avatarUrl) {
+          return currentUser?.avatarUrl ?? "";
+        }
+        return data.avatarUrl;
+      };
       setCurrentUser((prev) => ({
         ...prev,
         ...data,
         email: currentUser?.email ?? "",
-        avatarUrl: currentUser?.avatarUrl ?? "",
+        avatarUrl: getAvatarUrl(),
       }));
     },
   });
