@@ -46,6 +46,7 @@ export const EditProjectDialog: FC<Props> = ({
     mutationFn: ProjectService.createProject,
     onSuccess: (newProject) => {
       notify({ message: "Đăng tải dự án thành công.", variant: "success" });
+      setIsOpenEditDialog(false);
       queryClient.invalidateQueries([QUERY_KEY.PROJECT]);
       queryClient.invalidateQueries([QUERY_KEY.PROFILE]);
       queryClient.setQueryData([QUERY_KEY.PROJECT, newProject.id], newProject);
