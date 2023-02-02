@@ -25,7 +25,6 @@ export const schema = yup.object().shape<YupValidation<UserProfileForm>>({
     .oneOf(enumToArray(UserStudyYear))
     .required(APP_ERROR_MESSAGE.REQUIRED),
   avatarUrl: yup.string(),
-  avatar: yup.mixed(),
   homeAddress: yup.string().required(APP_ERROR_MESSAGE.REQUIRED),
   skillSet: yup
     .array()

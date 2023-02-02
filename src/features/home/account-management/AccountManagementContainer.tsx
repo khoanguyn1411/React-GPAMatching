@@ -14,7 +14,7 @@ import {
 } from "@/features/information/components/information-pages/initialize-info-page/InitializeInfoPage";
 import { ProfileService } from "@/services/profileService";
 import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
-import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
+import { AvatarPickerUpload } from "@/shared/components/avatar-picker-upload/AvatarPickerUpload";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
@@ -80,6 +80,7 @@ export const AccountManagementContainer: FC = () => {
     reset({
       email: currentUser?.email,
       fullName: currentUser?.fullName,
+      avatarUrl: currentUser?.avatarUrl,
       dob: currentUser?.dob,
       yearOfStudent: currentUser?.yearOfStudent,
       gender: currentUser?.gender,
@@ -104,13 +105,9 @@ export const AccountManagementContainer: FC = () => {
       <Stack direction="row" spacing={2} alignItems="center">
         <Controller
           control={control}
-          name="avatar"
+          name="avatarUrl"
           render={({ field: { value, onChange } }) => (
-            <AvatarPicker
-              defaultImageLink={currentUser?.avatarUrl ?? ""}
-              value={value}
-              onChange={onChange}
-            />
+            <AvatarPickerUpload value={value} onChange={onChange} />
           )}
         />
 

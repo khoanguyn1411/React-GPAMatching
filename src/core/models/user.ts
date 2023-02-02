@@ -6,7 +6,6 @@ import { UserSkillSet } from "./user-skill-set";
 import { UserStudyYear } from "./user-study-year";
 
 export type UserCreation = {
-  readonly avatar?: File;
   readonly avatarUrl: string;
   readonly fullName: string;
   readonly phoneNumber: string;
@@ -48,7 +47,6 @@ export type UserProfileCreation = Pick<
   User,
   | "id"
   | "email"
-  | "avatar"
   | "avatarUrl"
   | "fullName"
   | "gender"
