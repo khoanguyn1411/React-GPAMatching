@@ -21,6 +21,10 @@ export const projectManagementRoutes: RouteObject[] = [
         path: routePaths.home.children.project.children.joinedProjects.path,
         element: <ProjectManagementContainer />,
       },
+      {
+        path: routePaths.home.children.project.children.interestedProjects.path,
+        element: <ProjectManagementContainer />,
+      },
     ],
   },
 ];

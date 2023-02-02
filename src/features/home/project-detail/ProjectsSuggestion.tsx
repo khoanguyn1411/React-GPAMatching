@@ -51,7 +51,7 @@ export const ProjectsSuggestion: FC<Props> = ({ field }) => {
     <Grid container spacing={3}>
       {randomProjectSuggestion.map((project, index) => (
         <Grid key={`${project.id}-${index}`} item xs={6}>
-          <ProjectItem {...project} />
+          <ProjectItem invalidateQueryKeys={[]} data={project} />
         </Grid>
       ))}
     </Grid>

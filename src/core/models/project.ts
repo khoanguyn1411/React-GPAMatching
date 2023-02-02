@@ -14,16 +14,16 @@ export interface Project {
   readonly createdBy: User["id"];
   readonly description: string;
   readonly field: ProjectField;
-  readonly status: ProjectStatus;
   readonly followers: readonly User["id"][];
+  readonly status: ProjectStatus;
   readonly lastModifiedBy: User["id"];
   readonly currentMemberQuantity: string;
   readonly findingMemberQuantity: string;
   readonly requiredSkills: readonly Skill[];
   readonly updateAt: Date | null;
   readonly team: {
-    members: readonly User["id"][];
-    leader: UserShort | null;
+    readonly members: readonly User["id"][];
+    readonly leader: UserShort | null;
   };
 }
 
@@ -41,9 +41,10 @@ export type ProjectCreation = Pick<
   readonly readyToJoin: IsReadyToJoin.ThreeChoices;
 };
 
-export type ProjectDetail = StrictOmit<Project, "team"> & {
+export type ProjectDetail = StrictOmit<Project, "team" | "followers"> & {
+  readonly followers: readonly UserShort[];
   readonly team: {
-    members: readonly UserShort[];
-    leader: UserShort | null;
+    readonly members: readonly UserShort[];
+    readonly leader: UserShort | null;
   };
 };

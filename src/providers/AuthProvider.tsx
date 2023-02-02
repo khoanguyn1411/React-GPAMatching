@@ -6,6 +6,7 @@ import { User as UserProfile } from "@/core/models/user";
 import { firebaseAuth } from "@/firebase/firebase-config";
 import { ProfileService } from "@/services/profileService";
 import { UserService } from "@/services/userService";
+import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
@@ -14,7 +15,6 @@ export const isLoggedInAtom = atom<boolean>(true);
 export const isAuthPendingAtom = atom<boolean>(true);
 export const oauthCredentialAtom = atom<OAuthCredential | null>(null);
 
-const TIMEOUT = 6000;
 export const getUserFullName = (userProfile: UserProfile, user: User | null) => {
   if (!userProfile.fullName) {
     return user?.displayName ?? "";
@@ -35,8 +35,7 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   const [, setIsLoggedIn] = useAtom(isLoggedInAtom);
   const [oauthCredential] = useAtom(oauthCredentialAtom);
   const [, setCurrentUser] = useAtom(currentUserAtom);
-  const [, setIsPending] = useAtom(isAuthPendingAtom);
-  const controller = new AbortController();
+  const [isPending, setIsPending] = useAtom(isAuthPendingAtom);
 
   const { notify } = useNotify();
   const notifyLoginFailed = () => notify({ message: "Đăng nhập thất bại!", variant: "error" });
@@ -50,18 +49,11 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
   };
 
   const handleAfterFirebaseValidation = async (user: User | null) => {
-    const timeoutId = setTimeout(() => {
-      controller.abort();
-      handleLoginFailed();
-      notifyLoginFailed();
-    }, TIMEOUT);
-    const userProfile = await ProfileService.getPersonalWithController(controller);
+    const userProfile = await ProfileService.getPersonalWithError();
     if (userProfile instanceof Error) {
       handleLoginFailed();
-      clearTimeout(timeoutId);
       return;
     }
-    clearTimeout(timeoutId);
     setCurrentUser({
       ...userProfile,
       fullName: getUserFullName(userProfile, user),
@@ -96,14 +88,9 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
       return;
     }
     await UserService.saveSecret(userSecret);
-    const timeoutId = setTimeout(() => {
-      handleLoginFailed();
-    }, TIMEOUT);
     isAlreadyGetMe.current = true;
-    handleAfterFirebaseValidation(user).then(() => {
-      clearTimeout(timeoutId);
-      notifyLoginSuccess();
-    });
+    await handleAfterFirebaseValidation(user);
+    notifyLoginSuccess();
   };
   useEffect(() => {
     const unregisterAuthObserver = firebaseAuth.onAuthStateChanged(async (user) => {
@@ -112,11 +99,15 @@ export const AuthProvider: AppReact.FC.Children = ({ children }) => {
         await handleAfterFirebaseValidation(user);
         return;
       }
+      if (isAlreadyGetMe.current && user == null) {
+        handleLoginFailed();
+        return;
+      }
       signIn(user);
       return;
     });
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [oauthCredential]);
-  return <>{children}</>;
+  return <>{isPending ? <CircleLoading /> : <>{children}</>}</>;
 };

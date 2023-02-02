@@ -11,7 +11,7 @@ import { UserCreation } from "@/core/models/user";
 import { UserStudyYear } from "@/core/models/user-study-year";
 import { useAuth } from "@/features/auth/useAuth";
 import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
-import { AvatarPicker } from "@/shared/components/avatar-picker/Avatar-picker";
+import { AvatarPickerUpload } from "@/shared/components/avatar-picker-upload/AvatarPickerUpload";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { AppSelect, Option } from "@/shared/components/select/Select";
@@ -84,7 +84,6 @@ export const InitializeInfoPage: FC = () => {
           isReadyToJoin: userInformation.isReadyToJoin,
           homeAddress: userInformation.homeAddress,
           avatarUrl: currentUser?.avatarUrl,
-          avatar: userInformation.avatar,
         }
       : {
           email: currentUser?.email ?? "",
@@ -107,15 +106,17 @@ export const InitializeInfoPage: FC = () => {
             Khởi tạo thông tin cá nhân
           </Typography>
         </Stack>
-        <FormItem label="Avatar" error={errors.avatar?.message}>
+        <FormItem label="Avatar" error={errors.avatarUrl?.message}>
           <Controller
             control={control}
-            name="avatar"
+            name="avatarUrl"
             render={({ field: { value, onChange } }) => (
-              <AvatarPicker
-                defaultImageLink={currentUser?.avatarUrl ?? ""}
-                value={value}
-                onChange={onChange}
+              <Controller
+                control={control}
+                name="avatarUrl"
+                render={({ field: { value, onChange } }) => (
+                  <AvatarPickerUpload value={value} onChange={onChange} />
+                )}
               />
             )}
           />

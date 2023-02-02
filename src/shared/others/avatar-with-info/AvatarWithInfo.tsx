@@ -26,10 +26,22 @@ export const AvatarWithInfo: FC<Props> = ({ data }) => {
       >
         <Avatar src={data.avatarUrl} />
         <Stack>
-          <Typography component="h2" fontWeight={600}>
+          <Typography component="h2" fontWeight={600} title={data.fullName}>
             {data.fullName}
           </Typography>
-          <Typography component="em" fontSize={"13px"} maxWidth="220px">
+          <Typography
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: "2",
+              WebkitBoxOrient: "vertical",
+            }}
+            fontSize={"13px"}
+            title={data.school}
+            fontWeight={500}
+            maxWidth="220px"
+          >
             {data.school}
           </Typography>
         </Stack>

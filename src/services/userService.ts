@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 
 import { http } from "@/api/api-core";
-import { composeHttpMethodResult } from "@/api/api-utilities";
 import { UserSecretDto } from "@/core/dtos/user-secret.dto";
 import { userSecretMapper } from "@/core/mappers/user-secret.mapper";
 import { UserRefreshSecret, UserSecret, UserSecretCreation } from "@/core/models/user-secret";
@@ -39,13 +38,9 @@ export namespace UserService {
 
   export async function refreshSecret(token: UserRefreshSecret): Promise<UserSecret | Error> {
     const loginUrl = authUrlService.concatWith(["refresh"]);
-    const method = http.post<UserSecretDto>(loginUrl, userSecretMapper.toRefreshDto(token));
     try {
-      const result = await composeHttpMethodResult(method);
-      if (result.result_dto == null) {
-        return new Error("Unexpected null result");
-      }
-      return userSecretMapper.fromDto(result.result_dto);
+      const result = await http.post<UserSecretDto>(loginUrl, userSecretMapper.toRefreshDto(token));
+      return userSecretMapper.fromDto(result.data);
     } catch (error) {
       return new Error("Login Failed");
     }
@@ -53,13 +48,12 @@ export namespace UserService {
 
   export async function getUserSecret(token: UserSecretCreation): Promise<UserSecret | Error> {
     const loginUrl = authUrlService.concatWith(["login"]);
-    const method = http.post<UserSecretDto>(loginUrl, userSecretMapper.toCreationDto(token));
     try {
-      const result = await composeHttpMethodResult(method);
-      if (result.result_dto == null) {
-        return new Error("Unexpected null result");
-      }
-      return userSecretMapper.fromDto(result.result_dto);
+      const result = await http.post<UserSecretDto>(
+        loginUrl,
+        userSecretMapper.toCreationDto(token),
+      );
+      return userSecretMapper.fromDto(result.data);
     } catch (error) {
       return new Error("Login Failed");
     }

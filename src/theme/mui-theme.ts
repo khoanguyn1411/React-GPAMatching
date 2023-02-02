@@ -17,6 +17,9 @@ export const appColors = {
   success: "rgba(58,178,102,1)",
   successLight: "rgba(58,178,102,0.05)",
 
+  info: "rgba(0,175,185,1)",
+  infoLight: "rgba(0,175,185,0.05)",
+
   placeholder: "rgb(182,183,185)",
 };
 

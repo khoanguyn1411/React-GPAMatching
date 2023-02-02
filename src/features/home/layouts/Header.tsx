@@ -59,18 +59,13 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
       component="header"
     >
       <Container>
-        <Stack
-          padding={appPadding.layout}
-          direction="row"
-          justifyContent="space-between"
-          spacing={2}
-          alignItems="center"
-        >
+        <Stack padding={appPadding.layout} direction="row" spacing={2} alignItems="center">
           <Stack
             direction="row"
             alignItems="center"
             spacing={1}
             component="div"
+            width={1 / 3}
             sx={{ cursor: "pointer" }}
             onClick={handleNavigateToHome}
           >
@@ -79,7 +74,7 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
               Matching System
             </Typography>
           </Stack>
-          <Stack component="nav" direction="row" justifyContent="space-between" spacing={2}>
+          <Stack width={1 / 3} component="nav" direction="row" justifyContent="center" spacing={2}>
             {homeLinks.map((link, index) => {
               const isLinkActive = CompareURL.isInclude(link.routePath.path, pathname);
               return (
@@ -99,7 +94,7 @@ export const Header: AppReact.FC.PropsWithChildren<Props> = ({ shouldBorderBotto
               );
             })}
           </Stack>
-          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+          <Stack width={1 / 3} direction="row" justifyContent="end" alignItems="center" spacing={2}>
             {!currentUser?.hasCreatedProject && (
               <Button
                 onClick={handleOpenEditDialog}

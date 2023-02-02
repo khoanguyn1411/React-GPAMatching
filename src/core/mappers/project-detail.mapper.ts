@@ -18,7 +18,7 @@ class ProjectDetailMapper implements IMapperFromDto<ProjectDetailDto, ProjectDet
       description: data.content,
       field: projectFieldMapper.fromDto(data.category),
       status: projectStatusMapper.fromDto(data.currentStage),
-      followers: data.interesters,
+      followers: data.interesters.map((request) => userShortMapper.fromDto(request)),
       lastModifiedBy: data.lastModifiedBy,
       currentMemberQuantity: data.currentMemberCount.toString(),
       findingMemberQuantity: data.seekingMemberCount.toString(),

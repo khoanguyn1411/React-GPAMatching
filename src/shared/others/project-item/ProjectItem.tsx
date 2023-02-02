@@ -13,21 +13,24 @@ import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransiti
 
 import { ProjectButton } from "../project-button/ProjectButton";
 
-type Props = Project;
+type Props = {
+  data: Project;
+  invalidateQueryKeys: string[];
+};
 
 export const ProjectItem: FC<Props> = ({
-  id,
-  status,
-  name,
-  description,
-  field,
-  findingMemberQuantity,
-  createdAt,
-  team,
+  data: { id, status, name, description, field, findingMemberQuantity, createdAt, team },
+  invalidateQueryKeys,
 }) => {
   const { navigate } = useNavigateWithTransition();
   const getStatusStyle = () => {
-    if (status === ProjectStatus.NotFinished || status === ProjectStatus.Other) {
+    if (status === ProjectStatus.FinishedButNoProduct) {
+      return {
+        main: appColors.info,
+        bg: appColors.infoLight,
+      };
+    }
+    if (status === ProjectStatus.NotFinished) {
       return {
         main: appColors.warning,
         bg: appColors.warningLight,
@@ -41,11 +44,14 @@ export const ProjectItem: FC<Props> = ({
   const handleNavigateToDetailProjectPage = () => {
     navigate({ pathname: routePaths.home.children.projectDetail.url, search: `id=${id}` });
   };
+
+  const shouldShowStatus = status !== ProjectStatus.Other;
   return (
     <Stack
       divider={<Divider />}
       bgcolor="white"
       paddingY={3}
+      height={"100%"}
       spacing={2}
       border={`1.5px solid ${appColors.borderPrimary}`}
       borderRadius="8px"
@@ -58,32 +64,48 @@ export const ProjectItem: FC<Props> = ({
         alignItems="center"
       >
         {team.leader && <AvatarWithInfo data={team.leader} />}
-        <Typography
-          borderRadius="8px"
-          padding="2px 7px"
-          component="span"
-          noWrap
-          sx={{ maxWidth: 220 }}
-          title={ProjectStatus.toReadable(status)}
-          color={getStatusStyle().main}
-          fontWeight={500}
-          bgcolor={getStatusStyle().bg}
-          border={`1.5px solid ${getStatusStyle().main}`}
-        >
-          {ProjectStatus.toReadable(status)}
-        </Typography>
+        {shouldShowStatus && (
+          <Typography
+            borderRadius="8px"
+            padding="2px 7px"
+            component="span"
+            noWrap
+            sx={{ maxWidth: 180 }}
+            title={ProjectStatus.toReadable(status)}
+            color={getStatusStyle().main}
+            fontWeight={500}
+            bgcolor={getStatusStyle().bg}
+            border={`1.5px solid ${getStatusStyle().main}`}
+          >
+            {ProjectStatus.toReadable(status)}
+          </Typography>
+        )}
       </Stack>
+
       <Stack
         sx={{
           all: "unset",
           cursor: "pointer",
           ":hover a": { color: appColors.primary, transition: "0.3s ease" },
           paddingX: 2.5,
+          height: "calc(100% - 60px)",
         }}
         spacing={1.5}
         onClick={handleNavigateToDetailProjectPage}
       >
-        <Typography component="a" fontSize={"18px"} fontWeight={700}>
+        <Typography
+          sx={{
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            WebkitLineClamp: "1",
+            WebkitBoxOrient: "vertical",
+          }}
+          component="a"
+          fontSize={"18px"}
+          title={name}
+          fontWeight={700}
+        >
           {name}
         </Typography>
         <Typography
@@ -132,7 +154,7 @@ export const ProjectItem: FC<Props> = ({
         <Typography component="em" color={appColors.textPrimaryLight}>
           {DateUtils.toFormat(createdAt, "VN")}
         </Typography>
-        <ProjectButton projectId={id} />
+        <ProjectButton invalidateQueryKeys={invalidateQueryKeys} projectId={id} />
       </Stack>
     </Stack>
   );

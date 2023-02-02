@@ -24,7 +24,7 @@ export const MyRequestsSection: FC<Props> = ({ requesterList, projectId }) => {
   const { isLoading, mutate } = useMutation({
     mutationFn: ProjectService.performUserAction,
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY.PROJECT, projectId]);
+      queryClient.invalidateQueries([QUERY_KEY.PROJECT_BY_USER]);
     },
     onError: (_, variables) => {
       const actionMessage =

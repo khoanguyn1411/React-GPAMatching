@@ -10,7 +10,12 @@ import App from "./App";
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { retry: 1, retryDelay: 4000, refetchInterval: 30 * 1000, staleTime: 60 * 2 * 1000 },
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      retryDelay: 4000,
+      refetchInterval: 30 * 1000,
+    },
   },
 });
 

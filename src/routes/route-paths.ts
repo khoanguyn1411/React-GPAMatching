@@ -27,6 +27,7 @@ const homeRoutePaths = buildRoutePaths({
         children: {
           myProject: { path: "my-project" },
           joinedProjects: { path: "joined-projects" },
+          interestedProjects: { path: "interested-projects" },
         },
       },
       projectDetail: {
