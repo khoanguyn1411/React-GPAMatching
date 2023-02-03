@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { Outlet, RouteObject } from "react-router-dom";
 
 import { routePaths } from "@/routes";
 import { lazyImport } from "@/utils/funcs/lazy-import";
@@ -15,15 +15,15 @@ export const projectManagementRoutes: RouteObject[] = [
     children: [
       {
         path: routePaths.home.children.project.children.myProject.path,
-        element: <ProjectManagementContainer />,
+        element: <Outlet />,
       },
       {
         path: routePaths.home.children.project.children.joinedProjects.path,
-        element: <ProjectManagementContainer />,
+        element: <Outlet />,
       },
       {
         path: routePaths.home.children.project.children.interestedProjects.path,
-        element: <ProjectManagementContainer />,
+        element: <Outlet />,
       },
     ],
   },
