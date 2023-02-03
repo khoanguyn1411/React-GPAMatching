@@ -11,14 +11,14 @@ import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { QUERY_KEY } from "@/store/key";
 import { useNotify } from "@/utils/hooks/useNotify";
 
-import { RequestItem } from "./RequestItem";
+import { FollowerItem } from "./FollowerItem";
 
 type Props = {
-  requesterList: readonly UserShort[];
+  followerList: readonly UserShort[];
   projectId: Project["id"];
 };
 
-export const MyRequestsSection: FC<Props> = ({ requesterList, projectId }) => {
+export const MyFollowersSection: FC<Props> = ({ followerList, projectId }) => {
   const queryClient = useQueryClient();
   const { notify } = useNotify();
   const { isLoading, mutate } = useMutation({
@@ -32,15 +32,15 @@ export const MyRequestsSection: FC<Props> = ({ requesterList, projectId }) => {
       notify({ message: `${actionMessage} thất bại`, variant: "error" });
     },
   });
-  const handleApproveRequester = (user: UserShort) => {
+  const handleApproveFollower = (user: UserShort) => {
     mutate({ userId: user.id, projectId: projectId, action: InterestAction.Approve });
   };
 
-  const handleRejectRequester = (user: UserShort) => {
+  const handleRejectFollower = (user: UserShort) => {
     mutate({ userId: user.id, projectId: projectId, action: InterestAction.Decline });
   };
 
-  const hasRequest = requesterList.length > 0;
+  const hasRequest = followerList.length > 0;
   return (
     <Stack spacing={2}>
       <Typography variant="h2">Yêu cầu xin vào nhóm</Typography>
@@ -60,10 +60,10 @@ export const MyRequestsSection: FC<Props> = ({ requesterList, projectId }) => {
             <CircleLoading mode="normal" />
           </Stack>
         )}
-        {requesterList.map((user, index) => (
-          <RequestItem
-            onApproved={handleApproveRequester}
-            onRejected={handleRejectRequester}
+        {followerList.map((user, index) => (
+          <FollowerItem
+            onApproved={handleApproveFollower}
+            onRejected={handleRejectFollower}
             key={`${user.id}-${index}`}
             user={user}
           />

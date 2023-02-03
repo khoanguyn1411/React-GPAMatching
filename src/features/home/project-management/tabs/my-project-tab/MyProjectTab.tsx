@@ -14,7 +14,7 @@ import { DateUtils } from "@/utils/funcs/date-utils";
 import { useProjectManagement } from "../../useProjectManagementQuery";
 import { DeleteProjectDialog } from "./components/DeleteProjectDialog";
 import { EditProjectDialog } from "./components/EditProjectDialog";
-import { MyRequestsSection } from "./components/MyRequestsSection";
+import { MyFollowersSection } from "./components/MyFollowersSection";
 import { projectSchema } from "./form/shema";
 
 export const MyProjectTab: FC = () => {
@@ -86,9 +86,9 @@ export const MyProjectTab: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <SectionCardWrapper>
-            <MyRequestsSection
+            <MyFollowersSection
               projectId={projectInfo.data.ownedProject.id}
-              requesterList={projectInfo.data.ownedProject.followers}
+              followerList={projectInfo.data.ownedProject.followers}
             />
           </SectionCardWrapper>
         </Grid>

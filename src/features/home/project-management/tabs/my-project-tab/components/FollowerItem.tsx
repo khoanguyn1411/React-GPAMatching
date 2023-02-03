@@ -11,7 +11,7 @@ type Props = {
   user: UserShort;
 };
 
-export const RequestItem: FC<Props> = ({ user, onRejected, onApproved }) => {
+export const FollowerItem: FC<Props> = ({ user, onRejected, onApproved }) => {
   const handleApproved = () => {
     onApproved?.(user);
   };
