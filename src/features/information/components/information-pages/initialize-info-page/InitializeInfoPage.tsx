@@ -111,13 +111,7 @@ export const InitializeInfoPage: FC = () => {
             control={control}
             name="avatarUrl"
             render={({ field: { value, onChange } }) => (
-              <Controller
-                control={control}
-                name="avatarUrl"
-                render={({ field: { value, onChange } }) => (
-                  <AvatarPickerUpload value={value} onChange={onChange} />
-                )}
-              />
+              <AvatarPickerUpload shouldShowButton value={value} onChange={onChange} />
             )}
           />
         </FormItem>

@@ -39,11 +39,7 @@ export const isReadyToJoinList: Option[] = enumToArray(IsReadyToJoin.ThreeChoice
   label: IsReadyToJoin.ThreeChoices.toReadable(ready),
 }));
 
-export const EditProjectForm: FC<Props> = ({
-  formProps,
-  shouldHideIsReadyToJoinField = false,
-  mode,
-}) => {
+export const EditProjectForm: FC<Props> = ({ formProps, shouldHideIsReadyToJoinField = false }) => {
   const {
     control,
     formState: { errors },

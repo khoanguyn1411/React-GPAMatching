@@ -20,10 +20,8 @@ type Props = {
   invalidateQueryKeys: string[];
 };
 
-export const ProjectItem: FC<Props> = ({
-  data: { id, status, name, description, field, findingMemberQuantity, createdAt, team },
-  invalidateQueryKeys,
-}) => {
+export const ProjectItem: FC<Props> = ({ data, invalidateQueryKeys }) => {
+  const { id, status, name, description, field, findingMemberQuantity, createdAt, team } = data;
   const { navigate } = useNavigateWithTransition();
   const getStatusStyle = () => {
     if (status === ProjectStatus.FinishedButNoProduct) {
@@ -156,7 +154,7 @@ export const ProjectItem: FC<Props> = ({
         <Typography component="em" color={appColors.textPrimaryLight}>
           {DateUtils.toFormat(createdAt, "VN")}
         </Typography>
-        <ProjectButton invalidateQueryKeys={invalidateQueryKeys} projectId={id} />
+        <ProjectButton invalidateQueryKeys={invalidateQueryKeys} project={data} />
       </Stack>
     </Stack>
   );

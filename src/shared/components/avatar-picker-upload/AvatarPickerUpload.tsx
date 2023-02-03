@@ -23,10 +23,11 @@ import { CircleLoading } from "../loading/CircleLoading";
 
 type Props = {
   value: string;
+  shouldShowButton?: boolean;
   onChange: (value: string) => void;
 };
 
-export const AvatarPickerUpload: FC<Props> = ({ value, onChange }) => {
+export const AvatarPickerUpload: FC<Props> = ({ value, shouldShowButton = false, onChange }) => {
   const [message, setMessage] = useState<string>("");
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
@@ -39,7 +40,6 @@ export const AvatarPickerUpload: FC<Props> = ({ value, onChange }) => {
     },
     onSuccess: (avatarUrl) => {
       onChange(avatarUrl);
-      console.log(avatarUrl);
     },
   });
 
@@ -86,15 +86,13 @@ export const AvatarPickerUpload: FC<Props> = ({ value, onChange }) => {
 
       {
         <Stack spacing={1} direction="column" position="relative" width="fit-content">
-          <Tooltip placement="bottom-start" arrow title="Nhấn vào để chọn avatar">
-            <Box>
-              {isLoading && (
-                <Box
-                  sx={{ position: "absolute", zIndex: 10, top: 15, right: 0, left: 0, bottom: 0 }}
-                >
-                  <CircleLoading mode="normal" />
-                </Box>
-              )}
+          <Box>
+            {isLoading && (
+              <Box sx={{ position: "absolute", zIndex: 10, top: 15, right: 0, left: 0, bottom: 0 }}>
+                <CircleLoading mode="normal" />
+              </Box>
+            )}
+            <Tooltip placement="bottom-start" arrow title="Nhấn vào để chọn avatar">
               <Avatar
                 onClick={handleOpenSelectFile}
                 sx={{
@@ -106,19 +104,37 @@ export const AvatarPickerUpload: FC<Props> = ({ value, onChange }) => {
                 alt="User avatar"
                 src={value}
               />
-              <CameraAlt
-                fontSize="medium"
-                sx={{
-                  position: "absolute",
-                  right: "-3px",
-                  bottom: "-3px",
-                  bgcolor: appColors.backgroundBlur,
-                  borderRadius: "8px",
-                  padding: "3px",
-                }}
-              />
-            </Box>
-          </Tooltip>
+            </Tooltip>
+            {shouldShowButton && (
+              <Box
+                position="absolute"
+                right={-110}
+                top={0}
+                bottom={0}
+                display="flex"
+                alignItems="center"
+              >
+                <Button
+                  onClick={handleOpenSelectFile}
+                  variant="outlined"
+                  sx={{ height: "fit-content" }}
+                >
+                  Chọn ảnh
+                </Button>
+              </Box>
+            )}
+            <CameraAlt
+              fontSize="medium"
+              sx={{
+                position: "absolute",
+                right: "-3px",
+                bottom: "-3px",
+                bgcolor: appColors.backgroundBlur,
+                borderRadius: "8px",
+                padding: "3px",
+              }}
+            />
+          </Box>
         </Stack>
       }
       {message && (

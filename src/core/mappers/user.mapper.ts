@@ -32,6 +32,7 @@ class UserMapper
       readyToJoin: IsReadyToJoin.ThreeChoices.fromReadable(data.willingToJoinCompetition),
       skillSet: data.skillsSet.map((skill) => skillMapper.fromDto(skill)),
       teamIds: data.teamIds,
+      isAllowedToJoin: data.isAllowedToJoin,
     };
   }
   public toCreationDto(data: User): UserCreationDto {
