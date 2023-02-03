@@ -62,7 +62,7 @@ export const LoginContainer: FC = () => {
             fontSize={"12px"}
             fontWeight={500}
           >
-            Powerd by Symlody Team
+            Powered by Symlody Team
           </Typography>
         </Stack>
       </Card>

@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Tooltip, Typography } from "@mui/material";
 import { FC } from "react";
 
 import { icons } from "@/assets/icons";
@@ -65,20 +65,22 @@ export const ProjectItem: FC<Props> = ({ data, invalidateQueryKeys }) => {
       >
         {team.leader && <AvatarWithInfo data={team.leader} />}
         {shouldShowStatus && (
-          <Typography
-            borderRadius="8px"
-            padding="2px 7px"
-            component="span"
-            noWrap
-            sx={{ maxWidth: 180 }}
-            title={ProjectStatus.toReadable(status)}
-            color={getStatusStyle().main}
-            fontWeight={500}
-            bgcolor={getStatusStyle().bg}
-            border={`1.5px solid ${getStatusStyle().main}`}
-          >
-            {ProjectStatus.toReadable(status)}
-          </Typography>
+          <Tooltip title={ProjectStatus.toReadable(status)} arrow>
+            <Typography
+              borderRadius="8px"
+              padding="2px 7px"
+              component="span"
+              noWrap
+              sx={{ maxWidth: 180 }}
+              title={ProjectStatus.toReadable(status)}
+              color={getStatusStyle().main}
+              fontWeight={500}
+              bgcolor={getStatusStyle().bg}
+              border={`1.5px solid ${getStatusStyle().main}`}
+            >
+              {ProjectStatus.toReadable(status)}
+            </Typography>
+          </Tooltip>
         )}
       </Stack>
 
