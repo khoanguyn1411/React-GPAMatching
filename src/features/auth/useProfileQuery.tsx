@@ -23,10 +23,18 @@ export const useProfileQuery = () => {
         }
         return data.avatarUrl;
       };
+      const getUserFullName = () => {
+        if (!data.fullName) {
+          return currentUser?.fullName ?? "";
+        }
+        return data.fullName;
+      };
+
       setCurrentUser((prev) => ({
         ...prev,
         ...data,
         email: currentUser?.email ?? "",
+        fullName: getUserFullName(),
         avatarUrl: getAvatarUrl(),
       }));
     },

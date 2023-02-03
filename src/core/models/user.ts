@@ -36,6 +36,7 @@ export type User = UserCreation &
     readonly id: string;
     readonly teamIds: readonly Project["id"][];
     readonly hasCreatedProject: boolean;
+    readonly isAllowedToJoin: boolean;
   };
 
 export type UserShort = Pick<

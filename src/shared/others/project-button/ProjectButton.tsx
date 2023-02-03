@@ -9,21 +9,27 @@ import { ProjectService } from "@/services/projectService";
 import { QUERY_KEY } from "@/store/key";
 
 type Props = {
-  projectId: Project["id"];
+  project: Project;
   invalidateQueryKeys: string[];
 };
 
 type ButtonType = "cancel" | "join" | "out" | "disable";
 
-export const ProjectButton: FC<Props> = ({ projectId, invalidateQueryKeys }) => {
+export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
   const queryClient = useQueryClient();
   const { currentUser } = useAuth();
   const getButtonType = (): ButtonType => {
     if (currentUser == null) {
       return "disable";
     }
-    if (currentUser.teamIds.includes(projectId)) {
+
+    const shouldReturnOutType = project.followers.includes(currentUser.id);
+
+    if (shouldReturnOutType) {
       return "out";
+    }
+    if (!currentUser.isAllowedToJoin || project.team.leader?.id === currentUser.id) {
+      return "disable";
     }
     if (currentUser.teamIds.length > 3) {
       return "disable";
@@ -52,7 +58,7 @@ export const ProjectButton: FC<Props> = ({ projectId, invalidateQueryKeys }) => 
     if (buttonType === "cancel") {
       return "Hủy yêu cầu";
     }
-    if (buttonType === "join") {
+    if (buttonType === "join" || buttonType === "disable") {
       return "Tham gia";
     }
     return "Thoát dự án";
@@ -63,10 +69,18 @@ export const ProjectButton: FC<Props> = ({ projectId, invalidateQueryKeys }) => 
       return;
     }
     if (buttonType === "cancel") {
-      return mutate({ projectId, userId: currentUser.id, action: InterestAction.UnInterest });
+      return mutate({
+        projectId: project.id,
+        userId: currentUser.id,
+        action: InterestAction.UnInterest,
+      });
     }
     if (buttonType === "join") {
-      return mutate({ projectId, userId: currentUser.id, action: InterestAction.Interest });
+      return mutate({
+        projectId: project.id,
+        userId: currentUser.id,
+        action: InterestAction.Interest,
+      });
     }
   };
 
