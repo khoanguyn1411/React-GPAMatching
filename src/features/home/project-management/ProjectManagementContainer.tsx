@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { routePaths } from "@/routes";
@@ -31,15 +31,18 @@ export const ProjectManagementContainer: FC = () => {
     navigate(interestedProjects.url);
   };
 
-  const getDefaultActiveTab = () => {
-    if (pathname.includes(joinedProjects.path)) {
-      return joinedProjects.path;
-    }
-    if (pathname.includes(interestedProjects.path)) {
-      return interestedProjects.path;
-    }
-    return myProject.path;
-  };
+  const getDefaultActiveTab = useMemo(() => {
+    return () => {
+      if (pathname.includes(joinedProjects.path)) {
+        return joinedProjects.path;
+      }
+      if (pathname.includes(interestedProjects.path)) {
+        return interestedProjects.path;
+      }
+      return myProject.path;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
   return (
     <Box bgcolor={appColors.backgroundBlur} minHeight="calc(100vh - 75px)">
       <AppTab
