@@ -72,7 +72,6 @@ export const ProjectItem: FC<Props> = ({ data, invalidateQueryKeys }) => {
               component="span"
               noWrap
               sx={{ maxWidth: 180 }}
-              title={ProjectStatus.toReadable(status)}
               color={getStatusStyle().main}
               fontWeight={500}
               bgcolor={getStatusStyle().bg}

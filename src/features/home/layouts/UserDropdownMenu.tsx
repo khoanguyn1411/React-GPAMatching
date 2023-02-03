@@ -23,13 +23,15 @@ export const UserDropdownMenu: FC = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleCloseMenu = (menu: HomeMenu | null) => () => {
+  const handleCloseMenu = (menu: HomeMenu | null) => async () => {
     setAnchorEl(null);
     if (menu === null) {
       return;
     }
     if (menu.key === "logout") {
-      UserService.signOut();
+      UserService.logOut().finally(() => {
+        UserService.signOut();
+      });
       return;
     }
     if (menu.routePath) {

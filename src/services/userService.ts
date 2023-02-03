@@ -36,6 +36,11 @@ export namespace UserService {
     return true;
   }
 
+  export async function logOut() {
+    const url = authUrlService.concatWith(["logout"]);
+    return await http.get(url, { timeout: 3000 });
+  }
+
   export async function refreshSecret(token: UserRefreshSecret): Promise<UserSecret | Error> {
     const loginUrl = authUrlService.concatWith(["refresh"]);
     try {
