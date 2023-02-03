@@ -1,7 +1,8 @@
-import { ArrowRight, Description, PersonAdd, Star, WatchLater } from "@mui/icons-material";
+import { ArrowRight } from "@mui/icons-material";
 import { Button, Chip, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
+import { icons } from "@/assets/icons";
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
@@ -16,6 +17,8 @@ import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransiti
 
 import { ProjectsSuggestion } from "./ProjectsSuggestion";
 import { useProjectDetailQuery } from "./useProjectDetailQuery";
+
+const { FileIcon, StarIcon, UserGroupIcon, ClockIcon } = icons;
 
 export const ProjectDetailContainer: FC = () => {
   useCommon();
@@ -57,15 +60,15 @@ export const ProjectDetailContainer: FC = () => {
                 <AvatarWithInfo data={data.team.leader} />
               </Stack>
               <Stack spacing={1} direction="row">
-                <PersonAdd />
+                <UserGroupIcon />
                 <Typography fontWeight={700} component="span">
                   Thành viên cần tuyển:{" "}
                   <Typography component="span">{data.findingMemberQuantity}</Typography>
                 </Typography>
               </Stack>
 
-              <Stack spacing={1} direction="row">
-                <Description />
+              <Stack spacing={1} direction="row" alignItems="center">
+                <FileIcon />
                 <Typography fontWeight={700} component="span">
                   Lĩnh vực:{" "}
                   <Typography component="span">{ProjectField.toReadable(data.field)}</Typography>
@@ -73,7 +76,7 @@ export const ProjectDetailContainer: FC = () => {
               </Stack>
 
               <Stack spacing={1} direction="row">
-                <WatchLater />
+                <ClockIcon />
                 <Typography fontWeight={700} component="span">
                   Giai đoạn phát triển:{" "}
                   <Typography component="span">{ProjectStatus.toReadable(data.status)}</Typography>
@@ -93,7 +96,7 @@ export const ProjectDetailContainer: FC = () => {
 
               <Stack spacing={1}>
                 <Stack direction="row" alignItems="center" spacing={1}>
-                  <Star />
+                  <StarIcon />
                   <Typography variant="h3">Kỹ năng yêu cầu: </Typography>
                 </Stack>
                 <Stack direction="row" marginY={1} paddingX={3} component="ul" spacing={1}>

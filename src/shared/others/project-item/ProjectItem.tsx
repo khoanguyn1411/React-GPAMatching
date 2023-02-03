@@ -1,7 +1,7 @@
-import { Description, PersonAdd } from "@mui/icons-material";
 import { Divider, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 
+import { icons } from "@/assets/icons";
 import { Project } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
@@ -12,6 +12,8 @@ import { DateUtils } from "@/utils/funcs/date-utils";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
 import { ProjectButton } from "../project-button/ProjectButton";
+
+const { UserGroupIcon, FileIcon } = icons;
 
 type Props = {
   data: Project;
@@ -50,7 +52,7 @@ export const ProjectItem: FC<Props> = ({
     <Stack
       divider={<Divider />}
       bgcolor="white"
-      paddingY={3}
+      paddingY={2}
       height={"100%"}
       spacing={2}
       border={`1.5px solid ${appColors.borderPrimary}`}
@@ -104,7 +106,7 @@ export const ProjectItem: FC<Props> = ({
           component="a"
           fontSize={"18px"}
           title={name}
-          fontWeight={700}
+          fontWeight={600}
         >
           {name}
         </Typography>
@@ -123,7 +125,7 @@ export const ProjectItem: FC<Props> = ({
         <Stack>
           <Stack spacing={2}>
             <Stack spacing={1} direction="row">
-              <Description />
+              <FileIcon />
               <Typography component="span">
                 Lĩnh vực:{" "}
                 <Typography component="span" sx={{ color: appColors.textPrimaryLight }}>
@@ -132,8 +134,8 @@ export const ProjectItem: FC<Props> = ({
               </Typography>
             </Stack>
 
-            <Stack spacing={1} direction="row">
-              <PersonAdd />
+            <Stack spacing={1} direction="row" alignItems="center">
+              <UserGroupIcon />
               <Typography component="span">
                 Thành viên cần tuyển:{" "}
                 <Typography component="span" sx={{ color: appColors.textPrimaryLight }}>

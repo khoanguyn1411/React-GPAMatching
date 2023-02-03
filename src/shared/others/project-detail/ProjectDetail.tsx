@@ -1,7 +1,7 @@
-import { Article, People, Star, WatchLater } from "@mui/icons-material";
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import { FC, ReactNode } from "react";
 
+import { icons } from "@/assets/icons";
 import { ProjectDetail as ProjectDetailType } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
@@ -10,6 +10,8 @@ import { AppReact } from "@/utils/types/react";
 
 import { AvatarWithInfo } from "../avatar-with-info/AvatarWithInfo";
 import { MemberList } from "../member-list/MemberList";
+
+const { UserGroupIcon, StarIcon, ClockIcon, FileIcon } = icons;
 
 type Props = {
   title: string;
@@ -42,17 +44,17 @@ export const ProjectDetail: FC<ProjectDetailProps> = ({ project }) => {
     <Stack spacing={2}>
       <Typography variant="h2">{project.name}</Typography>
       <Typography>{project.description}</Typography>
-      <FieldStack title="Lĩnh vực" prefix={<Article />}>
+      <FieldStack title="Lĩnh vực" prefix={<FileIcon />}>
         {ProjectField.toReadable(project.field)}
       </FieldStack>
-      <FieldStack title="Trạng thái" prefix={<WatchLater />}>
+      <FieldStack title="Trạng thái" prefix={<ClockIcon />}>
         {ProjectStatus.toReadable(project.status)}
       </FieldStack>
-      <FieldStack title="Thành viên cần tuyển" prefix={<People />}>
+      <FieldStack title="Thành viên cần tuyển" prefix={<UserGroupIcon />}>
         {project.findingMemberQuantity}
       </FieldStack>
       <Box>
-        <FieldStack title="Kỹ năng yêu cầu" prefix={<Star />} />
+        <FieldStack title="Kỹ năng yêu cầu" prefix={<StarIcon />} />
         <Stack direction="row" marginY={1} paddingX={3} component="ul" spacing={1}>
           {project.requiredSkills.map((skill) => (
             <Chip label={Skill.toReadable(skill)} key={`${skill}-index`} component="li" />
