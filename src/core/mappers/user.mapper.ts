@@ -39,7 +39,7 @@ class UserMapper
       fullName: data.fullName,
       avatar: data.avatarUrl,
       dob: dateMapper.toDto(data.dob),
-      bio: data.experience && "Không",
+      bio: data.experience ?? "Không",
       phoneNumber: data.phoneNumber,
       gender: genderMapper.toDto(data.gender),
       isFilledInformation: data.isFilledInformation,
