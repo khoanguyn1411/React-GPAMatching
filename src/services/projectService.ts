@@ -34,6 +34,13 @@ export namespace ProjectService {
     return projectMapper.fromDto(result.data);
   }
 
+  export async function updateProject({ id, data }: { id: Project["id"]; data: ProjectCreation }) {
+    const url = projectUrlService.constructUrlWithParam(id);
+    const dataDto = projectMapper.toCreationDto(data);
+    const result = await http.patch<ProjectDto>(url, dataDto);
+    return projectMapper.fromDto(result.data);
+  }
+
   export async function deleteProject(projectId: Project["id"]) {
     const url = projectUrlService.constructUrlWithParam(projectId);
     return http.delete(url);

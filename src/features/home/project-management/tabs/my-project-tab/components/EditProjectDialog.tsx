@@ -19,6 +19,7 @@ import { QUERY_KEY } from "@/store/key";
 import { useNotify } from "@/utils/hooks/useNotify";
 import { AppReact } from "@/utils/types/react";
 
+import { useProjectManagement } from "../../../useProjectManagementQuery";
 import { EditProjectForm } from "../form/EditProjectForm";
 
 type Props = {
@@ -42,6 +43,8 @@ export const EditProjectDialog: FC<Props> = ({
 
   const queryClient = useQueryClient();
 
+  const projectData = useProjectManagement();
+
   const createProject = useMutation({
     mutationFn: ProjectService.createProject,
     onSuccess: (newProject) => {
@@ -53,6 +56,18 @@ export const EditProjectDialog: FC<Props> = ({
       queryClient.setQueryData([QUERY_KEY.PROJECT, newProject.id], newProject);
     },
     onError: () => notify({ message: "Đăng tải dự án thất bại.", variant: "error" }),
+  });
+
+  const updateProject = useMutation({
+    mutationFn: ProjectService.updateProject,
+    onSuccess: (newProject) => {
+      notify({ message: "Cập nhật dự án thành công.", variant: "success" });
+      setIsOpenEditDialog(false);
+      queryClient.invalidateQueries([QUERY_KEY.PROJECT_BY_USER]);
+      queryClient.invalidateQueries([QUERY_KEY.PROFILE]);
+      queryClient.setQueryData([QUERY_KEY.PROJECT, newProject.id], newProject);
+    },
+    onError: () => notify({ message: "Cập nhật dự án thất bại.", variant: "error" }),
   });
 
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -72,6 +87,14 @@ export const EditProjectDialog: FC<Props> = ({
       createProject.mutate(editData);
       return;
     }
+
+    if (projectData == null || projectData.isError || projectData.data?.ownedProject == null) {
+      return;
+    }
+    updateProject.mutate({
+      id: projectData.data.ownedProject?.id,
+      data: editData,
+    });
   };
 
   return (
@@ -108,7 +131,7 @@ export const EditProjectDialog: FC<Props> = ({
           Hủy
         </Button>
         <LoadingButton
-          isLoading={createProject.isLoading}
+          isLoading={createProject.isLoading || updateProject.isLoading}
           variant="contained"
           disabled={!isDirty}
           onClick={handleDispatchClickEvent}
