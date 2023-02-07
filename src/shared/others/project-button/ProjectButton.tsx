@@ -25,7 +25,6 @@ export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
     if (currentUser == null) {
       return "disable";
     }
-
     const shouldReturnOutType =
       project.followers.includes(currentUser.id) || project.team.members.includes(currentUser.id);
 
