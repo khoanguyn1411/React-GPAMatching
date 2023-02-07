@@ -7,6 +7,7 @@ import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
 import { Skill } from "@/core/models/skills";
+import { useAuth } from "@/features/auth/useAuth";
 import { routePaths } from "@/routes";
 import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
@@ -22,6 +23,7 @@ const { FileIcon, StarIcon, UserGroupIcon, ClockIcon } = icons;
 
 export const ProjectDetailContainer: FC = () => {
   useCommon();
+  const { currentUser } = useAuth();
 
   const { navigate } = useNavigateWithTransition();
   const { data, isLoading, isError } = useProjectDetailQuery();
@@ -33,6 +35,8 @@ export const ProjectDetailContainer: FC = () => {
       search: `${key}=${data?.field}`,
     });
   };
+
+  const shouldHideJoinButton = currentUser?.id === data?.team.leader?.id;
 
   if (isLoading) {
     return <CircleLoading mode="normal" />;
@@ -106,9 +110,11 @@ export const ProjectDetailContainer: FC = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <Button variant="contained" sx={{ alignSelf: "end" }}>
-              Tham gia ngay
-            </Button>
+            {!shouldHideJoinButton && (
+              <Button variant="contained" sx={{ alignSelf: "end" }}>
+                Tham gia ngay
+              </Button>
+            )}
           </SectionCardWrapper>
         </Grid>
       </Grid>

@@ -18,6 +18,9 @@ type ButtonType = "cancel" | "join" | "out" | "disable";
 export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
   const queryClient = useQueryClient();
   const { currentUser } = useAuth();
+
+  const shouldHideJoinButton = project.team.leader?.id === currentUser?.id;
+
   const getButtonType = (): ButtonType => {
     if (currentUser == null) {
       return "disable";
@@ -29,7 +32,7 @@ export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
     if (shouldReturnOutType) {
       return "out";
     }
-    if (!currentUser.isAllowedToJoin || project.team.leader?.id === currentUser.id) {
+    if (!currentUser.isAllowedToJoin) {
       return "disable";
     }
     if (currentUser.teamIds.length > 3) {
@@ -85,6 +88,9 @@ export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
     }
   };
 
+  if (shouldHideJoinButton) {
+    return <></>;
+  }
   return (
     <Button
       variant={buttonType !== "cancel" ? "contained" : "outlined"}
