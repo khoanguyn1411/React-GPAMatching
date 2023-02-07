@@ -48,3 +48,16 @@ export type ProjectDetail = StrictOmit<Project, "team" | "followers"> & {
     readonly leader: UserShort | null;
   };
 };
+
+export namespace Project {
+  export function fromDetail(projectDetail: ProjectDetail): Project {
+    return {
+      ...projectDetail,
+      followers: projectDetail.followers.map((follower) => follower.id),
+      team: {
+        members: projectDetail.team.members.map((member) => member.id),
+        leader: projectDetail.team.leader,
+      },
+    };
+  }
+}

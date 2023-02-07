@@ -4,6 +4,7 @@ import { FC } from "react";
 
 import { icons } from "@/assets/icons";
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
+import { Project } from "@/core/models/project";
 import { ProjectField } from "@/core/models/project-field";
 import { ProjectStatus } from "@/core/models/project-status";
 import { Skill } from "@/core/models/skills";
@@ -12,7 +13,9 @@ import { routePaths } from "@/routes";
 import { CircleLoading } from "@/shared/components/loading/CircleLoading";
 import { AvatarWithInfo } from "@/shared/others/avatar-with-info/AvatarWithInfo";
 import { MemberList } from "@/shared/others/member-list/MemberList";
+import { ProjectButton } from "@/shared/others/project-button/ProjectButton";
 import { SectionCardWrapper } from "@/shared/others/section-card-wrapper/SectionCardWrapper";
+import { QUERY_KEY } from "@/store/key";
 import { useCommon } from "@/utils/hooks/useCommon";
 import { useNavigateWithTransition } from "@/utils/hooks/useNavigateWithTransition";
 
@@ -110,11 +113,11 @@ export const ProjectDetailContainer: FC = () => {
                 </Stack>
               </Stack>
             </Stack>
-            {!shouldHideJoinButton && (
-              <Button variant="contained" sx={{ alignSelf: "end" }}>
-                Tham gia ngay
-              </Button>
-            )}
+            <ProjectButton
+              sx={{ alignSelf: "end" }}
+              project={Project.fromDetail(data)}
+              invalidateQueryKeys={[QUERY_KEY.PROJECT, data.id]}
+            />
           </SectionCardWrapper>
         </Grid>
       </Grid>

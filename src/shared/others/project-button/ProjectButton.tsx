@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
 
@@ -8,14 +8,14 @@ import { useAuth } from "@/features/auth/useAuth";
 import { ProjectService } from "@/services/projectService";
 import { QUERY_KEY } from "@/store/key";
 
-type Props = {
+interface Props extends ButtonProps {
   project: Project;
   invalidateQueryKeys: string[];
-};
+}
 
 type ButtonType = "cancel" | "join" | "out" | "disable";
 
-export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
+export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys, ...otherProps }) => {
   const queryClient = useQueryClient();
   const { currentUser } = useAuth();
 
@@ -96,6 +96,7 @@ export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys }) => {
       color={buttonType !== "out" ? "primary" : "error"}
       disabled={buttonType === "disable"}
       onClick={handleClick}
+      {...otherProps}
     >
       {getButtonText()}
     </Button>
