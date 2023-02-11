@@ -8,7 +8,6 @@ import { Skill } from "@/core/models/skills";
 import { useAuth } from "@/features/auth/useAuth";
 import {
   genderList,
-  provinceList,
   studyYearList,
   universityList,
 } from "@/features/information/components/information-pages/initialize-info-page/InitializeInfoPage";
@@ -18,6 +17,7 @@ import { AvatarPickerUpload } from "@/shared/components/avatar-picker-upload/Ava
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
 import { LoadingButton } from "@/shared/components/loading-button/LoadingButton";
+import { ProvinceAutocomplete } from "@/shared/components/province-autocomplete/ProvinceAutocomplete";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { SelectMultiple } from "@/shared/components/select/SelectMultiple";
 import { AppTextField } from "@/shared/components/text-field/TextField";
@@ -244,12 +244,7 @@ export const AccountManagementContainer: FC = () => {
                 control={control}
                 name="homeAddress"
                 render={({ field: { value, onChange } }) => (
-                  <AppAutocomplete
-                    placeholder="Tìm và chọn tỉnh thành"
-                    list={provinceList}
-                    value={value}
-                    onChange={onChange}
-                  />
+                  <ProvinceAutocomplete value={value} onChange={onChange} />
                 )}
               />
             </FormItem>

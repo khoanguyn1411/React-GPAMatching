@@ -14,9 +14,9 @@ import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPickerUpload } from "@/shared/components/avatar-picker-upload/AvatarPickerUpload";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
+import { ProvinceAutocomplete } from "@/shared/components/province-autocomplete/ProvinceAutocomplete";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
-import provinces from "@/shared/constants/province.json";
 import { UNIVERSITY_LIST } from "@/shared/constants/university";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { generateArrayWithNoDuplicate } from "@/utils/funcs/generate-array-with-no-duplicate";
@@ -53,11 +53,6 @@ export const universityList: Option[] = generateArrayWithNoDuplicate(UNIVERSITY_
     value: university,
   }),
 );
-
-export const provinceList: Option[] = provinces.map((province) => ({
-  label: province.city,
-  value: province.city,
-}));
 
 export const InitializeInfoPage: FC = () => {
   const [, increasePage] = useAtom(informationActivePageAtomFn.increasePage);
@@ -261,12 +256,7 @@ export const InitializeInfoPage: FC = () => {
             control={control}
             name="homeAddress"
             render={({ field: { value, onChange } }) => (
-              <AppAutocomplete
-                placeholder="Tìm và chọn tỉnh thành"
-                list={provinceList}
-                value={value}
-                onChange={onChange}
-              />
+              <ProvinceAutocomplete value={value} onChange={onChange} />
             )}
           />
         </FormItem>
