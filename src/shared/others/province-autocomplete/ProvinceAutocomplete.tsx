@@ -4,8 +4,8 @@ import React from "react";
 import { ProvinceService } from "@/services/provinceService";
 import { QUERY_KEY } from "@/store/key";
 
-import { AppAutocomplete } from "../autocomplete/Autocomplete";
-import { Option } from "../select/Select";
+import { AppAutocomplete } from "../../components/autocomplete/Autocomplete";
+import { Option } from "../../components/select/Select";
 
 interface Props {
   value: string;
