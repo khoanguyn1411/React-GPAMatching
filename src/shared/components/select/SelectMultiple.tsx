@@ -47,6 +47,10 @@ export const SelectMultiple: FC<Props> = ({
     );
   };
 
+  const handleDelete = (deletedValue: string) => () => {
+    onChange(value.filter((_value) => _value !== deletedValue));
+  };
+
   return (
     <Select
       multiple
@@ -72,6 +76,10 @@ export const SelectMultiple: FC<Props> = ({
               <Chip
                 sx={{ height: "25px" }}
                 key={value}
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                }}
+                onDelete={handleDelete(value)}
                 label={list.find((item) => item.value === value)?.label}
               />
             ))}
