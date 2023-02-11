@@ -51,7 +51,7 @@ export const UserInfoDialog: FC<Props> = ({ isOpen, setIsOpen, data }) => {
     >
       <DialogTitle display="flex" gap={5} justifyContent="space-between">
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar sx={{ width: 65, height: 65 }} src={data.avatarUrl} />
+          <Avatar sx={{ width: 55, height: 55 }} src={data.avatarUrl} />
           <Stack spacing={0.5}>
             <Typography variant="h2">{data.fullName}</Typography>
           </Stack>
