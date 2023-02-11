@@ -14,10 +14,10 @@ import { AppAutocomplete } from "@/shared/components/autocomplete/Autocomplete";
 import { AvatarPickerUpload } from "@/shared/components/avatar-picker-upload/AvatarPickerUpload";
 import { AppDatePicker } from "@/shared/components/date-picker/DatePicker";
 import { FormItem } from "@/shared/components/form-item/FormItem";
-import { ProvinceAutocomplete } from "@/shared/components/province-autocomplete/ProvinceAutocomplete";
 import { AppSelect, Option } from "@/shared/components/select/Select";
 import { AppTextField } from "@/shared/components/text-field/TextField";
 import { UNIVERSITY_LIST } from "@/shared/constants/university";
+import { ProvinceAutocomplete } from "@/shared/others/province-autocomplete/ProvinceAutocomplete";
 import { enumToArray } from "@/utils/funcs/enum-to-array";
 import { generateArrayWithNoDuplicate } from "@/utils/funcs/generate-array-with-no-duplicate";
 
