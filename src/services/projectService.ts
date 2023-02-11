@@ -1,27 +1,30 @@
 import { http } from "@/api/api-core";
+import { PaginationDto } from "@/core/dtos/pagination.dto";
 import { ProjectDetailDto, ProjectDto } from "@/core/dtos/project.dto";
 import { ProjectByUserDto } from "@/core/dtos/project-by-user.dto";
 import { projectFilterParamsMapper } from "@/core/mappers/filter-param-mappers/project-filter-params.mapper";
 import { interestMapper } from "@/core/mappers/interest.mapper";
+import { paginationMapper } from "@/core/mappers/pagination.mapper";
 import { projectMapper } from "@/core/mappers/project.mapper";
 import { projectByUserMapper } from "@/core/mappers/project-by-user.mapper";
 import { projectDetailMapper } from "@/core/mappers/project-detail.mapper";
 import { ProjectFilterParams } from "@/core/models/filter-params/project-filter-params";
 import { Interest } from "@/core/models/interest";
+import { Pagination } from "@/core/models/pagination";
 import { Project, ProjectCreation, ProjectDetail } from "@/core/models/project";
 import { User } from "@/core/models/user";
 import { ComposeUrlService } from "@/utils/funcs/compose-url";
 
 export namespace ProjectService {
   const projectUrlService = new ComposeUrlService("feed");
-  export async function getProjects(params: ProjectFilterParams): Promise<readonly Project[]> {
+  export async function getProjects(params: ProjectFilterParams): Promise<Pagination<Project>> {
     const projectUrl = projectUrlService.getBaseUrl();
     const paramsDto = projectFilterParamsMapper.toDto(params);
-    const result = await http.get<readonly ProjectDto[]>(projectUrl, { params: paramsDto });
-    return result.data.map((project) => projectMapper.fromDto(project));
+    const result = await http.get<PaginationDto<ProjectDto>>(projectUrl, { params: paramsDto });
+    return paginationMapper.fromDto(result.data, projectMapper);
   }
 
-  export async function getProjectById(id: Project["id"]): Promise<ProjectDetail | null> {
+  export async function getProjectById(id: Project["id"]): Promise<ProjectDetail> {
     const url = projectUrlService.constructUrlWithParam(id);
     const result = await http.get<ProjectDetailDto>(url);
     return projectDetailMapper.fromDto(result.data);

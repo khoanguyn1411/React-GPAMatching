@@ -3,3 +3,7 @@ export const QUERY_KEY = {
   PROFILE: "profile",
   PROJECT_BY_USER: "project-by-user",
 };
+
+export const QUERY_MODIFIER = {
+  INFINITIVE: "infinitive",
+};

@@ -7,8 +7,8 @@ import { IMapper } from "./base-mappers/mapper";
 const TO_INTEREST_ACTION_DTO: Readonly<Record<InterestAction, InterestActionDto>> = {
   [InterestAction.Approve]: InterestActionDto.Approve,
   [InterestAction.Decline]: InterestActionDto.Decline,
-  [InterestAction.Interest]: InterestActionDto.Interest,
-  [InterestAction.UnInterest]: InterestActionDto.UnInterest,
+  [InterestAction.Interested]: InterestActionDto.Interested,
+  [InterestAction.Uninterested]: InterestActionDto.Uninterested,
 };
 
 const FROM_INTEREST_ACTION_DTO = reverseRecord(TO_INTEREST_ACTION_DTO);

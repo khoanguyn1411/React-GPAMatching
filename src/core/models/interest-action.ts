@@ -1,6 +1,6 @@
 export enum InterestAction {
-  Interest = "interest",
-  UnInterest = "UnInterest",
+  Interested = "interested",
+  Uninterested = "uninterested",
   Approve = "approve",
   Decline = "decline",
 }

@@ -46,11 +46,11 @@ export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys, ...othe
     onSuccess: (_, variable) => {
       queryClient.invalidateQueries(invalidateQueryKeys);
       queryClient.invalidateQueries([QUERY_KEY.PROFILE]);
-      if (variable.action === InterestAction.Interest) {
+      if (variable.action === InterestAction.Interested) {
         setButtonType("cancel");
         return;
       }
-      if (variable.action === InterestAction.UnInterest) {
+      if (variable.action === InterestAction.Uninterested) {
         setButtonType("join");
         return;
       }
@@ -71,20 +71,11 @@ export const ProjectButton: FC<Props> = ({ project, invalidateQueryKeys, ...othe
     if (currentUser == null) {
       return;
     }
-    if (buttonType === "cancel") {
-      return mutate({
-        projectId: project.id,
-        userId: currentUser.id,
-        action: InterestAction.UnInterest,
-      });
-    }
-    if (buttonType === "join") {
-      return mutate({
-        projectId: project.id,
-        userId: currentUser.id,
-        action: InterestAction.Interest,
-      });
-    }
+    mutate({
+      projectId: project.id,
+      userId: currentUser.id,
+      action: buttonType === "cancel" ? InterestAction.Uninterested : InterestAction.Interested,
+    });
   };
 
   if (shouldHideJoinButton) {

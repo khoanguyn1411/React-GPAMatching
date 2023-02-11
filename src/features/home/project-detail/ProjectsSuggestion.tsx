@@ -36,7 +36,7 @@ export const ProjectsSuggestion: FC<Props> = ({ field }) => {
   );
 
   useEffect(() => {
-    setRandomProjectSuggestion(getRandomEntities(data ?? null, 2));
+    setRandomProjectSuggestion(getRandomEntities(data?.result ?? null, 2));
   }, [data]);
 
   if (isLoading) {
