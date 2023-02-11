@@ -51,7 +51,12 @@ export const EditProjectForm: FC<Props> = ({ formProps, shouldHideIsReadyToJoinF
           control={control}
           name="name"
           render={({ field: { value, onChange } }) => (
-            <AppTextField placeholder="Tên dự án" value={value} onChange={onChange} />
+            <AppTextField
+              name="projectName"
+              placeholder="Tên dự án"
+              value={value}
+              onChange={onChange}
+            />
           )}
         />
       </FormItem>
@@ -62,6 +67,7 @@ export const EditProjectForm: FC<Props> = ({ formProps, shouldHideIsReadyToJoinF
           name="description"
           render={({ field: { value, onChange } }) => (
             <AppTextField
+              name="description"
               rows={3}
               multiline
               placeholder="Mô tả dự án ..."
@@ -117,6 +123,7 @@ export const EditProjectForm: FC<Props> = ({ formProps, shouldHideIsReadyToJoinF
               name="currentMemberQuantity"
               render={({ field: { value, onChange } }) => (
                 <AppTextField
+                  name="currentMemberQuantity"
                   type="number"
                   placeholder="Số thành viên hiện tại"
                   value={value}
@@ -138,6 +145,7 @@ export const EditProjectForm: FC<Props> = ({ formProps, shouldHideIsReadyToJoinF
               name="findingMemberQuantity"
               render={({ field: { value, onChange } }) => (
                 <AppTextField
+                  name="findingMemberQuantity"
                   type="number"
                   placeholder="Số thành viên đang tìm kiếm"
                   value={value}

@@ -126,7 +126,12 @@ export const AccountManagementContainer: FC = () => {
                 control={control}
                 name="fullName"
                 render={({ field: { value, onChange } }) => (
-                  <AppTextField placeholder="Họ và tên" value={value} onChange={onChange} />
+                  <AppTextField
+                    placeholder="Họ và tên"
+                    name="fullName"
+                    value={value}
+                    onChange={onChange}
+                  />
                 )}
               />
             </FormItem>
@@ -141,6 +146,7 @@ export const AccountManagementContainer: FC = () => {
                   <AppTextField
                     type="email"
                     disabled
+                    name="email"
                     placeholder="Vd: abc@gmail.com"
                     value={value}
                     onChange={onChange}
@@ -221,6 +227,7 @@ export const AccountManagementContainer: FC = () => {
                 render={({ field: { value, onChange } }) => (
                   <AppTextField
                     type="tel"
+                    name="phoneNumber"
                     inputProps={{ maxLength: 10 }}
                     value={value}
                     onChange={onChange}

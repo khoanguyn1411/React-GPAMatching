@@ -72,6 +72,7 @@ export const FeedContainer: FC = () => {
                 endAdornment: <Search />,
               }}
               placeholder="Tìm kiếm tên dự án, người đại diện,..."
+              name="search"
               type="search"
               value={inputValue}
               onChange={setInputValue}

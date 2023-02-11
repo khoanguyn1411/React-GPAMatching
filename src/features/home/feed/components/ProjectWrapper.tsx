@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
 
@@ -57,12 +57,14 @@ export const ProjectWrapper: FC = () => {
             </Grid>
           ))}
       </Grid>
-      {isFetchingNextPage && <CircleLoading mode="normal" />}
-      {hasNextPage && !isFetchingNextPage && (
-        <Button onClick={handleLoadMore} sx={{ mt: 3 }}>
-          Load more
-        </Button>
-      )}
+      <Box mt={3}>
+        {isFetchingNextPage && <CircleLoading mode="normal" />}
+        {hasNextPage && !isFetchingNextPage && (
+          <Button fullWidth onClick={handleLoadMore}>
+            Load more
+          </Button>
+        )}
+      </Box>
     </>
   );
 };

@@ -122,7 +122,12 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="fullName"
                 render={({ field: { value, onChange } }) => (
-                  <AppTextField placeholder="Họ và tên" value={value} onChange={onChange} />
+                  <AppTextField
+                    name="fullName"
+                    placeholder="Họ và tên"
+                    value={value}
+                    onChange={onChange}
+                  />
                 )}
               />
             </FormItem>
@@ -136,6 +141,7 @@ export const InitializeInfoPage: FC = () => {
                 render={({ field: { value, onChange } }) => (
                   <AppTextField
                     type="email"
+                    name="email"
                     disabled
                     placeholder="Vd: abc@gmail.com"
                     value={value}
@@ -183,6 +189,7 @@ export const InitializeInfoPage: FC = () => {
                 render={({ field: { value, onChange } }) => (
                   <AppTextField
                     type="tel"
+                    name="phoneNumber"
                     inputProps={{ maxLength: 10 }}
                     value={value}
                     onChange={onChange}
@@ -199,7 +206,12 @@ export const InitializeInfoPage: FC = () => {
                 control={control}
                 name="socialLink"
                 render={({ field: { value, onChange } }) => (
-                  <AppTextField value={value} onChange={onChange} placeholder="http://..." />
+                  <AppTextField
+                    name="socialLink"
+                    value={value}
+                    onChange={onChange}
+                    placeholder="http://..."
+                  />
                 )}
               />
             </FormItem>
