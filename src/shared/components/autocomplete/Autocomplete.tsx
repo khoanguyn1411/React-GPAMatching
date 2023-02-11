@@ -2,7 +2,6 @@ import { Autocomplete, LinearProgress, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { FC, ReactNode, useEffect, useState } from "react";
 
-import { LinearLoading } from "../loading/LinearLoading";
 import { Option } from "../select/Select";
 
 interface AutocompleteOption extends Pick<Option, "value" | "label"> {
