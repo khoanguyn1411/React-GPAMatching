@@ -7,7 +7,7 @@ const { FeedContainer } = lazyImport(() => import("./FeedContainer"), "FeedConta
 
 export const feedRoutes: RouteObject[] = [
   {
-    path: routePaths.home.children.feed.path,
+    path: routePaths.home.children.feed.url,
     element: <FeedContainer />,
   },
 ];

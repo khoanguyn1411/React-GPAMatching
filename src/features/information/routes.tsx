@@ -11,8 +11,8 @@ const { InformationContainer } = lazyImport(
 
 export const informationRoutes: RouteObject[] = [
   {
-    path: routePaths.information.path,
+    path: routePaths.information.url,
     element: <NonInformationGuard />,
-    children: [{ path: routePaths.root.path, element: <InformationContainer /> }],
+    children: [{ path: routePaths.root.url, element: <InformationContainer /> }],
   },
 ];

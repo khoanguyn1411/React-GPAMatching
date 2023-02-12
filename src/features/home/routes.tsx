@@ -12,20 +12,20 @@ import { projectManagementRoutes } from "./project-management/routes";
 
 export const homeRoutes: RouteObject[] = [
   {
-    path: routePaths.root.path,
+    path: routePaths.root.url,
     element: <Outlet />,
     children: [
       {
-        path: routePaths.home.path,
+        path: routePaths.home.url,
         element: <InformationGuard />,
         children: [
           {
-            path: routePaths.root.path,
+            path: routePaths.root.url,
             element: <HomeLayout />,
             children: [...feedRoutes, ...accountManagementRoutes, ...projectDetailRoutes],
           },
           {
-            path: routePaths.root.path,
+            path: routePaths.root.url,
             element: <HomeLayoutWithTabs />,
             children: [...projectManagementRoutes],
           },

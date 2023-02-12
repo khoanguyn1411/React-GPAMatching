@@ -10,7 +10,7 @@ const { NotFoundContainer } = lazyImport(
 
 export const notFoundRoutes: RouteObject[] = [
   {
-    path: routePaths.rest.path,
+    path: routePaths.rest.url,
     element: <NotFoundContainer />,
   },
 ];
