@@ -10,19 +10,19 @@ const { ProjectManagementContainer } = lazyImport(
 
 export const projectManagementRoutes: RouteObject[] = [
   {
-    path: routePaths.home.children.project.url,
+    path: routePaths.home.children.project.path,
     element: <ProjectManagementContainer />,
     children: [
       {
-        path: routePaths.home.children.project.children.myProject.url,
+        path: routePaths.home.children.project.children.myProject.path,
         element: <Outlet />,
       },
       {
-        path: routePaths.home.children.project.children.joinedProjects.url,
+        path: routePaths.home.children.project.children.joinedProjects.path,
         element: <Outlet />,
       },
       {
-        path: routePaths.home.children.project.children.interestedProjects.url,
+        path: routePaths.home.children.project.children.interestedProjects.path,
         element: <Outlet />,
       },
     ],

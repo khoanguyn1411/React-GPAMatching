@@ -1,4 +1,4 @@
-import { Outlet, RouteObject } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
 import { InformationGuard } from "@/guards/information-guards/InformationGuard";
 import { routePaths } from "@/routes";
@@ -12,24 +12,22 @@ import { projectManagementRoutes } from "./project-management/routes";
 
 export const homeRoutes: RouteObject[] = [
   {
-    path: routePaths.root.url,
-    element: <Outlet />,
+    path: "",
+    element: <Navigate to={routePaths.home.url} />,
+  },
+  {
+    path: routePaths.home.path,
+    element: <InformationGuard />,
     children: [
       {
-        path: routePaths.home.url,
-        element: <InformationGuard />,
-        children: [
-          {
-            path: routePaths.root.url,
-            element: <HomeLayout />,
-            children: [...feedRoutes, ...accountManagementRoutes, ...projectDetailRoutes],
-          },
-          {
-            path: routePaths.root.url,
-            element: <HomeLayoutWithTabs />,
-            children: [...projectManagementRoutes],
-          },
-        ],
+        // path: routePaths.root.url,
+        element: <HomeLayout />,
+        children: [...feedRoutes, ...accountManagementRoutes, ...projectDetailRoutes],
+      },
+      {
+        // path: routePaths.root.url,
+        element: <HomeLayoutWithTabs />,
+        children: [...projectManagementRoutes],
       },
     ],
   },
