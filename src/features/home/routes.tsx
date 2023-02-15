@@ -13,7 +13,7 @@ import { projectManagementRoutes } from "./project-management/routes";
 export const homeRoutes: RouteObject[] = [
   {
     path: "",
-    element: <Navigate to={routePaths.home.url} />,
+    element: <Navigate to={routePaths.home.url} replace />,
   },
   {
     path: routePaths.home.path,
